@@ -252,6 +252,56 @@ async function sair() {
   mostrar("inicio");
 }
 
+  async function criarAnuncio() {
+
+  const usuario = (await supabaseClient.auth.getUser()).data.user;
+
+  if (!usuario) {
+    document.getElementById("msgAnuncio").textContent =
+      "Você precisa estar logado.";
+    return;
+  }
+
+  const nome = document.getElementById("nomeAnuncio").value.trim();
+  const idade = document.getElementById("idadeAnuncio").value;
+  const cidade = document.getElementById("cidadeAnuncio").value.trim();
+  const descricao = document.getElementById("descricaoAnuncio").value.trim();
+  const foto = document.getElementById("fotoAnuncio").value.trim();
+
+  if (!nome || !idade || !cidade || !descricao) {
+    document.getElementById("msgAnuncio").textContent =
+      "Preencha nome, idade, cidade e descrição.";
+    return;
+  }
+
+  const { error } = await supabaseClient
+    .from("anuncios")
+    .insert({
+      usuario_id: usuario.id,
+      nome: nome,
+      idade: Number(idade),
+      cidade: cidade,
+      descricao: descricao,
+      foto_url: foto || null,
+      ativo: true
+    });
+
+  if (error) {
+    document.getElementById("msgAnuncio").textContent =
+      "Erro ao publicar: " + error.message;
+    return;
+  }
+
+  document.getElementById("msgAnuncio").textContent =
+    "Anúncio publicado com sucesso!";
+
+  document.getElementById("nomeAnuncio").value = "";
+  document.getElementById("idadeAnuncio").value = "";
+  document.getElementById("cidadeAnuncio").value = "";
+  document.getElementById("descricaoAnuncio").value = "";
+  document.getElementById("fotoAnuncio").value = "";
+  }
+
 </script>
 
 </body>
