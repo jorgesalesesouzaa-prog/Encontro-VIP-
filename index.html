@@ -180,6 +180,7 @@ button:disabled {
 .menu {
   margin-bottom: 20px;
 }
+  
 </style></head><body><div class="container"><!-- INÍCIO --><div id="inicio">
   <div class="card">
     <h1>Encontro VIP</h1><p style="text-align:center;">
@@ -381,7 +382,6 @@ let conversaUsuarioNome = "";
 
 let intervaloChat = null;
 
-
 /* =========================
    ESCAPAR HTML
 ========================= */
@@ -399,7 +399,6 @@ function escapeHtml(valor) {
     .replace(/"/g, "&quot;")
     .replace(/'/g, "&#039;");
 }
-
 
 /* =========================
    MOSTRAR TELA
@@ -437,14 +436,12 @@ function mostrar(tela) {
     escolhida.classList.remove("hidden");
   }
 
-
   if (tela !== "chatTela") {
 
     pararAtualizacaoChat();
 
   }
 }
-
 
 /* =========================
    CADASTRO
@@ -541,7 +538,6 @@ async function cadastrar() {
   }, 1000);
 }
 
-
 /* =========================
    LOGIN
 ========================= */
@@ -582,7 +578,6 @@ async function entrar() {
   await carregarPainel();
 }
 
-
 /* =========================
    PAINEL
 ========================= */
@@ -613,7 +608,6 @@ async function carregarPainel() {
   mostrar("painel");
 }
 
-
 /* =========================
    SAIR
 ========================= */
@@ -632,7 +626,6 @@ async function sair() {
 
   mostrar("inicio");
 }
-
 
 /* =========================
    CRIAR ANÚNCIO
@@ -712,7 +705,6 @@ async function criarAnuncio() {
   document.getElementById("anDescricao").value = "";
   document.getElementById("anFoto").value = "";
 }
-
 
 /* =========================
    LISTAR ANÚNCIOS
@@ -826,7 +818,6 @@ async function listarAnuncios() {
   });
 }
 
-
 /* =========================
    FAVORITAR
 ========================= */
@@ -871,7 +862,6 @@ async function favoritarAnuncio(anuncioId) {
     "Anúncio adicionado aos favoritos!"
   );
 }
-
 
 /* =========================
    LISTAR FAVORITOS
@@ -972,7 +962,6 @@ async function listarFavoritos() {
   });
 }
 
-
 /* =========================
    ABRIR CONVERSA
 ========================= */
@@ -1017,7 +1006,6 @@ async function abrirConversa(id, nome) {
 
   await carregarChat();
 }
-
 
 /* =========================
    LISTAR CONVERSAS
@@ -1402,7 +1390,6 @@ async function carregarPainel() {
   voltarPainel();
 }
 
-
 /* SAIR */
 
 async function sair() {
@@ -1421,7 +1408,6 @@ async function sair() {
     .getElementById("inicio")
     .classList.remove("hidden");
 }
-
 
 /* CRIAR ANÚNCIO */
 
@@ -1586,7 +1572,6 @@ async function listarAnuncios() {
   });
 }
 
-
 /* FAVORITAR */
 
 async function favoritarAnuncio(anuncioId) {
@@ -1627,7 +1612,6 @@ async function favoritarAnuncio(anuncioId) {
     "Anúncio adicionado aos favoritos!"
   );
 }
-
 
 /* LISTAR FAVORITOS */
 
@@ -1749,7 +1733,6 @@ async function abrirConversa(outroUsuarioId) {
   iniciarAtualizacaoChat();
 }
 
-
 /* CARREGAR CHAT */
 
 async function carregarChat() {
@@ -1769,7 +1752,6 @@ async function carregarChat() {
 
   await buscarMensagensChat();
 }
-
 
 /* BUSCAR MENSAGENS */
 
@@ -1870,7 +1852,6 @@ function pararAtualizacaoChat() {
   }
 }
 
-
 /* ENVIAR MENSAGEM */
 
 async function enviarMensagemChat() {
@@ -1913,7 +1894,6 @@ async function enviarMensagemChat() {
 
   await buscarMensagensChat();
 }
-
 
 /* ENTER PARA ENVIAR */
 
