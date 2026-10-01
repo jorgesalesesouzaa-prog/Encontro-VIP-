@@ -253,6 +253,48 @@ async function sair() {
   mostrar("inicio");
 }
 
+  async function listarAnuncios() {
+
+  const { data: anuncios, error } = await supabaseClient
+    .from("anuncios")
+    .select("id, nome, idade, cidade, descricao, foto_url")
+    .eq("ativo", true)
+    .order("created_at", { ascending: false });
+
+  if (error) {
+    alert("Erro ao carregar anúncios: " + error.message);
+    return;
+  }
+
+  let html = `
+    <div id="listaAnuncios">
+      <h2>Anúncios</h2>
+  `;
+
+  if (!anuncios || anuncios.length === 0) {
+    html += "<p>Nenhum anúncio encontrado.</p>";
+  } else {
+    anuncios.forEach(anuncio => {
+      html += `
+        <div class="anuncio">
+          <h3>${anuncio.nome}, ${anuncio.idade}</h3>
+          <p><strong>Cidade:</strong> ${anuncio.cidade}</p>
+          <p>${anuncio.descricao}</p>
+        </div>
+      `;
+    });
+  }
+
+  html += `
+      <button onclick="mostrar('painel')">Voltar</button>
+    </div>
+  `;
+
+  document.body.insertAdjacentHTML("beforeend", html);
+
+  mostrar("listaAnuncios");
+  }
+
   async function criarAnuncio() {
 
   const usuario = (await supabaseClient.auth.getUser()).data.user;
