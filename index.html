@@ -1,11 +1,8 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
+<!DOCTYPE html><html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Encontro VIP</title>
-
-<style>
+<title>Encontro VIP</title><style>
 * {
   box-sizing: border-box;
 }
@@ -66,6 +63,11 @@ button:hover {
   opacity: 0.9;
 }
 
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
 .btn-secundario {
   background: #777;
 }
@@ -118,6 +120,8 @@ button:hover {
   max-height: 450px;
   overflow-y: auto;
   padding: 5px;
+  display: flex;
+  flex-direction: column;
 }
 
 .balao {
@@ -176,246 +180,184 @@ button:hover {
 .menu {
   margin-bottom: 20px;
 }
-</style>
-</head>
-
-<body>
-
-<div class="container">
-
-<!-- INÍCIO -->
-<div id="inicio">
+</style></head><body><div class="container"><!-- INÍCIO --><div id="inicio">
   <div class="card">
-    <h1>Encontro VIP</h1>
+    <h1>Encontro VIP</h1><p style="text-align:center;">
+  Conecte-se de forma simples e segura.
+</p>
 
-    <p style="text-align:center;">
-      Conecte-se de forma simples e segura.
-    </p>
+<button onclick="mostrar('cadastro')">
+  Criar conta
+</button>
 
-    <button onclick="mostrar('cadastro')">
-      Criar conta
-    </button>
-
-    <button onclick="mostrar('login')" class="btn-secundario">
-      Entrar
-    </button>
-  </div>
-</div>
-
-
-<!-- CADASTRO -->
-<div id="cadastro" class="hidden">
-  <div class="card">
-
-    <h2>Criar conta</h2>
-
-    <input id="cadNome" type="text" placeholder="Nome">
-
-    <input id="cadTelefone" type="text" placeholder="Telefone">
-
-    <input id="cadEmail" type="email" placeholder="E-mail">
-
-    <input id="cadSenha" type="password" placeholder="Senha">
-
-    <button onclick="cadastrar()">
-      Criar conta
-    </button>
-
-    <button onclick="mostrar('inicio')" class="btn-secundario">
-      Voltar
-    </button>
-
-    <p id="cadMensagem"></p>
+<button onclick="mostrar('login')" class="btn-secundario">
+  Entrar
+</button>
 
   </div>
-</div>
+</div><!-- CADASTRO --><div id="cadastro" class="hidden">
+  <div class="card"><h2>Criar conta</h2>
 
+<input id="cadNome" type="text" placeholder="Nome">
 
-<!-- LOGIN -->
-<div id="login" class="hidden">
-  <div class="card">
+<input id="cadTelefone" type="text" placeholder="Telefone">
 
-    <h2>Entrar</h2>
+<input id="cadEmail" type="email" placeholder="E-mail">
 
-    <input
-      id="loginEmail"
-      type="email"
-      placeholder="E-mail">
+<input id="cadSenha" type="password" placeholder="Senha">
 
-    <input
-      id="loginSenha"
-      type="password"
-      placeholder="Senha">
+<button onclick="cadastrar()">
+  Criar conta
+</button>
 
-    <button onclick="entrar()">
-      Entrar
-    </button>
+<button onclick="mostrar('inicio')" class="btn-secundario">
+  Voltar
+</button>
 
-    <button onclick="mostrar('inicio')" class="btn-secundario">
-      Voltar
-    </button>
-
-    <p id="loginMensagem"></p>
+<p id="cadMensagem"></p>
 
   </div>
-</div>
+</div><!-- LOGIN --><div id="login" class="hidden">
+  <div class="card"><h2>Entrar</h2>
 
+<input
+  id="loginEmail"
+  type="email"
+  placeholder="E-mail">
 
-<!-- PAINEL -->
-<div id="painel" class="hidden">
-  <div class="card">
+<input
+  id="loginSenha"
+  type="password"
+  placeholder="Senha">
 
-    <h2>Encontro VIP</h2>
+<button onclick="entrar()">
+  Entrar
+</button>
 
-    <p id="olaUsuario"></p>
+<button onclick="mostrar('inicio')" class="btn-secundario">
+  Voltar
+</button>
 
-    <div class="menu">
-
-      <button onclick="mostrar('criarAnuncio')">
-        Criar meu anúncio
-      </button>
-
-      <button onclick="listarAnuncios()">
-        Ver anúncios
-      </button>
-
-      <button onclick="listarFavoritos()">
-        Meus favoritos
-      </button>
-
-      <button onclick="listarConversas()" class="btn-roxo">
-        💬 Minhas mensagens
-      </button>
-
-      <button onclick="sair()" class="btn-vermelho">
-        Sair
-      </button>
-
-    </div>
-  </div>
-</div>
-
-
-<!-- CRIAR ANÚNCIO -->
-<div id="criarAnuncio" class="hidden">
-  <div class="card">
-
-    <h2>Criar meu anúncio</h2>
-
-    <input id="anNome" type="text" placeholder="Nome">
-
-    <input id="anIdade" type="number" placeholder="Idade">
-
-    <input id="anCidade" type="text" placeholder="Cidade">
-
-    <textarea
-      id="anDescricao"
-      placeholder="Descrição"></textarea>
-
-    <input
-      id="anFoto"
-      type="url"
-      placeholder="URL da foto">
-
-    <button onclick="criarAnuncio()" class="btn-verde">
-      Publicar anúncio
-    </button>
-
-    <button onclick="mostrar('painel')" class="btn-secundario">
-      Voltar
-    </button>
-
-    <p id="anMensagem"></p>
+<p id="loginMensagem"></p>
 
   </div>
+</div><!-- PAINEL --><div id="painel" class="hidden">
+  <div class="card"><h2>Encontro VIP</h2>
+
+<p id="olaUsuario"></p>
+
+<div class="menu">
+
+  <button onclick="mostrar('criarAnuncio')">
+    Criar meu anúncio
+  </button>
+
+  <button onclick="listarAnuncios()">
+    Ver anúncios
+  </button>
+
+  <button onclick="listarFavoritos()">
+    Meus favoritos
+  </button>
+
+  <button onclick="listarConversas()" class="btn-roxo">
+    💬 Minhas mensagens
+  </button>
+
+  <button onclick="sair()" class="btn-vermelho">
+    Sair
+  </button>
+
 </div>
-
-
-<!-- LISTA DE ANÚNCIOS -->
-<div id="listaAnuncios" class="hidden">
-  <div class="card">
-
-    <h2>Anúncios</h2>
-
-    <div id="conteudoAnuncios"></div>
-
-    <button onclick="mostrar('painel')" class="btn-secundario">
-      Voltar
-    </button>
 
   </div>
-</div>
+</div><!-- CRIAR ANÚNCIO --><div id="criarAnuncio" class="hidden">
+  <div class="card"><h2>Criar meu anúncio</h2>
 
+<input id="anNome" type="text" placeholder="Nome">
 
-<!-- FAVORITOS -->
-<div id="listaFavoritos" class="hidden">
-  <div class="card">
+<input id="anIdade" type="number" placeholder="Idade">
 
-    <h2>Meus favoritos</h2>
+<input id="anCidade" type="text" placeholder="Cidade">
 
-    <div id="conteudoFavoritos"></div>
+<textarea
+  id="anDescricao"
+  placeholder="Descrição"></textarea>
 
-    <button onclick="mostrar('painel')" class="btn-secundario">
-      Voltar
-    </button>
+<input
+  id="anFoto"
+  type="url"
+  placeholder="URL da foto">
 
-  </div>
-</div>
+<button onclick="criarAnuncio()" class="btn-verde">
+  Publicar anúncio
+</button>
 
+<button onclick="mostrar('painel')" class="btn-secundario">
+  Voltar
+</button>
 
-<!-- LISTA DE CONVERSAS -->
-<div id="listaConversas" class="hidden">
-  <div class="card">
-
-    <h2>Minhas mensagens</h2>
-
-    <div id="conteudoConversas"></div>
-
-    <button onclick="mostrar('painel')" class="btn-secundario">
-      Voltar
-    </button>
+<p id="anMensagem"></p>
 
   </div>
-</div>
+</div><!-- LISTA DE ANÚNCIOS --><div id="listaAnuncios" class="hidden">
+  <div class="card"><h2>Anúncios</h2>
 
+<div id="conteudoAnuncios"></div>
 
-<!-- CHAT -->
-<div id="chatTela" class="hidden">
-  <div class="card">
-
-    <h2 id="tituloChat">
-      Conversa
-    </h2>
-
-    <div id="conteudoChat" class="chat"></div>
-
-    <textarea
-      id="novaMensagem"
-      placeholder="Digite sua mensagem..."></textarea>
-
-    <button
-      onclick="enviarMensagemChat()"
-      class="btn-verde">
-      Enviar
-    </button>
-
-    <button
-      onclick="listarConversas()"
-      class="btn-secundario">
-      Voltar
-    </button>
-
-    <p id="chatMensagem"></p>
+<button onclick="mostrar('painel')" class="btn-secundario">
+  Voltar
+</button>
 
   </div>
-</div>
+</div><!-- FAVORITOS --><div id="listaFavoritos" class="hidden">
+  <div class="card"><h2>Meus favoritos</h2>
 
-</div>
+<div id="conteudoFavoritos"></div>
 
+<button onclick="mostrar('painel')" class="btn-secundario">
+  Voltar
+</button>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  </div>
+</div><!-- LISTA DE CONVERSAS --><div id="listaConversas" class="hidden">
+  <div class="card"><h2>Minhas mensagens</h2>
 
-<script>
+<div id="conteudoConversas"></div>
+
+<button onclick="mostrar('painel')" class="btn-secundario">
+  Voltar
+</button>
+
+  </div>
+</div><!-- CHAT --><div id="chatTela" class="hidden">
+  <div class="card"><h2 id="tituloChat">
+  Conversa
+</h2>
+
+<div id="conteudoChat" class="chat"></div>
+
+<textarea
+  id="novaMensagem"
+  placeholder="Digite sua mensagem..."></textarea>
+
+<button
+  id="btnEnviarMensagem"
+  onclick="enviarMensagemChat()"
+  class="btn-verde">
+  Enviar
+</button>
+
+<button
+  onclick="listarConversas()"
+  class="btn-secundario">
+  Voltar
+</button>
+
+<p id="chatMensagem"></p>
+
+  </div>
+</div></div><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script>
 
 const SUPABASE_URL =
 "https://avgnulmolujgedfdjdhb.supabase.co";
@@ -435,6 +377,27 @@ let usuario = null;
 let conversaUsuarioId = null;
 
 let conversaUsuarioNome = "";
+
+let intervaloChat = null;
+
+
+/* =========================
+   ESCAPAR HTML
+========================= */
+
+function escapeHtml(valor) {
+
+  if (valor === null || valor === undefined) {
+    return "";
+  }
+
+  return String(valor)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
 
 
 /* =========================
@@ -472,6 +435,13 @@ function mostrar(tela) {
   if (escolhida) {
     escolhida.classList.remove("hidden");
   }
+
+
+  if (tela !== "chatTela") {
+
+    pararAtualizacaoChat();
+
+  }
 }
 
 
@@ -500,9 +470,7 @@ async function cadastrar() {
   const mensagem =
     document.getElementById("cadMensagem");
 
-
   mensagem.textContent = "";
-
 
   if (!nome || !email || !senha) {
 
@@ -514,13 +482,11 @@ async function cadastrar() {
     return;
   }
 
-
   const { data, error } =
     await supabaseClient.auth.signUp({
       email,
       password: senha
     });
-
 
   if (error) {
 
@@ -532,7 +498,6 @@ async function cadastrar() {
     return;
   }
 
-
   if (!data.user) {
 
     mensagem.textContent =
@@ -542,7 +507,6 @@ async function cadastrar() {
 
     return;
   }
-
 
   const { error: erroPerfil } =
     await supabaseClient
@@ -555,7 +519,6 @@ async function cadastrar() {
         ativo: true
       });
 
-
   if (erroPerfil) {
 
     mensagem.textContent =
@@ -567,12 +530,10 @@ async function cadastrar() {
     return;
   }
 
-
   mensagem.textContent =
     "Cadastro criado com sucesso!";
 
   mensagem.className = "sucesso";
-
 
   setTimeout(() => {
     mostrar("login");
@@ -597,13 +558,13 @@ async function entrar() {
   const mensagem =
     document.getElementById("loginMensagem");
 
+  mensagem.textContent = "";
 
   const { data, error } =
     await supabaseClient.auth.signInWithPassword({
       email,
       password: senha
     });
-
 
   if (error) {
 
@@ -614,7 +575,6 @@ async function entrar() {
 
     return;
   }
-
 
   usuario = data.user;
 
@@ -632,7 +592,6 @@ async function carregarPainel() {
     return;
   }
 
-
   const { data: perfil } =
     await supabaseClient
       .from("profiles")
@@ -640,19 +599,15 @@ async function carregarPainel() {
       .eq("id", usuario.id)
       .maybeSingle();
 
-
   let nome = "usuário";
-
 
   if (perfil && perfil.nome) {
     nome = perfil.nome;
   }
 
-
   document.getElementById("olaUsuario")
     .textContent =
     "Olá, " + nome + "!";
-
 
   mostrar("painel");
 }
@@ -664,9 +619,15 @@ async function carregarPainel() {
 
 async function sair() {
 
+  pararAtualizacaoChat();
+
   await supabaseClient.auth.signOut();
 
   usuario = null;
+
+  conversaUsuarioId = null;
+
+  conversaUsuarioNome = "";
 
   mostrar("inicio");
 }
@@ -682,7 +643,6 @@ async function criarAnuncio() {
     alert("Faça login primeiro.");
     return;
   }
-
 
   const nome =
     document.getElementById("anNome")
@@ -707,7 +667,6 @@ async function criarAnuncio() {
   const mensagem =
     document.getElementById("anMensagem");
 
-
   if (!nome || !idade || !cidade || !descricao) {
 
     mensagem.textContent =
@@ -717,7 +676,6 @@ async function criarAnuncio() {
 
     return;
   }
-
 
   const { error } =
     await supabaseClient
@@ -732,7 +690,6 @@ async function criarAnuncio() {
         ativo: true
       });
 
-
   if (error) {
 
     mensagem.textContent =
@@ -743,12 +700,10 @@ async function criarAnuncio() {
     return;
   }
 
-
   mensagem.textContent =
     "Anúncio publicado com sucesso!";
 
   mensagem.className = "sucesso";
-
 
   document.getElementById("anNome").value = "";
   document.getElementById("anIdade").value = "";
@@ -766,14 +721,11 @@ async function listarAnuncios() {
 
   mostrar("listaAnuncios");
 
-
   const conteudo =
     document.getElementById("conteudoAnuncios");
 
-
   conteudo.innerHTML =
     "<p>Carregando anúncios...</p>";
-
 
   const { data, error } =
     await supabaseClient
@@ -792,15 +744,13 @@ async function listarAnuncios() {
         ascending: false
       });
 
-
   if (error) {
 
     conteudo.innerHTML =
-      `<p class="erro">${error.message}</p>`;
+      `<p class="erro">${escapeHtml(error.message)}</p>`;
 
     return;
   }
-
 
   if (!data || data.length === 0) {
 
@@ -810,9 +760,7 @@ async function listarAnuncios() {
     return;
   }
 
-
   conteudo.innerHTML = "";
-
 
   data.forEach(anuncio => {
 
@@ -820,7 +768,6 @@ async function listarAnuncios() {
       document.createElement("div");
 
     div.className = "anuncio";
-
 
     let fotoHtml = "";
 
@@ -832,7 +779,6 @@ async function listarAnuncios() {
           alt="Foto de ${escapeHtml(anuncio.nome)}">
       `;
     }
-
 
     div.innerHTML = `
       ${fotoHtml}
@@ -852,24 +798,30 @@ async function listarAnuncios() {
       </p>
 
       <button
-        onclick="favoritarAnuncio('${anuncio.id}')"
-        class="btn-secundario">
+        class="btn-secundario btn-favoritar">
         ❤️ Favoritar
       </button>
 
       <button
-        onclick="abrirConversa(
-          '${anuncio.usuario_id}',
-          '${escapeHtml(anuncio.nome)}'
-        )"
-        class="btn-roxo">
+        class="btn-roxo btn-mensagem">
         💬 Enviar mensagem
       </button>
     `;
 
+    div.querySelector(".btn-favoritar")
+      .addEventListener("click", () => {
+        favoritarAnuncio(anuncio.id);
+      });
+
+    div.querySelector(".btn-mensagem")
+      .addEventListener("click", () => {
+        abrirConversa(
+          anuncio.usuario_id,
+          anuncio.nome
+        );
+      });
 
     conteudo.appendChild(div);
-
   });
 }
 
@@ -887,7 +839,6 @@ async function favoritarAnuncio(anuncioId) {
     return;
   }
 
-
   const { error } =
     await supabaseClient
       .from("favoritos")
@@ -895,7 +846,6 @@ async function favoritarAnuncio(anuncioId) {
         usuario_id: usuario.id,
         anuncio_id: anuncioId
       });
-
 
   if (error) {
 
@@ -908,7 +858,6 @@ async function favoritarAnuncio(anuncioId) {
       return;
     }
 
-
     alert(
       "Erro ao favoritar: " +
       error.message
@@ -916,7 +865,6 @@ async function favoritarAnuncio(anuncioId) {
 
     return;
   }
-
 
   alert(
     "Anúncio adicionado aos favoritos!"
@@ -932,14 +880,11 @@ async function listarFavoritos() {
 
   mostrar("listaFavoritos");
 
-
   const conteudo =
     document.getElementById("conteudoFavoritos");
 
-
   conteudo.innerHTML =
     "<p>Carregando favoritos...</p>";
-
 
   const { data, error } =
     await supabaseClient
@@ -961,15 +906,13 @@ async function listarFavoritos() {
         ascending: false
       });
 
-
   if (error) {
 
     conteudo.innerHTML =
-      `<p class="erro">${error.message}</p>`;
+      `<p class="erro">${escapeHtml(error.message)}</p>`;
 
     return;
   }
-
 
   if (!data || data.length === 0) {
 
@@ -979,9 +922,7 @@ async function listarFavoritos() {
     return;
   }
 
-
   conteudo.innerHTML = "";
-
 
   data.forEach(item => {
 
@@ -989,16 +930,13 @@ async function listarFavoritos() {
       return;
     }
 
-
     const anuncio =
       item.anuncios;
-
 
     const div =
       document.createElement("div");
 
     div.className = "anuncio";
-
 
     let fotoHtml = "";
 
@@ -1010,7 +948,6 @@ async function listarFavoritos() {
           alt="Foto de ${escapeHtml(anuncio.nome)}">
       `;
     }
-
 
     div.innerHTML = `
       ${fotoHtml}
@@ -1030,9 +967,7 @@ async function listarFavoritos() {
       </p>
     `;
 
-
     conteudo.appendChild(div);
-
   });
 }
 
@@ -1050,7 +985,6 @@ async function abrirConversa(id, nome) {
     return;
   }
 
-
   if (id === usuario.id) {
 
     alert(
@@ -1060,14 +994,7 @@ async function abrirConversa(id, nome) {
     return;
   }
 
-
   conversaUsuarioId = id;
-
-
-  /*
-    Busca diretamente o nome real
-    do usuário na tabela profiles.
-  */
 
   const { data: perfil, error } =
     await supabaseClient
@@ -1075,7 +1002,6 @@ async function abrirConversa(id, nome) {
       .select("nome")
       .eq("id", id)
       .maybeSingle();
-
 
   if (!error && perfil && perfil.nome) {
 
@@ -1088,7 +1014,6 @@ async function abrirConversa(id, nome) {
       nome || "Usuário";
   }
 
-
   await carregarChat();
 }
 
@@ -1099,16 +1024,21 @@ async function abrirConversa(id, nome) {
 
 async function listarConversas() {
 
-  mostrar("listaConversas");
+  pararAtualizacaoChat();
 
+  mostrar("listaConversas");
 
   const conteudo =
     document.getElementById("conteudoConversas");
 
-
   conteudo.innerHTML =
     "<p>Carregando conversas...</p>";
 
+  if (!usuario) {
+    conteudo.innerHTML =
+      "<p class='erro'>Faça login primeiro.</p>";
+    return;
+  }
 
   const { data, error } =
     await supabaseClient
@@ -1128,15 +1058,13 @@ async function listarConversas() {
         ascending: false
       });
 
-
   if (error) {
 
     conteudo.innerHTML =
-      `<p class="erro">${error.message}</p>`;
+      `<p class="erro">${escapeHtml(error.message)}</p>`;
 
     return;
   }
-
 
   if (!data || data.length === 0) {
 
@@ -1148,10 +1076,8 @@ async function listarConversas() {
     return;
   }
 
-
   const usuariosConversas =
     new Map();
-
 
   data.forEach(msg => {
 
@@ -1159,7 +1085,6 @@ async function listarConversas() {
       msg.remetente_id === usuario.id
         ? msg.destinatario_id
         : msg.remetente_id;
-
 
     if (!usuariosConversas.has(outroUsuario)) {
 
@@ -1170,10 +1095,8 @@ async function listarConversas() {
     }
   });
 
-
   const ids =
     Array.from(usuariosConversas.keys());
-
 
   const { data: perfis } =
     await supabaseClient
@@ -1181,9 +1104,7 @@ async function listarConversas() {
       .select("id, nome")
       .in("id", ids);
 
-
   const nomes = {};
-
 
   if (perfis) {
 
@@ -1195,9 +1116,7 @@ async function listarConversas() {
     });
   }
 
-
   conteudo.innerHTML = "";
-
 
   usuariosConversas.forEach(
     (ultimaMensagem, outroId) => {
@@ -1207,21 +1126,17 @@ async function listarConversas() {
 
       div.className = "conversa";
 
-
       const nome =
         nomes[outroId] ||
         "Usuário";
 
-
       const texto =
         ultimaMensagem.mensagem;
-
 
       const dataMensagem =
         new Date(
           ultimaMensagem.created_at
         ).toLocaleString("pt-BR");
-
 
       div.innerHTML = `
         <strong>
@@ -1236,19 +1151,22 @@ async function listarConversas() {
           ${dataMensagem}
         </span>
 
-        <button
-          class="btn-roxo"
-          onclick="abrirConversa(
-            '${outroId}',
-            '${escapeHtml(nome)}'
-          )">
+        <button class="btn-roxo">
           Abrir conversa
         </button>
       `;
 
+      div.querySelector("button")
+        .addEventListener("click", () => {
+
+          abrirConversa(
+            outroId,
+            nome
+          );
+
+        });
 
       conteudo.appendChild(div);
-
     }
   );
 }
@@ -1262,45 +1180,23 @@ async function carregarChat() {
 
   mostrar("chatTela");
 
-
   document.getElementById("tituloChat")
     .textContent =
     "Conversa com " +
     conversaUsuarioNome;
 
+  document.getElementById("novaMensagem")
+    .value = "";
 
-  const conteudo =
-    document.getElementById("conteudoChat");
+  document.getElementById("chatMensagem")
+    .textContent = "";
 
+  await buscarMensagensChat(true);
 
-  conteudo.innerHTML =
-    "<p>Carregando conversa...</p>";
-
-
-  const { data, error } =
-    await supabaseClient
-      .from("mensagens")
-      .select(`
-        id,
-        remetente_id,
-        destinatario_id,
-        mensagem,
-        lida,
-        created_at
-      `)
-      .or(
-        `and(remetente_id.eq.${usuario.id},destinatario_id.eq.${conversaUsuarioId}),and(remetente_id.eq.${conversaUsuarioId},destinatario_id.eq.${usuario.id})`
-      )
-      .order("created_at", {
-        ascending: true
-      });
+  iniciarAtualizacaoChat();
+}
 
 
-  if (error) {
-
-    conteudo.innerHTML =
-      `<p class="erro">${error.message}</p>`;
-
-    return;
-  }
-  
+/* =========================
+   BUSCAR MENSAGENS DO CHAT
+========================
