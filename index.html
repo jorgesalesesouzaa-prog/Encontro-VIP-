@@ -1171,7 +1171,6 @@ async function listarConversas() {
   );
 }
 
-
 /* =========================
    CARREGAR CHAT
 ========================= */
@@ -1196,7 +1195,908 @@ async function carregarChat() {
   iniciarAtualizacaoChat();
 }
 
-
 /* =========================
    BUSCAR MENSAGENS DO CHAT
 ========================
+</div>
+
+<script>
+
+/* SUPABASE */
+
+const SUPABASE_URL =
+"https://avgnulmolujgedfdjdhb.supabase.co";
+
+const SUPABASE_KEY =
+"sb_publishable_Q_IvM4UGgiB4qZGzSXEuig_uP9oda_f";
+
+const supabaseClient =
+window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
+);
+
+let usuario = null;
+let perfil = null;
+let conversaUsuarioId = null;
+let intervaloChat = null;
+
+/* MOSTRAR TELAS */
+
+function esconderTudo() {
+
+  document
+    .querySelectorAll(".container > div, #painel > div")
+    .forEach(div => {
+      div.classList.add("hidden");
+    });
+}
+
+function mostrar(id) {
+
+  esconderTudo();
+
+  const elemento =
+    document.getElementById(id);
+
+  if (elemento) {
+    elemento.classList.remove("hidden");
+  }
+}
+
+function mostrarTela(id) {
+
+  document
+    .querySelectorAll("#painel > div")
+    .forEach(div => {
+      div.classList.add("hidden");
+    });
+
+  document
+    .getElementById(id)
+    .classList.remove("hidden");
+
+  document
+    .getElementById("painel")
+    .classList.remove("hidden");
+}
+
+function voltarPainel() {
+
+  document
+    .querySelectorAll("#painel > div")
+    .forEach(div => {
+      div.classList.add("hidden");
+    });
+
+  document
+    .getElementById("painel")
+    .classList.remove("hidden");
+}
+
+/* SEGURANÇA */
+
+function escapeHtml(texto) {
+
+  if (texto === null || texto === undefined) {
+    return "";
+  }
+
+  return String(texto)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+  }
+  /* CADASTRO */
+
+async function cadastrar() {
+
+  const nome =
+    document.getElementById("cadNome").value.trim();
+
+  const telefone =
+    document.getElementById("cadTelefone").value.trim();
+
+  const email =
+    document.getElementById("cadEmail").value.trim();
+
+  const senha =
+    document.getElementById("cadSenha").value;
+
+  const mensagem =
+    document.getElementById("cadMensagem");
+
+  mensagem.innerHTML = "";
+
+  if (!nome || !email || !senha) {
+
+    mensagem.innerHTML = `
+      <div class="erro">
+        Preencha nome, e-mail e senha.
+      </div>
+    `;
+
+    return;
+  }
+
+  const { data, error } =
+    await supabaseClient.auth.signUp({
+      email: email,
+      password: senha
+    });
+
+  if (error) {
+
+    mensagem.innerHTML = `
+      <div class="erro">
+        ${escapeHtml(error.message)}
+      </div>
+    `;
+
+    return;
+  }
+
+  if (!data.user) {
+
+    mensagem.innerHTML = `
+      <div class="erro">
+        Não foi possível criar a conta.
+      </div>
+    `;
+
+    return;
+  }
+
+  const { error: perfilError } =
+    await supabaseClient
+      .from("profiles")
+      .insert({
+        id: data.user.id,
+        nome: nome,
+        telefone: telefone,
+        tipo: "usuario",
+        ativo: true
+      });
+
+  if (perfilError) {
+
+    mensagem.innerHTML = `
+      <div class="erro">
+        ${escapeHtml(perfilError.message)}
+      </div>
+    `;
+
+    return;
+  }
+
+  mensagem.innerHTML = `
+    <div class="sucesso">
+      Cadastro
+      /* MINHA CONTA */
+
+async function carregarPainel() {
+
+  const { data, error } =
+    await supabaseClient
+      .from("profiles")
+      .select("*")
+      .eq("id", usuario.id)
+      .maybeSingle();
+
+  if (!error) {
+    perfil = data;
+  }
+
+  document.getElementById("saudacao").innerText =
+    `Olá, ${perfil?.nome || "usuário"}! 👋`;
+
+  esconderTudo();
+
+  document
+    .getElementById("painel")
+    .classList.remove("hidden");
+
+  voltarPainel();
+}
+
+
+/* SAIR */
+
+async function sair() {
+
+  pararAtualizacaoChat();
+
+  await supabaseClient.auth.signOut();
+
+  usuario = null;
+  perfil = null;
+  conversaUsuarioId = null;
+
+  esconderTudo();
+
+  document
+    .getElementById("inicio")
+    .classList.remove("hidden");
+}
+
+
+/* CRIAR ANÚNCIO */
+
+async function criarAnuncio() {
+
+  const nome =
+    document.getElementById("anuncioNome").value.trim();
+
+  const idade =
+    document.getElementById("anuncioIdade").value;
+
+  const cidade =
+    document.getElementById("anuncioCidade").value.trim();
+
+  const descricao =
+    document.getElementById("anuncioDescricao").value.trim();
+
+  const foto =
+    document.getElementById("anuncioFoto").value.trim();
+
+  const mensagem =
+    document.getElementById("anuncioMensagem");
+
+  mensagem.innerHTML = "";
+
+  if (!nome || !idade || !cidade) {
+
+    mensagem.innerHTML = `
+      <div class="erro">
+        Preencha nome, idade e cidade.
+      </div>
+    `;
+
+    return;
+  }
+
+  const { error } =
+    await supabaseClient
+      .from("anuncios")
+      .insert({
+        usuario_id: usuario.id,
+        nome: nome,
+        idade: Number(idade),
+        cidade: cidade,
+        descricao: descricao,
+        foto_url: foto,
+        ativo: true
+      });
+
+  if (error) {
+
+    mensagem.innerHTML = `
+      <div class="erro">
+        ${escapeHtml(error.message)}
+      </div>
+    `;
+
+    return;
+  }
+
+  mensagem.innerHTML = `
+    <div class="sucesso">
+      Anúncio publicado com sucesso!
+    </div>
+  `;
+
+  document.getElementById("anuncioNome").value = "";
+  document.getElementById("anuncioIdade").value = "";
+  document.getElementById("anuncioCidade").value = "";
+  document.getElementById("anuncioDescricao").value = "";
+  document.getElementById("anuncioFoto").value = "";
+  }
+
+  /* VER ANÚNCIOS */
+
+async function listarAnuncios() {
+
+  mostrarTela("listaAnuncios");
+
+  const conteudo =
+    document.getElementById("anunciosConteudo");
+
+  conteudo.innerHTML =
+    "Carregando anúncios...";
+
+  const { data, error } =
+    await supabaseClient
+      .from("anuncios")
+      .select("*")
+      .eq("ativo", true)
+      .order("created_at", {
+        ascending: false
+      });
+
+  if (error) {
+
+    conteudo.innerHTML = `
+      <div class="erro">
+        ${escapeHtml(error.message)}
+      </div>
+    `;
+
+    return;
+  }
+
+  if (!data || data.length === 0) {
+
+    conteudo.innerHTML = `
+      <div class="sem-mensagem">
+        Nenhum anúncio encontrado.
+      </div>
+    `;
+
+    return;
+  }
+
+  conteudo.innerHTML = "";
+
+  data.forEach(anuncio => {
+
+    const div =
+      document.createElement("div");
+
+    div.className = "anuncio";
+
+    div.innerHTML = `
+
+      ${
+        anuncio.foto_url
+        ? `<img src="${escapeHtml(anuncio.foto_url)}"
+          onerror="this.style.display='none'">`
+        : ""
+      }
+
+      <h3>
+        ${escapeHtml(anuncio.nome)},
+        ${escapeHtml(anuncio.idade)}
+      </h3>
+
+      <p>
+        Cidade:
+        ${escapeHtml(anuncio.cidade)}
+      </p>
+
+      <p>
+        ${escapeHtml(anuncio.descricao || "")}
+      </p>
+
+      <button
+        onclick="favoritarAnuncio('${anuncio.id}')">
+        ❤️ Favoritar
+      </button>
+
+      <button
+        class="btn-roxo"
+        onclick="abrirConversa('${anuncio.usuario_id}')">
+        💬 Enviar mensagem
+      </button>
+    `;
+
+    conteudo.appendChild(div);
+  });
+}
+
+
+/* FAVORITAR */
+
+async function favoritarAnuncio(anuncioId) {
+
+  const { data: existente } =
+    await supabaseClient
+      .from("favoritos")
+      .select("id")
+      .eq("usuario_id", usuario.id)
+      .eq("anuncio_id", anuncioId)
+      .maybeSingle();
+
+  if (existente) {
+
+    alert(
+      "Este anúncio já está nos seus favoritos."
+    );
+
+    return;
+  }
+
+  const { error } =
+    await supabaseClient
+      .from("favoritos")
+      .insert({
+        usuario_id: usuario.id,
+        anuncio_id: anuncioId
+      });
+
+  if (error) {
+
+    alert(error.message);
+
+    return;
+  }
+
+  alert(
+    "Anúncio adicionado aos favoritos!"
+  );
+}
+
+
+/* LISTAR FAVORITOS */
+
+async function listarFavoritos() {
+
+  mostrarTela("listaFavoritos");
+
+  const conteudo =
+    document.getElementById("favoritosConteudo");
+
+  conteudo.innerHTML =
+    "Carregando favoritos...";
+
+  const { data, error } =
+    await supabaseClient
+      .from("favoritos")
+      .select(`
+        id,
+        anuncio_id,
+        anuncios (
+          id,
+          usuario_id,
+          nome,
+          idade,
+          cidade,
+          descricao,
+          foto_url
+        )
+      `)
+      .eq("usuario_id", usuario.id)
+      .order("created_at", {
+        ascending: false
+      });
+
+  if (error) {
+
+    conteudo.innerHTML = `
+      <div class="erro">
+        ${escapeHtml(error.message)}
+      </div>
+    `;
+
+    return;
+  }
+
+  if (!data || data.length === 0) {
+
+    conteudo.innerHTML = `
+      <div class="sem-mensagem">
+        Você ainda não possui favoritos.
+      </div>
+    `;
+
+    return;
+  }
+
+  conteudo.innerHTML = "";
+
+  data.forEach(item => {
+
+    const anuncio = item.anuncios;
+
+    if (!anuncio) return;
+
+    const div =
+      document.createElement("div");
+
+    div.className = "anuncio";
+
+    div.innerHTML = `
+
+      ${
+        anuncio.foto_url
+        ? `<img src="${escapeHtml(anuncio.foto_url)}"
+          onerror="this.style.display='none'">`
+        : ""
+      }
+
+      <h3>
+        ${escapeHtml(anuncio.nome)},
+        ${escapeHtml(anuncio.idade)}
+      </h3>
+
+      <p>
+        Cidade:
+        ${escapeHtml(anuncio.cidade)}
+      </p>
+
+      <p>
+        ${escapeHtml(anuncio.descricao || "")}
+      </p>
+
+      <button
+        class="btn-roxo"
+        onclick="abrirConversa('${anuncio.usuario_id}')">
+        💬 Enviar mensagem
+      </button>
+    `;
+
+    conteudo.appendChild(div);
+  });
+  }
+
+  /* ABRIR CONVERSA */
+
+async function abrirConversa(outroUsuarioId) {
+
+  if (outroUsuarioId === usuario.id) {
+    alert("Você não pode conversar com você mesmo.");
+    return;
+  }
+
+  conversaUsuarioId = outroUsuarioId;
+
+  mostrarTela("chatTela");
+
+  await carregarChat();
+
+  iniciarAtualizacaoChat();
+}
+
+
+/* CARREGAR CHAT */
+
+async function carregarChat() {
+
+  const titulo =
+    document.getElementById("chatTitulo");
+
+  const { data } =
+    await supabaseClient
+      .from("profiles")
+      .select("nome")
+      .eq("id", conversaUsuarioId)
+      .maybeSingle();
+
+  titulo.innerText =
+    `Chat com ${data?.nome || "usuário"}`;
+
+  await buscarMensagensChat();
+}
+
+
+/* BUSCAR MENSAGENS */
+
+async function buscarMensagensChat() {
+
+  if (!conversaUsuarioId || !usuario) {
+    return;
+  }
+
+  const conteudo =
+    document.getElementById("chatConteudo");
+
+  const { data, error } =
+    await supabaseClient
+      .from("mensagens")
+      .select("*")
+      .or(
+        `and(remetente_id.eq.${usuario.id},destinatario_id.eq.${conversaUsuarioId}),and(remetente_id.eq.${conversaUsuarioId},destinatario_id.eq.${usuario.id})`
+      )
+      .order("created_at", {
+        ascending: true
+      });
+
+  if (error) {
+
+    conteudo.innerHTML = `
+      <div class="erro">
+        ${escapeHtml(error.message)}
+      </div>
+    `;
+
+    return;
+  }
+
+  conteudo.innerHTML = "";
+
+  if (!data || data.length === 0) {
+
+    conteudo.innerHTML = `
+      <div class="sem-mensagem">
+        Nenhuma mensagem ainda.
+      </div>
+    `;
+
+    return;
+  }
+
+  data.forEach(msg => {
+
+    const balao =
+      document.createElement("div");
+
+    balao.classList.add("balao");
+
+    if (msg.remetente_id === usuario.id) {
+
+      balao.classList.add(
+        "balao-enviado"
+      );
+
+    } else {
+
+      balao.classList.add(
+        "balao-recebido"
+      );
+    }
+
+    balao.innerText =
+      msg.mensagem;
+
+    conteudo.appendChild(balao);
+  });
+
+  conteudo.scrollTop =
+    conteudo.scrollHeight;
+  }
+
+  /* ATUALIZAÇÃO DO CHAT */
+
+function iniciarAtualizacaoChat() {
+
+  pararAtualizacaoChat();
+
+  intervaloChat =
+    setInterval(
+      buscarMensagensChat,
+      3000
+    );
+}
+
+function pararAtualizacaoChat() {
+
+  if (intervaloChat) {
+
+    clearInterval(intervaloChat);
+
+    intervaloChat = null;
+  }
+}
+
+
+/* ENVIAR MENSAGEM */
+
+async function enviarMensagemChat() {
+
+  const input =
+    document.getElementById("mensagemInput");
+
+  const texto =
+    input.value.trim();
+
+  if (!texto) {
+    return;
+  }
+
+  if (!conversaUsuarioId) {
+
+    alert("Nenhuma conversa selecionada.");
+
+    return;
+  }
+
+  const { error } =
+    await supabaseClient
+      .from("mensagens")
+      .insert({
+        remetente_id: usuario.id,
+        destinatario_id: conversaUsuarioId,
+        mensagem: texto,
+        lida: false
+      });
+
+  if (error) {
+
+    alert(error.message);
+
+    return;
+  }
+
+  input.value = "";
+
+  await buscarMensagensChat();
+}
+
+
+/* ENTER PARA ENVIAR */
+
+document
+  .getElementById("mensagemInput")
+  .addEventListener(
+    "keydown",
+    function(event) {
+
+      if (
+        event.key === "Enter" &&
+        !event.shiftKey
+      ) {
+
+        event.preventDefault();
+
+        enviarMensagemChat();
+      }
+    }
+  );
+
+  /* LISTAR CONVERSAS */
+
+async function listarConversas() {
+
+  pararAtualizacaoChat();
+
+  mostrarTela("listaConversas");
+
+  const conteudo =
+    document.getElementById("conversasConteudo");
+
+  conteudo.innerHTML =
+    "Carregando mensagens...";
+
+  const { data, error } =
+    await supabaseClient
+      .from("mensagens")
+      .select("*")
+      .or(
+        `remetente_id.eq.${usuario.id},destinatario_id.eq.${usuario.id}`
+      )
+      .order("created_at", {
+        ascending: false
+      });
+
+  if (error) {
+
+    conteudo.innerHTML = `
+      <div class="erro">
+        ${escapeHtml(error.message)}
+      </div>
+    `;
+
+    return;
+  }
+
+  if (!data || data.length === 0) {
+
+    conteudo.innerHTML = `
+      <div class="sem-mensagem">
+        Você ainda não possui mensagens.
+      </div>
+    `;
+
+    return;
+  }
+
+  const usuariosConversas =
+    new Map();
+
+  data.forEach(msg => {
+
+    const outroUsuario =
+      msg.remetente_id === usuario.id
+        ? msg.destinatario_id
+        : msg.remetente_id;
+
+    if (
+      outroUsuario !== usuario.id &&
+      !usuariosConversas.has(outroUsuario)
+    ) {
+
+      usuariosConversas.set(
+        outroUsuario,
+        msg
+      );
+    }
+  });
+
+  const ids =
+    Array.from(
+      usuariosConversas.keys()
+    );
+
+  if (ids.length === 0) {
+
+    conteudo.innerHTML = `
+      <div class="sem-mensagem">
+        Você ainda não possui mensagens.
+      </div>
+    `;
+
+    return;
+  }
+
+  const { data: perfis } =
+    await supabaseClient
+      .from("profiles")
+      .select("id,nome")
+      .in("id", ids);
+
+  const nomes =
+    new Map();
+
+  (perfis || []).forEach(perfil => {
+
+    nomes.set(
+      perfil.id,
+      perfil.nome
+    );
+  });
+
+  conteudo.innerHTML = "";
+
+  usuariosConversas.forEach(
+    (msg, outroUsuarioId) => {
+
+      const div =
+        document.createElement("div");
+
+      div.className = "conversa";
+
+      const nome =
+        nomes.get(outroUsuarioId) ||
+        "Usuário";
+
+      div.innerHTML = `
+        <strong>
+          💬 ${escapeHtml(nome)}
+        </strong>
+
+        <p>
+          ${escapeHtml(msg.mensagem)}
+        </p>
+
+        <small>
+          Toque para abrir a conversa
+        </small>
+      `;
+
+      div.onclick = () =>
+        abrirConversa(outroUsuarioId);
+
+      conteudo.appendChild(div);
+    }
+  );
+  }
+
+  /* VERIFICAR SESSÃO */
+
+async function verificarSessao() {
+
+  const { data } =
+    await supabaseClient.auth.getSession();
+
+  if (data.session) {
+
+    usuario = data.session.user;
+
+    await carregarPainel();
+
+  } else {
+
+    mostrar("inicio");
+  }
+}
+
+
+/* INICIAR */
+
+verificarSessao();
+
+</script>
+
+</body>
+</html>
