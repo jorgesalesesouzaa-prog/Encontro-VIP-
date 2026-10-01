@@ -4,84 +4,320 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Encontro VIP</title>
+
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       margin: 0;
       font-family: Arial, sans-serif;
       background: #111;
       color: white;
-      text-align: center;
     }
 
-    header {
-      padding: 60px 20px 30px;
+    .container {
+      max-width: 500px;
+      margin: auto;
+      padding: 30px 20px;
+      text-align: center;
     }
 
     h1 {
       color: #d4af37;
       font-size: 42px;
-      margin-bottom: 10px;
+      margin-top: 40px;
     }
 
     p {
       color: #ddd;
-      font-size: 18px;
     }
 
-    .botao {
-      display: inline-block;
-      margin: 15px 8px;
-      padding: 15px 30px;
+    button {
+      width: 100%;
+      padding: 16px;
+      margin-top: 12px;
+      border: none;
+      border-radius: 10px;
       background: #d4af37;
       color: #111;
-      text-decoration: none;
-      border-radius: 10px;
+      font-size: 17px;
       font-weight: bold;
+      cursor: pointer;
     }
 
-    .botao.secundario {
+    button.secundario {
       background: transparent;
       color: #d4af37;
       border: 1px solid #d4af37;
     }
 
-    .card {
-      max-width: 500px;
-      margin: 30px auto;
-      padding: 25px;
-      background: #1c1c1c;
-      border-radius: 15px;
+    .tela {
+      display: none;
     }
 
-    footer {
-      margin-top: 50px;
-      padding: 20px;
-      color: #888;
-      font-size: 14px;
+    .ativa {
+      display: block;
+    }
+
+    input {
+      width: 100%;
+      padding: 15px;
+      margin-top: 12px;
+      border-radius: 8px;
+      border: 1px solid #555;
+      background: #222;
+      color: white;
+      font-size: 16px;
+    }
+
+    .card {
+      background: #1c1c1c;
+      padding: 25px;
+      border-radius: 15px;
+      margin-top: 30px;
+    }
+
+    .voltar {
+      background: #333;
+      color: white;
+    }
+
+    #mensagem {
+      margin-top: 15px;
+      color: #d4af37;
     }
   </style>
 </head>
 
 <body>
 
-  <header>
-    <h1>Encontro VIP</h1>
-    <p>Conectando pessoas de forma simples, segura e discreta.</p>
+  <div class="container">
 
-    <a href="#" class="botao">Criar conta</a>
-    <a href="#" class="botao secundario">Entrar</a>
-  </header>
+    <!-- INÍCIO -->
+    <section id="inicio" class="tela ativa">
+      <h1>Encontro VIP</h1>
 
-  <div class="card">
-    <h2>Encontre seu encontro</h2>
-    <p>
-      Crie seu perfil, conheça anúncios e envie solicitações de contato.
-    </p>
+      <p>
+        Conectando pessoas de forma simples,
+        segura e discreta.
+      </p>
+
+      <button onclick="mostrarTela('cadastro')">
+        Criar conta
+      </button>
+
+      <button class="secundario" onclick="mostrarTela('login')">
+        Entrar
+      </button>
+    </section>
+
+
+    <!-- CADASTRO -->
+    <section id="cadastro" class="tela">
+
+      <h1>Criar conta</h1>
+
+      <div class="card">
+
+        <input
+          type="text"
+          id="nomeCadastro"
+          placeholder="Nome"
+        >
+
+        <input
+          type="email"
+          id="emailCadastro"
+          placeholder="E-mail"
+        >
+
+        <input
+          type="password"
+          id="senhaCadastro"
+          placeholder="Senha"
+        >
+
+        <button onclick="cadastrar()">
+          Criar minha conta
+        </button>
+
+        <button
+          class="voltar"
+          onclick="mostrarTela('inicio')"
+        >
+          Voltar
+        </button>
+
+        <div id="mensagemCadastro"></div>
+
+      </div>
+
+    </section>
+
+
+    <!-- LOGIN -->
+    <section id="login" class="tela">
+
+      <h1>Entrar</h1>
+
+      <div class="card">
+
+        <input
+          type="email"
+          id="emailLogin"
+          placeholder="E-mail"
+        >
+
+        <input
+          type="password"
+          id="senhaLogin"
+          placeholder="Senha"
+        >
+
+        <button onclick="entrar()">
+          Entrar
+        </button>
+
+        <button
+          class="voltar"
+          onclick="mostrarTela('inicio')"
+        >
+          Voltar
+        </button>
+
+        <div id="mensagemLogin"></div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ÁREA LOGADA -->
+    <section id="painel" class="tela">
+
+      <h1>Encontro VIP</h1>
+
+      <div class="card">
+
+        <h2>Bem-vindo! 👋</h2>
+
+        <p id="usuarioLogado"></p>
+
+        <button onclick="sair()">
+          Sair
+        </button>
+
+      </div>
+
+    </section>
+
   </div>
 
-  <footer>
-    © 2026 Encontro VIP
-  </footer>
+
+  <script>
+
+    function mostrarTela(nome) {
+
+      document
+        .querySelectorAll(".tela")
+        .forEach(function(tela) {
+
+          tela.classList.remove("ativa");
+
+        });
+
+      document
+        .getElementById(nome)
+        .classList.add("ativa");
+    }
+
+
+    function cadastrar() {
+
+      const nome =
+        document.getElementById("nomeCadastro").value;
+
+      const email =
+        document.getElementById("emailCadastro").value;
+
+      const senha =
+        document.getElementById("senhaCadastro").value;
+
+      if (!nome || !email || !senha) {
+
+        document.getElementById("mensagemCadastro").innerText =
+          "Preencha todos os campos.";
+
+        return;
+      }
+
+      localStorage.setItem(
+        "encontro_nome",
+        nome
+      );
+
+      localStorage.setItem(
+        "encontro_email",
+        email
+      );
+
+      localStorage.setItem(
+        "encontro_senha",
+        senha
+      );
+
+      document.getElementById("mensagemCadastro").innerText =
+        "Conta criada com sucesso!";
+
+    }
+
+
+    function entrar() {
+
+      const email =
+        document.getElementById("emailLogin").value;
+
+      const senha =
+        document.getElementById("senhaLogin").value;
+
+      const emailSalvo =
+        localStorage.getItem("encontro_email");
+
+      const senhaSalva =
+        localStorage.getItem("encontro_senha");
+
+      const nomeSalvo =
+        localStorage.getItem("encontro_nome");
+
+      if (
+        email === emailSalvo &&
+        senha === senhaSalva
+      ) {
+
+        document.getElementById("usuarioLogado").innerText =
+          "Olá, " + nomeSalvo + "!";
+
+        mostrarTela("painel");
+
+      } else {
+
+        document.getElementById("mensagemLogin").innerText =
+          "E-mail ou senha incorretos.";
+
+      }
+
+    }
+
+
+    function sair() {
+
+      mostrarTela("inicio");
+
+    }
+
+  </script>
 
 </body>
   </html>
