@@ -253,6 +253,34 @@ async function sair() {
   mostrar("inicio");
 }
 
+  async function favoritarAnuncio(anuncioId) {
+
+  const usuario = (await supabaseClient.auth.getUser()).data.user;
+
+  if (!usuario) {
+    alert("Você precisa estar logado.");
+    return;
+  }
+
+  const { error } = await supabaseClient
+    .from("favoritos")
+    .insert({
+      usuario_id: usuario.id,
+      anuncio_id: anuncioId
+    });
+
+  if (error) {
+    if (error.code === "23505") {
+      alert("Esse anúncio já está nos seus favoritos.");
+    } else {
+      alert("Erro ao favoritar: " + error.message);
+    }
+    return;
+  }
+
+  alert("Anúncio adicionado aos favoritos!");
+  }
+  
   async function listarAnuncios() {
 
   const { data: anuncios, error } = await supabaseClient
