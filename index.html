@@ -5,11 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Encontro VIP</title>
 
-  <style>
-    * {
-      box-sizing: border-box;
-    }
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
+  <style>
     body {
       margin: 0;
       font-family: Arial, sans-serif;
@@ -18,7 +16,7 @@
     }
 
     .container {
-      max-width: 500px;
+      max-width: 450px;
       margin: auto;
       padding: 30px 20px;
       text-align: center;
@@ -26,45 +24,14 @@
 
     h1 {
       color: #d4af37;
-      font-size: 42px;
-      margin-top: 40px;
-    }
-
-    p {
-      color: #ddd;
-    }
-
-    button {
-      width: 100%;
-      padding: 16px;
-      margin-top: 12px;
-      border: none;
-      border-radius: 10px;
-      background: #d4af37;
-      color: #111;
-      font-size: 17px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    button.secundario {
-      background: transparent;
-      color: #d4af37;
-      border: 1px solid #d4af37;
-    }
-
-    .tela {
-      display: none;
-    }
-
-    .ativa {
-      display: block;
+      font-size: 36px;
     }
 
     input {
       width: 100%;
-      padding: 15px;
-      margin-top: 12px;
+      box-sizing: border-box;
+      padding: 14px;
+      margin: 8px 0;
       border-radius: 8px;
       border: 1px solid #555;
       background: #222;
@@ -72,252 +39,198 @@
       font-size: 16px;
     }
 
-    .card {
-      background: #1c1c1c;
-      padding: 25px;
-      border-radius: 15px;
-      margin-top: 30px;
+    button {
+      width: 100%;
+      padding: 14px;
+      margin: 8px 0;
+      border: none;
+      border-radius: 8px;
+      background: #d4af37;
+      color: #111;
+      font-size: 16px;
+      font-weight: bold;
     }
 
-    .voltar {
+    .secundario {
       background: #333;
       color: white;
     }
 
-    #mensagem {
+    .mensagem {
       margin-top: 15px;
-      color: #d4af37;
+      min-height: 25px;
+    }
+
+    .oculto {
+      display: none;
     }
   </style>
 </head>
 
 <body>
 
-  <div class="container">
+<div class="container">
 
-    <!-- INÍCIO -->
-    <section id="inicio" class="tela ativa">
-      <h1>Encontro VIP</h1>
+  <div id="inicio">
+    <h1>Encontro VIP</h1>
+    <p>Conecte-se de forma simples e segura.</p>
 
-      <p>
-        Conectando pessoas de forma simples,
-        segura e discreta.
-      </p>
-
-      <button onclick="mostrarTela('cadastro')">
-        Criar conta
-      </button>
-
-      <button class="secundario" onclick="mostrarTela('login')">
-        Entrar
-      </button>
-    </section>
-
-
-    <!-- CADASTRO -->
-    <section id="cadastro" class="tela">
-
-      <h1>Criar conta</h1>
-
-      <div class="card">
-
-        <input
-          type="text"
-          id="nomeCadastro"
-          placeholder="Nome"
-        >
-
-        <input
-          type="email"
-          id="emailCadastro"
-          placeholder="E-mail"
-        >
-
-        <input
-          type="password"
-          id="senhaCadastro"
-          placeholder="Senha"
-        >
-
-        <button onclick="cadastrar()">
-          Criar minha conta
-        </button>
-
-        <button
-          class="voltar"
-          onclick="mostrarTela('inicio')"
-        >
-          Voltar
-        </button>
-
-        <div id="mensagemCadastro"></div>
-
-      </div>
-
-    </section>
-
-
-    <!-- LOGIN -->
-    <section id="login" class="tela">
-
-      <h1>Entrar</h1>
-
-      <div class="card">
-
-        <input
-          type="email"
-          id="emailLogin"
-          placeholder="E-mail"
-        >
-
-        <input
-          type="password"
-          id="senhaLogin"
-          placeholder="Senha"
-        >
-
-        <button onclick="entrar()">
-          Entrar
-        </button>
-
-        <button
-          class="voltar"
-          onclick="mostrarTela('inicio')"
-        >
-          Voltar
-        </button>
-
-        <div id="mensagemLogin"></div>
-
-      </div>
-
-    </section>
-
-
-    <!-- ÁREA LOGADA -->
-    <section id="painel" class="tela">
-
-      <h1>Encontro VIP</h1>
-
-      <div class="card">
-
-        <h2>Bem-vindo! 👋</h2>
-
-        <p id="usuarioLogado"></p>
-
-        <button onclick="sair()">
-          Sair
-        </button>
-
-      </div>
-
-    </section>
-
+    <button onclick="mostrar('cadastro')">Criar conta</button>
+    <button class="secundario" onclick="mostrar('login')">Entrar</button>
   </div>
 
+  <div id="cadastro" class="oculto">
+    <h2>Criar conta</h2>
 
-  <script>
+    <input id="nome" type="text" placeholder="Nome">
+    <input id="telefone" type="text" placeholder="Telefone">
+    <input id="emailCadastro" type="email" placeholder="E-mail">
+    <input id="senhaCadastro" type="password" placeholder="Senha">
 
-    function mostrarTela(nome) {
+    <button onclick="cadastrar()">Criar conta</button>
+    <button class="secundario" onclick="mostrar('inicio')">Voltar</button>
 
-      document
-        .querySelectorAll(".tela")
-        .forEach(function(tela) {
+    <div id="msgCadastro" class="mensagem"></div>
+  </div>
 
-          tela.classList.remove("ativa");
+  <div id="login" class="oculto">
+    <h2>Entrar</h2>
 
-        });
+    <input id="emailLogin" type="email" placeholder="E-mail">
+    <input id="senhaLogin" type="password" placeholder="Senha">
 
-      document
-        .getElementById(nome)
-        .classList.add("ativa");
+    <button onclick="entrar()">Entrar</button>
+    <button class="secundario" onclick="mostrar('inicio')">Voltar</button>
+
+    <div id="msgLogin" class="mensagem"></div>
+  </div>
+
+  <div id="painel" class="oculto">
+    <h2>Encontro VIP</h2>
+
+    <p id="boasVindas"></p>
+
+    <button onclick="sair()">Sair</button>
+  </div>
+
+</div>
+
+<script>
+
+const SUPABASE_URL = "https://avgnulmolujgedfdjdhb.supabase.co/rest/v1/";
+const SUPABASE_KEY = "sb_publishable_Q_IvM4UGgiB4qZGzSXEuig_uP9oda_f";
+
+const supabaseClient = supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
+);
+
+function mostrar(tela) {
+  document.getElementById("inicio").classList.add("oculto");
+  document.getElementById("cadastro").classList.add("oculto");
+  document.getElementById("login").classList.add("oculto");
+  document.getElementById("painel").classList.add("oculto");
+
+  document.getElementById(tela).classList.remove("oculto");
+}
+
+async function cadastrar() {
+
+  const nome = document.getElementById("nome").value.trim();
+  const telefone = document.getElementById("telefone").value.trim();
+  const email = document.getElementById("emailCadastro").value.trim();
+  const senha = document.getElementById("senhaCadastro").value;
+
+  const mensagem = document.getElementById("msgCadastro");
+
+  if (!nome || !email || !senha) {
+    mensagem.textContent = "Preencha nome, e-mail e senha.";
+    return;
+  }
+
+  mensagem.textContent = "Criando conta...";
+
+  const { data, error } = await supabaseClient.auth.signUp({
+    email: email,
+    password: senha
+  });
+
+  if (error) {
+    mensagem.textContent = error.message;
+    return;
+  }
+
+  if (data.user) {
+
+    const { error: erroPerfil } = await supabaseClient
+      .from("profiles")
+      .insert({
+        id: data.user.id,
+        nome: nome,
+        telefone: telefone,
+        tipo: "usuario",
+        ativo: true
+      });
+
+    if (erroPerfil) {
+      mensagem.textContent = erroPerfil.message;
+      return;
     }
+  }
 
+  mensagem.textContent = "Conta criada com sucesso!";
 
-    function cadastrar() {
+  document.getElementById("nome").value = "";
+  document.getElementById("telefone").value = "";
+  document.getElementById("emailCadastro").value = "";
+  document.getElementById("senhaCadastro").value = "";
+}
 
-      const nome =
-        document.getElementById("nomeCadastro").value;
+async function entrar() {
 
-      const email =
-        document.getElementById("emailCadastro").value;
+  const email = document.getElementById("emailLogin").value.trim();
+  const senha = document.getElementById("senhaLogin").value;
 
-      const senha =
-        document.getElementById("senhaCadastro").value;
+  const mensagem = document.getElementById("msgLogin");
 
-      if (!nome || !email || !senha) {
+  mensagem.textContent = "Entrando...";
 
-        document.getElementById("mensagemCadastro").innerText =
-          "Preencha todos os campos.";
+  const { data, error } = await supabaseClient.auth.signInWithPassword({
+    email: email,
+    password: senha
+  });
 
-        return;
-      }
+  if (error) {
+    mensagem.textContent = error.message;
+    return;
+  }
 
-      localStorage.setItem(
-        "encontro_nome",
-        nome
-      );
+  let nome = email;
 
-      localStorage.setItem(
-        "encontro_email",
-        email
-      );
+  const { data: perfil } = await supabaseClient
+    .from("profiles")
+    .select("nome")
+    .eq("id", data.user.id)
+    .maybeSingle();
 
-      localStorage.setItem(
-        "encontro_senha",
-        senha
-      );
+  if (perfil && perfil.nome) {
+    nome = perfil.nome;
+  }
 
-      document.getElementById("mensagemCadastro").innerText =
-        "Conta criada com sucesso!";
+  document.getElementById("boasVindas").textContent =
+    "Olá, " + nome + "!";
 
-    }
+  mostrar("painel");
+}
 
+async function sair() {
 
-    function entrar() {
+  await supabaseClient.auth.signOut();
 
-      const email =
-        document.getElementById("emailLogin").value;
+  mostrar("inicio");
+}
 
-      const senha =
-        document.getElementById("senhaLogin").value;
-
-      const emailSalvo =
-        localStorage.getItem("encontro_email");
-
-      const senhaSalva =
-        localStorage.getItem("encontro_senha");
-
-      const nomeSalvo =
-        localStorage.getItem("encontro_nome");
-
-      if (
-        email === emailSalvo &&
-        senha === senhaSalva
-      ) {
-
-        document.getElementById("usuarioLogado").innerText =
-          "Olá, " + nomeSalvo + "!";
-
-        mostrarTela("painel");
-
-      } else {
-
-        document.getElementById("mensagemLogin").innerText =
-          "E-mail ou senha incorretos.";
-
-      }
-
-    }
-
-
-    function sair() {
-
-      mostrarTela("inicio");
-
-    }
-
-  </script>
+</script>
 
 </body>
-  </html>
+</html>
