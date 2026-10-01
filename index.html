@@ -1,276 +1,342 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Encontro VIP</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Encontro VIP</title>
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+* {
+  box-sizing: border-box;
+}
 
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #111;
-      color: white;
-    }
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f5f5f5;
+  color: #222;
+}
 
-    .container {
-      max-width: 450px;
-      margin: auto;
-      padding: 30px 20px;
-      text-align: center;
-    }
+.container {
+  max-width: 600px;
+  margin: auto;
+  padding: 20px;
+}
 
-    h1 {
-      color: #d4af37;
-      font-size: 36px;
-    }
+h1, h2 {
+  text-align: center;
+}
 
-    h2 {
-      color: #d4af37;
-    }
+.card {
+  background: white;
+  padding: 20px;
+  margin: 15px 0;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
 
-    input,
-    textarea {
-      width: 100%;
-      box-sizing: border-box;
-      padding: 14px;
-      margin: 8px 0;
-      border-radius: 8px;
-      border: 1px solid #555;
-      background: #222;
-      color: white;
-      font-size: 16px;
-    }
+input, textarea {
+  width: 100%;
+  padding: 12px;
+  margin: 7px 0;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 16px;
+}
 
-    textarea {
-      min-height: 100px;
-      resize: vertical;
-    }
+textarea {
+  min-height: 100px;
+  resize: vertical;
+}
 
-    button {
-      width: 100%;
-      padding: 14px;
-      margin: 8px 0;
-      border: none;
-      border-radius: 8px;
-      background: #d4af37;
-      color: #111;
-      font-size: 16px;
-      font-weight: bold;
-      cursor: pointer;
-    }
+button {
+  width: 100%;
+  padding: 13px;
+  margin: 7px 0;
+  border: none;
+  border-radius: 8px;
+  background: #111;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+}
 
-    .secundario {
-      background: #333;
-      color: white;
-    }
+button:hover {
+  opacity: 0.9;
+}
 
-    .mensagem {
-      margin-top: 15px;
-      min-height: 25px;
-    }
+.btn-secundario {
+  background: #777;
+}
 
-    .oculto {
-      display: none;
-    }
+.btn-verde {
+  background: #16823b;
+}
 
-    .anuncio {
-      background: #222;
-      border: 1px solid #444;
-      border-radius: 12px;
-      padding: 15px;
-      margin: 15px 0;
-      text-align: left;
-    }
+.btn-vermelho {
+  background: #b3261e;
+}
 
-    .anuncio h3 {
-      color: #d4af37;
-      margin-top: 0;
-    }
+.btn-roxo {
+  background: #6a1b9a;
+}
 
-    .anuncio img {
-      width: 100%;
-      border-radius: 10px;
-      margin: 10px 0;
-    }
-  </style>
+.hidden {
+  display: none;
+}
+
+.anuncio {
+  border: 1px solid #ddd;
+  padding: 15px;
+  margin: 12px 0;
+  border-radius: 10px;
+  background: #fff;
+}
+
+.anuncio img {
+  width: 100%;
+  max-height: 300px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+.mensagem {
+  padding: 12px;
+  margin: 10px 0;
+  border-radius: 10px;
+  background: #f0f0f0;
+}
+
+.mensagem.nao-lida {
+  border-left: 5px solid #6a1b9a;
+  background: #f3e5f5;
+}
+
+.pequeno {
+  color: #666;
+  font-size: 14px;
+}
+
+.sucesso {
+  color: green;
+  font-weight: bold;
+}
+
+.erro {
+  color: red;
+  font-weight: bold;
+}
+
+.menu {
+  margin-bottom: 20px;
+}
+</style>
 </head>
 
 <body>
 
 <div class="container">
 
-  <!-- INÍCIO -->
-  <div id="inicio">
+<!-- INÍCIO -->
+<div id="inicio">
+  <div class="card">
     <h1>Encontro VIP</h1>
+    <p style="text-align:center;">Conecte-se de forma simples e segura.</p>
 
-    <p>Conecte-se de forma simples e segura.</p>
-
-    <button onclick="mostrar('cadastro')">
-      Criar conta
-    </button>
-
-    <button class="secundario" onclick="mostrar('login')">
-      Entrar
-    </button>
+    <button onclick="mostrar('cadastro')">Criar conta</button>
+    <button onclick="mostrar('login')" class="btn-secundario">Entrar</button>
   </div>
+</div>
 
 
-  <!-- CADASTRO -->
-  <div id="cadastro" class="oculto">
-
+<!-- CADASTRO -->
+<div id="cadastro" class="hidden">
+  <div class="card">
     <h2>Criar conta</h2>
 
-    <input id="nome" type="text" placeholder="Nome">
+    <input id="cadNome" type="text" placeholder="Nome">
+    <input id="cadTelefone" type="text" placeholder="Telefone">
+    <input id="cadEmail" type="email" placeholder="E-mail">
+    <input id="cadSenha" type="password" placeholder="Senha">
 
-    <input id="telefone" type="text" placeholder="Telefone">
+    <button onclick="cadastrar()">Criar conta</button>
+    <button onclick="mostrar('inicio')" class="btn-secundario">Voltar</button>
 
-    <input id="emailCadastro" type="email" placeholder="E-mail">
-
-    <input id="senhaCadastro" type="password" placeholder="Senha">
-
-    <button onclick="cadastrar()">
-      Criar conta
-    </button>
-
-    <button class="secundario" onclick="mostrar('inicio')">
-      Voltar
-    </button>
-
-    <div id="msgCadastro" class="mensagem"></div>
-
+    <p id="cadMensagem"></p>
   </div>
+</div>
 
 
-  <!-- LOGIN -->
-  <div id="login" class="oculto">
-
+<!-- LOGIN -->
+<div id="login" class="hidden">
+  <div class="card">
     <h2>Entrar</h2>
 
-    <input id="emailLogin" type="email" placeholder="E-mail">
+    <input id="loginEmail" type="email" placeholder="E-mail">
+    <input id="loginSenha" type="password" placeholder="Senha">
 
-    <input id="senhaLogin" type="password" placeholder="Senha">
+    <button onclick="entrar()">Entrar</button>
+    <button onclick="mostrar('inicio')" class="btn-secundario">Voltar</button>
 
-    <button onclick="entrar()">
-      Entrar
-    </button>
-
-    <button class="secundario" onclick="mostrar('inicio')">
-      Voltar
-    </button>
-
-    <div id="msgLogin" class="mensagem"></div>
-
+    <p id="loginMensagem"></p>
   </div>
+</div>
 
 
-  <!-- PAINEL -->
-  <div id="painel" class="oculto">
-
+<!-- PAINEL -->
+<div id="painel" class="hidden">
+  <div class="card">
     <h2>Encontro VIP</h2>
 
-    <p id="boasVindas"></p>
+    <p id="olaUsuario"></p>
 
-    <button onclick="mostrar('criarAnuncio')">
-      Criar meu anúncio
-    </button>
+    <div class="menu">
+      <button onclick="mostrar('criarAnuncio')">
+        Criar meu anúncio
+      </button>
 
-    <button onclick="listarAnuncios()">
-      Ver anúncios
-    </button>
+      <button onclick="listarAnuncios()">
+        Ver anúncios
+      </button>
 
-    <button onclick="listarFavoritos()">
-      Meus favoritos
-    </button>
+      <button onclick="listarFavoritos()">
+        Meus favoritos
+      </button>
 
-    <button class="secundario" onclick="sair()">
-      Sair
-    </button>
+      <button onclick="listarMensagens()" class="btn-roxo">
+        Minhas mensagens
+      </button>
 
+      <button onclick="sair()" class="btn-vermelho">
+        Sair
+      </button>
+    </div>
   </div>
+</div>
 
 
-  <!-- CRIAR ANÚNCIO -->
-  <div id="criarAnuncio" class="oculto">
-
+<!-- CRIAR ANÚNCIO -->
+<div id="criarAnuncio" class="hidden">
+  <div class="card">
     <h2>Criar meu anúncio</h2>
 
-    <input id="nomeAnuncio" type="text" placeholder="Nome">
+    <input id="anNome" type="text" placeholder="Nome">
+    <input id="anIdade" type="number" placeholder="Idade">
+    <input id="anCidade" type="text" placeholder="Cidade">
 
-    <input id="idadeAnuncio" type="number" placeholder="Idade">
+    <textarea id="anDescricao" placeholder="Descrição"></textarea>
 
-    <input id="cidadeAnuncio" type="text" placeholder="Cidade">
+    <input id="anFoto" type="url" placeholder="URL da foto">
 
-    <textarea id="descricaoAnuncio" placeholder="Descrição"></textarea>
-
-    <input id="fotoAnuncio" type="text" placeholder="URL da foto">
-
-    <button onclick="criarAnuncio()">
+    <button onclick="criarAnuncio()" class="btn-verde">
       Publicar anúncio
     </button>
 
-    <button class="secundario" onclick="mostrar('painel')">
+    <button onclick="mostrar('painel')" class="btn-secundario">
       Voltar
     </button>
 
-    <div id="msgAnuncio" class="mensagem"></div>
-
+    <p id="anMensagem"></p>
   </div>
+</div>
 
 
-  <!-- ANÚNCIOS -->
-  <div id="listaAnuncios" class="oculto">
-
+<!-- LISTA DE ANÚNCIOS -->
+<div id="listaAnuncios" class="hidden">
+  <div class="card">
     <h2>Anúncios</h2>
 
     <div id="conteudoAnuncios"></div>
 
-    <button class="secundario" onclick="mostrar('painel')">
+    <button onclick="mostrar('painel')" class="btn-secundario">
       Voltar
     </button>
-
   </div>
+</div>
 
 
-  <!-- FAVORITOS -->
-  <div id="listaFavoritos" class="oculto">
-
+<!-- FAVORITOS -->
+<div id="listaFavoritos" class="hidden">
+  <div class="card">
     <h2>Meus favoritos</h2>
 
     <div id="conteudoFavoritos"></div>
 
-    <button class="secundario" onclick="mostrar('painel')">
+    <button onclick="mostrar('painel')" class="btn-secundario">
+      Voltar
+    </button>
+  </div>
+</div>
+
+
+<!-- MENSAGENS -->
+<div id="listaMensagens" class="hidden">
+  <div class="card">
+    <h2>Minhas mensagens</h2>
+
+    <div id="conteudoMensagens"></div>
+
+    <button onclick="mostrar('painel')" class="btn-secundario">
+      Voltar
+    </button>
+  </div>
+</div>
+
+
+<!-- ENVIAR MENSAGEM -->
+<div id="enviarMensagem" class="hidden">
+  <div class="card">
+
+    <h2>Enviar mensagem</h2>
+
+    <p id="destinatarioNome"></p>
+
+    <textarea
+      id="textoMensagem"
+      placeholder="Digite sua mensagem..."
+    ></textarea>
+
+    <button onclick="enviarMensagem()" class="btn-verde">
+      Enviar mensagem
+    </button>
+
+    <button onclick="mostrar('listaAnuncios')" class="btn-secundario">
       Voltar
     </button>
 
+    <p id="mensagemEnvio"></p>
+
   </div>
+</div>
+
 
 </div>
 
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <script>
 
-/* =========================
-   SUPABASE
-========================= */
-
-const SUPABASE_URL =
-  "https://avgnulmolujgedfdjdhb.supabase.co";
+const SUPABASE_URL = "https://avgnulmolujgedfdjdhb.supabase.co";
 
 const SUPABASE_KEY =
-  "sb_publishable_Q_IvM4UGgiB4qZGzSXEuig_uP9oda_f";
+"sb_publishable_Q_IvM4UGgiB4qZGzSXEuig_uP9oda_f";
 
 const supabaseClient =
-  supabase.createClient(
+  window.supabase.createClient(
     SUPABASE_URL,
     SUPABASE_KEY
   );
 
 
+let usuario = null;
+let destinatarioId = null;
+let destinatarioNomeAtual = "";
+
+
 /* =========================
-   TROCAR DE TELA
+   MOSTRAR TELA
 ========================= */
 
 function mostrar(tela) {
@@ -282,48 +348,52 @@ function mostrar(tela) {
     "painel",
     "criarAnuncio",
     "listaAnuncios",
-    "listaFavoritos"
+    "listaFavoritos",
+    "listaMensagens",
+    "enviarMensagem"
   ];
 
-  telas.forEach(function(id) {
+  telas.forEach(id => {
 
     const elemento = document.getElementById(id);
 
     if (elemento) {
-      elemento.classList.add("oculto");
+      elemento.classList.add("hidden");
     }
 
   });
 
-  const telaEscolhida =
-    document.getElementById(tela);
+  const escolhida = document.getElementById(tela);
 
-  if (telaEscolhida) {
-    telaEscolhida.classList.remove("oculto");
+  if (escolhida) {
+    escolhida.classList.remove("hidden");
   }
 }
 
 
 /* =========================
-   CADASTRAR CONTA
+   CADASTRO
 ========================= */
 
 async function cadastrar() {
 
   const nome =
-    document.getElementById("nome").value.trim();
+    document.getElementById("cadNome").value.trim();
 
   const telefone =
-    document.getElementById("telefone").value.trim();
+    document.getElementById("cadTelefone").value.trim();
 
   const email =
-    document.getElementById("emailCadastro").value.trim();
+    document.getElementById("cadEmail").value.trim();
 
   const senha =
-    document.getElementById("senhaCadastro").value;
+    document.getElementById("cadSenha").value;
 
   const mensagem =
-    document.getElementById("msgCadastro");
+    document.getElementById("cadMensagem");
+
+
+  mensagem.textContent = "";
 
 
   if (!nome || !email || !senha) {
@@ -331,17 +401,15 @@ async function cadastrar() {
     mensagem.textContent =
       "Preencha nome, e-mail e senha.";
 
+    mensagem.className = "erro";
+
     return;
   }
 
 
-  mensagem.textContent =
-    "Criando conta...";
-
-
   const { data, error } =
     await supabaseClient.auth.signUp({
-      email: email,
+      email,
       password: senha
     });
 
@@ -351,42 +419,58 @@ async function cadastrar() {
     mensagem.textContent =
       error.message;
 
+    mensagem.className = "erro";
+
     return;
   }
 
 
-  if (data.user) {
+  if (!data.user) {
 
-    const { error: erroPerfil } =
-      await supabaseClient
-        .from("profiles")
-        .insert({
-          id: data.user.id,
-          nome: nome,
-          telefone: telefone,
-          tipo: "usuario",
-          ativo: true
-        });
+    mensagem.textContent =
+      "Conta criada. Verifique seu e-mail para continuar.";
+
+    mensagem.className = "sucesso";
+
+    return;
+  }
 
 
-    if (erroPerfil) {
+  const { error: erroPerfil } =
+    await supabaseClient
+      .from("profiles")
+      .insert({
+        id: data.user.id,
+        nome: nome,
+        telefone: telefone,
+        tipo: "usuario",
+        ativo: true
+      });
 
-      mensagem.textContent =
-        erroPerfil.message;
 
-      return;
-    }
+  if (erroPerfil) {
+
+    mensagem.textContent =
+      "Conta criada, mas houve um problema ao salvar o perfil: " +
+      erroPerfil.message;
+
+    mensagem.className = "erro";
+
+    return;
   }
 
 
   mensagem.textContent =
-    "Conta criada com sucesso!";
+    "Cadastro criado com sucesso!";
+
+  mensagem.className = "sucesso";
 
 
-  document.getElementById("nome").value = "";
-  document.getElementById("telefone").value = "";
-  document.getElementById("emailCadastro").value = "";
-  document.getElementById("senhaCadastro").value = "";
+  setTimeout(() => {
+
+    mostrar("login");
+
+  }, 1000);
 }
 
 
@@ -397,31 +481,21 @@ async function cadastrar() {
 async function entrar() {
 
   const email =
-    document.getElementById("emailLogin").value.trim();
+    document.getElementById("loginEmail").value.trim();
 
   const senha =
-    document.getElementById("senhaLogin").value;
+    document.getElementById("loginSenha").value;
 
   const mensagem =
-    document.getElementById("msgLogin");
+    document.getElementById("loginMensagem");
 
 
-  if (!email || !senha) {
-
-    mensagem.textContent =
-      "Digite seu e-mail e sua senha.";
-
-    return;
-  }
-
-
-  mensagem.textContent =
-    "Entrando...";
+  mensagem.textContent = "";
 
 
   const { data, error } =
     await supabaseClient.auth.signInWithPassword({
-      email: email,
+      email,
       password: senha
     });
 
@@ -431,19 +505,39 @@ async function entrar() {
     mensagem.textContent =
       error.message;
 
+    mensagem.className = "erro";
+
     return;
   }
 
 
-  let nome = email;
+  usuario = data.user;
+
+
+  await carregarPainel();
+}
+
+
+/* =========================
+   CARREGAR PAINEL
+========================= */
+
+async function carregarPainel() {
+
+  if (!usuario) {
+    return;
+  }
 
 
   const { data: perfil } =
     await supabaseClient
       .from("profiles")
       .select("nome")
-      .eq("id", data.user.id)
+      .eq("id", usuario.id)
       .maybeSingle();
+
+
+  let nome = "usuário";
 
 
   if (perfil && perfil.nome) {
@@ -451,12 +545,8 @@ async function entrar() {
   }
 
 
-  document.getElementById("boasVindas").textContent =
+  document.getElementById("olaUsuario").textContent =
     "Olá, " + nome + "!";
-
-
-  document.getElementById("emailLogin").value = "";
-  document.getElementById("senhaLogin").value = "";
 
 
   mostrar("painel");
@@ -471,26 +561,54 @@ async function sair() {
 
   await supabaseClient.auth.signOut();
 
+  usuario = null;
+
   mostrar("inicio");
 }
 
 
 /* =========================
-   FAVORITAR ANÚNCIO
+   CRIAR ANÚNCIO
 ========================= */
 
-async function favoritarAnuncio(anuncioId) {
-
-  const resultado =
-    await supabaseClient.auth.getUser();
-
-  const usuario =
-    resultado.data.user;
-
+async function criarAnuncio() {
 
   if (!usuario) {
 
-    alert("Você precisa estar logado.");
+    alert("Faça login primeiro.");
+
+    return;
+  }
+
+
+  const nome =
+    document.getElementById("anNome").value.trim();
+
+  const idade =
+    document.getElementById("anIdade").value;
+
+  const cidade =
+    document.getElementById("anCidade").value.trim();
+
+  const descricao =
+    document.getElementById("anDescricao").value.trim();
+
+  const foto =
+    document.getElementById("anFoto").value.trim();
+
+  const mensagem =
+    document.getElementById("anMensagem");
+
+
+  mensagem.textContent = "";
+
+
+  if (!nome || !idade || !cidade || !descricao) {
+
+    mensagem.textContent =
+      "Preencha todos os campos obrigatórios.";
+
+    mensagem.className = "erro";
 
     return;
   }
@@ -498,36 +616,40 @@ async function favoritarAnuncio(anuncioId) {
 
   const { error } =
     await supabaseClient
-      .from("favoritos")
+      .from("anuncios")
       .insert({
         usuario_id: usuario.id,
-        anuncio_id: anuncioId
+        nome: nome,
+        idade: Number(idade),
+        cidade: cidade,
+        descricao: descricao,
+        foto_url: foto || null,
+        ativo: true
       });
 
 
   if (error) {
 
-    if (error.code === "23505") {
+    mensagem.textContent =
+      error.message;
 
-      alert(
-        "Esse anúncio já está nos seus favoritos."
-      );
-
-    } else {
-
-      alert(
-        "Erro ao favoritar: " +
-        error.message
-      );
-    }
+    mensagem.className = "erro";
 
     return;
   }
 
 
-  alert(
-    "Anúncio adicionado aos favoritos!"
-  );
+  mensagem.textContent =
+    "Anúncio publicado com sucesso!";
+
+  mensagem.className = "sucesso";
+
+
+  document.getElementById("anNome").value = "";
+  document.getElementById("anIdade").value = "";
+  document.getElementById("anCidade").value = "";
+  document.getElementById("anDescricao").value = "";
+  document.getElementById("anFoto").value = "";
 }
 
 
@@ -548,31 +670,34 @@ async function listarAnuncios() {
     "<p>Carregando anúncios...</p>";
 
 
-  const { data: anuncios, error } =
+  const { data, error } =
     await supabaseClient
       .from("anuncios")
-      .select(
-        "id, nome, idade, cidade, descricao, foto_url"
-      )
+      .select(`
+        id,
+        usuario_id,
+        nome,
+        idade,
+        cidade,
+        descricao,
+        foto_url
+      `)
       .eq("ativo", true)
-      .order(
-        "created_at",
-        { ascending: false }
-      );
+      .order("created_at", {
+        ascending: false
+      });
 
 
   if (error) {
 
     conteudo.innerHTML =
-      "<p>Erro ao carregar anúncios: " +
-      error.message +
-      "</p>";
+      `<p class="erro">${error.message}</p>`;
 
     return;
   }
 
 
-  if (!anuncios || anuncios.length === 0) {
+  if (!data || data.length === 0) {
 
     conteudo.innerHTML =
       "<p>Nenhum anúncio encontrado.</p>";
@@ -581,53 +706,129 @@ async function listarAnuncios() {
   }
 
 
-  let html = "";
+  conteudo.innerHTML = "";
 
 
-  anuncios.forEach(function(anuncio) {
+  data.forEach(anuncio => {
 
-    html += `
+    let fotoHtml = "";
 
-      <div class="anuncio">
+    if (anuncio.foto_url) {
 
-        <h3>
-          ${anuncio.nome}, ${anuncio.idade}
-        </h3>
-
-        <p>
-          <strong>Cidade:</strong>
-          ${anuncio.cidade}
-        </p>
-
-        <p>
-          ${anuncio.descricao}
-        </p>
-
-        ${
-          anuncio.foto_url
-            ? `
-              <img
-                src="${anuncio.foto_url}"
-                alt="Foto de ${anuncio.nome}"
-              >
-            `
-            : ""
-        }
-
-        <button
-          onclick="favoritarAnuncio('${anuncio.id}')"
+      fotoHtml = `
+        <img
+          src="${anuncio.foto_url}"
+          alt="Foto de ${anuncio.nome}"
         >
-          Favoritar
-        </button>
+      `;
+    }
 
-      </div>
 
+    const div =
+      document.createElement("div");
+
+    div.className = "anuncio";
+
+
+    div.innerHTML = `
+      ${fotoHtml}
+
+      <h3>
+        ${anuncio.nome}, ${anuncio.idade}
+      </h3>
+
+      <p>
+        <strong>Cidade:</strong>
+        ${anuncio.cidade}
+      </p>
+
+      <p>
+        ${anuncio.descricao}
+      </p>
+
+      <button
+        onclick="favoritarAnuncio('${anuncio.id}')"
+        class="btn-secundario"
+      >
+        ❤️ Favoritar
+      </button>
+
+      <button
+        onclick="abrirEnviarMensagem(
+          '${anuncio.usuario_id}',
+          '${escapeHtml(anuncio.nome)}'
+        )"
+        class="btn-roxo"
+      >
+        💬 Enviar mensagem
+      </button>
     `;
 
+
+    conteudo.appendChild(div);
+
   });
+}
 
 
-  conteudo.innerHTML = html;
+/* =========================
+   ESCAPAR TEXTO
+========================= */
+
+function escapeHtml(texto) {
+
+  return String(texto)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
+
+/* =========================
+   FAVORITAR
+========================= */
+
+async function favoritarAnuncio(anuncioId) {
+
+  if (!usuario) {
+
+    alert("Faça login primeiro.");
+
+    return;
+  }
+
+
+  const { error } =
+    await supabaseClient
+      .from("favoritos")
+      .insert({
+        usuario_id: usuario.id,
+        anuncio_id: anuncioId
+      });
+
+
+  if (error) {
+
+    if (error.code === "23505") {
+
+      alert("Este anúncio já está nos seus favoritos.");
+
+      return;
+    }
+
+
+    alert(
+      "Erro ao favoritar: " +
+      error.message
+    );
+
+    return;
+  }
+
+
+  alert("Anúncio adicionado aos favoritos!");
 }
 
 
@@ -648,23 +849,7 @@ async function listarFavoritos() {
     "<p>Carregando favoritos...</p>";
 
 
-  const resultado =
-    await supabaseClient.auth.getUser();
-
-  const usuario =
-    resultado.data.user;
-
-
-  if (!usuario) {
-
-    conteudo.innerHTML =
-      "<p>Você precisa estar logado.</p>";
-
-    return;
-  }
-
-
-  const { data: favoritos, error } =
+  const { data, error } =
     await supabaseClient
       .from("favoritos")
       .select(`
@@ -680,24 +865,21 @@ async function listarFavoritos() {
         )
       `)
       .eq("usuario_id", usuario.id)
-      .order(
-        "created_at",
-        { ascending: false }
-      );
+      .order("created_at", {
+        ascending: false
+      });
 
 
   if (error) {
 
     conteudo.innerHTML =
-      "<p>Erro ao carregar favoritos: " +
-      error.message +
-      "</p>";
+      `<p class="erro">${error.message}</p>`;
 
     return;
   }
 
 
-  if (!favoritos || favoritos.length === 0) {
+  if (!data || data.length === 0) {
 
     conteudo.innerHTML =
       "<p>Você ainda não tem favoritos.</p>";
@@ -706,204 +888,339 @@ async function listarFavoritos() {
   }
 
 
-  let html = "";
+  conteudo.innerHTML = "";
 
 
-  favoritos.forEach(function(item) {
+  data.forEach(item => {
+
+    if (!item.anuncios) {
+      return;
+    }
+
 
     const anuncio =
       item.anuncios;
 
 
-    if (!anuncio) {
-      return;
+    const div =
+      document.createElement("div");
+
+    div.className = "anuncio";
+
+
+    let fotoHtml = "";
+
+    if (anuncio.foto_url) {
+
+      fotoHtml = `
+        <img
+          src="${anuncio.foto_url}"
+          alt="Foto de ${anuncio.nome}"
+        >
+      `;
     }
 
 
-    html += `
+    div.innerHTML = `
+      ${fotoHtml}
 
-      <div class="anuncio">
+      <h3>
+        ${anuncio.nome}, ${anuncio.idade}
+      </h3>
 
-        <h3>
-          ${anuncio.nome}, ${anuncio.idade}
-        </h3>
+      <p>
+        <strong>Cidade:</strong>
+        ${anuncio.cidade}
+      </p>
 
-        <p>
-          <strong>Cidade:</strong>
-          ${anuncio.cidade}
-        </p>
-
-        <p>
-          ${anuncio.descricao}
-        </p>
-
-        ${
-          anuncio.foto_url
-            ? `
-              <img
-                src="${anuncio.foto_url}"
-                alt="Foto de ${anuncio.nome}"
-              >
-            `
-            : ""
-        }
-
-      </div>
-
+      <p>
+        ${anuncio.descricao}
+      </p>
     `;
 
+
+    conteudo.appendChild(div);
+
   });
-
-
-  if (!html) {
-
-    conteudo.innerHTML =
-      "<p>Nenhum favorito encontrado.</p>";
-
-    return;
-  }
-
-
-  conteudo.innerHTML = html;
 }
 
 
 /* =========================
-   CRIAR ANÚNCIO
+   ABRIR ENVIO DE MENSAGEM
 ========================= */
 
-async function criarAnuncio() {
-
-  const resultado =
-    await supabaseClient.auth.getUser();
-
-  const usuario =
-    resultado.data.user;
-
+function abrirEnviarMensagem(id, nome) {
 
   if (!usuario) {
 
-    document.getElementById(
-      "msgAnuncio"
-    ).textContent =
-      "Você precisa estar logado.";
+    alert("Faça login primeiro.");
 
     return;
   }
 
 
-  const nome =
-    document.getElementById(
-      "nomeAnuncio"
-    ).value.trim();
+  if (id === usuario.id) {
+
+    alert("Você não pode enviar mensagem para você mesmo.");
+
+    return;
+  }
 
 
-  const idade =
-    document.getElementById(
-      "idadeAnuncio"
-    ).value;
+  destinatarioId = id;
+
+  destinatarioNomeAtual = nome;
 
 
-  const cidade =
-    document.getElementById(
-      "cidadeAnuncio"
-    ).value.trim();
+  document.getElementById("destinatarioNome").innerHTML =
+    "<strong>Para: " + nome + "</strong>";
 
 
-  const descricao =
-    document.getElementById(
-      "descricaoAnuncio"
-    ).value.trim();
+  document.getElementById("textoMensagem").value = "";
+
+  document.getElementById("mensagemEnvio").textContent = "";
 
 
-  const foto =
-    document.getElementById(
-      "fotoAnuncio"
-    ).value.trim();
+  mostrar("enviarMensagem");
+}
 
+
+/* =========================
+   ENVIAR MENSAGEM
+========================= */
+
+async function enviarMensagem() {
+
+  if (!usuario) {
+
+    alert("Faça login primeiro.");
+
+    return;
+  }
+
+
+  if (!destinatarioId) {
+
+    alert("Destinatário não encontrado.");
+
+    return;
+  }
+
+
+  const texto =
+    document.getElementById("textoMensagem")
+      .value
+      .trim();
 
   const mensagem =
-    document.getElementById(
-      "msgAnuncio"
-    );
+    document.getElementById("mensagemEnvio");
 
 
-  if (
-    !nome ||
-    !idade ||
-    !cidade ||
-    !descricao
-  ) {
+  if (!texto) {
 
     mensagem.textContent =
-      "Preencha nome, idade, cidade e descrição.";
+      "Digite uma mensagem.";
+
+    mensagem.className = "erro";
 
     return;
   }
-
-
-  mensagem.textContent =
-    "Publicando anúncio...";
 
 
   const { error } =
     await supabaseClient
-      .from("anuncios")
+      .from("mensagens")
       .insert({
-
-        usuario_id: usuario.id,
-
-        nome: nome,
-
-        idade: Number(idade),
-
-        cidade: cidade,
-
-        descricao: descricao,
-
-        foto_url: foto || null,
-
-        ativo: true
-
+        remetente_id: usuario.id,
+        destinatario_id: destinatarioId,
+        mensagem: texto,
+        lida: false
       });
 
 
   if (error) {
 
     mensagem.textContent =
-      "Erro ao publicar: " +
+      "Erro ao enviar: " +
       error.message;
+
+    mensagem.className = "erro";
 
     return;
   }
 
 
   mensagem.textContent =
-    "Anúncio publicado com sucesso!";
+    "Mensagem enviada com sucesso!";
+
+  mensagem.className = "sucesso";
 
 
-  document.getElementById(
-    "nomeAnuncio"
-  ).value = "";
+  document.getElementById("textoMensagem").value = "";
 
-  document.getElementById(
-    "idadeAnuncio"
-  ).value = "";
 
-  document.getElementById(
-    "cidadeAnuncio"
-  ).value = "";
+  setTimeout(() => {
 
-  document.getElementById(
-    "descricaoAnuncio"
-  ).value = "";
+    listarMensagens();
 
-  document.getElementById(
-    "fotoAnuncio"
-  ).value = "";
+  }, 800);
 }
+
+
+/* =========================
+   LISTAR MENSAGENS
+========================= */
+
+async function listarMensagens() {
+
+  mostrar("listaMensagens");
+
+
+  const conteudo =
+    document.getElementById("conteudoMensagens");
+
+
+  conteudo.innerHTML =
+    "<p>Carregando mensagens...</p>";
+
+
+  const { data, error } =
+    await supabaseClient
+      .from("mensagens")
+      .select(`
+        id,
+        remetente_id,
+        destinatario_id,
+        mensagem,
+        lida,
+        created_at
+      `)
+      .or(
+        `remetente_id.eq.${usuario.id},destinatario_id.eq.${usuario.id}`
+      )
+      .order("created_at", {
+        ascending: false
+      });
+
+
+  if (error) {
+
+    conteudo.innerHTML =
+      `<p class="erro">${error.message}</p>`;
+
+    return;
+  }
+
+
+  if (!data || data.length === 0) {
+
+    conteudo.innerHTML =
+      "<p>Você ainda não possui mensagens.</p>";
+
+    return;
+  }
+
+
+  conteudo.innerHTML = "";
+
+
+  for (const item of data) {
+
+    const div =
+      document.createElement("div");
+
+    div.className =
+      "mensagem" +
+      (!item.lida &&
+       item.destinatario_id === usuario.id
+        ? " nao-lida"
+        : "");
+
+
+    let tipo = "";
+
+
+    if (item.remetente_id === usuario.id) {
+      tipo = "Você enviou";
+    } else {
+      tipo = "Mensagem recebida";
+    }
+
+
+    const dataMensagem =
+      new Date(item.created_at)
+        .toLocaleString("pt-BR");
+
+
+    div.innerHTML = `
+      <strong>${tipo}</strong>
+
+      <p>${escapeHtml(item.mensagem)}</p>
+
+      <span class="pequeno">
+        ${dataMensagem}
+      </span>
+    `;
+
+
+    conteudo.appendChild(div);
+
+
+    if (
+      item.destinatario_id === usuario.id &&
+      item.lida === false
+    ) {
+
+      await marcarComoLida(item.id);
+
+    }
+  }
+}
+
+
+/* =========================
+   MARCAR COMO LIDA
+========================= */
+
+async function marcarComoLida(id) {
+
+  await supabaseClient
+    .from("mensagens")
+    .update({
+      lida: true
+    })
+    .eq("id", id)
+    .eq("destinatario_id", usuario.id);
+}
+
+
+/* =========================
+   VERIFICAR SESSÃO
+========================= */
+
+async function verificarSessao() {
+
+  const { data } =
+    await supabaseClient.auth.getSession();
+
+
+  if (data.session) {
+
+    usuario = data.session.user;
+
+    await carregarPainel();
+
+  } else {
+
+    mostrar("inicio");
+
+  }
+}
+
+
+verificarSessao();
 
 </script>
 
 </body>
-  </html>
+</html>
