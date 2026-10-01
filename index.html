@@ -105,13 +105,35 @@
     <div id="msgLogin" class="mensagem"></div>
   </div>
 
-  <div id="painel" class="oculto">
-    <h2>Encontro VIP</h2>
+<div id="painel" class="oculto">
+  <h2>Encontro VIP</h2>
 
-    <p id="boasVindas"></p>
+  <p id="boasVindas"></p>
 
-    <button onclick="sair()">Sair</button>
-  </div>
+  <button onclick="mostrar('criarAnuncio')">Criar meu anúncio</button>
+
+  <button class="secundario" onclick="sair()">Sair</button>
+</div>
+
+<div id="criarAnuncio" class="oculto">
+  <h2>Criar meu anúncio</h2>
+
+  <input id="nomeAnuncio" type="text" placeholder="Nome">
+
+  <input id="idadeAnuncio" type="number" placeholder="Idade">
+
+  <input id="cidadeAnuncio" type="text" placeholder="Cidade">
+
+  <textarea id="descricaoAnuncio" placeholder="Descrição"></textarea>
+
+  <input id="fotoAnuncio" type="text" placeholder="URL da foto">
+
+  <button onclick="criarAnuncio()">Publicar anúncio</button>
+
+  <button class="secundario" onclick="mostrar('painel')">Voltar</button>
+
+  <div id="msgAnuncio" class="mensagem"></div>
+</div>
 
 </div>
 
