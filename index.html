@@ -27,7 +27,12 @@
       font-size: 36px;
     }
 
-    input {
+    h2 {
+      color: #d4af37;
+    }
+
+    input,
+    textarea {
       width: 100%;
       box-sizing: border-box;
       padding: 14px;
@@ -37,6 +42,11 @@
       background: #222;
       color: white;
       font-size: 16px;
+    }
+
+    textarea {
+      min-height: 100px;
+      resize: vertical;
     }
 
     button {
@@ -49,6 +59,11 @@
       color: #111;
       font-size: 16px;
       font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:hover {
+      opacity: 0.9;
     }
 
     .secundario {
@@ -64,6 +79,30 @@
     .oculto {
       display: none;
     }
+
+    .anuncio {
+      background: #222;
+      border: 1px solid #444;
+      border-radius: 12px;
+      padding: 15px;
+      margin: 15px 0;
+      text-align: left;
+    }
+
+    .anuncio h3 {
+      color: #d4af37;
+      margin-top: 0;
+    }
+
+    .anuncio img {
+      width: 100%;
+      border-radius: 10px;
+      margin: 10px 0;
+    }
+
+    .anuncio button {
+      text-align: center;
+    }
   </style>
 </head>
 
@@ -71,316 +110,760 @@
 
 <div class="container">
 
+  <!-- INÍCIO -->
   <div id="inicio">
     <h1>Encontro VIP</h1>
+
     <p>Conecte-se de forma simples e segura.</p>
 
-    <button onclick="mostrar('cadastro')">Criar conta</button>
-    <button class="secundario" onclick="mostrar('login')">Entrar</button>
+    <button onclick="mostrar('cadastro')">
+      Criar conta
+    </button>
+
+    <button class="secundario" onclick="mostrar('login')">
+      Entrar
+    </button>
   </div>
 
+
+  <!-- CADASTRO -->
   <div id="cadastro" class="oculto">
+
     <h2>Criar conta</h2>
 
-    <input id="nome" type="text" placeholder="Nome">
-    <input id="telefone" type="text" placeholder="Telefone">
-    <input id="emailCadastro" type="email" placeholder="E-mail">
-    <input id="senhaCadastro" type="password" placeholder="Senha">
+    <input
+      id="nome"
+      type="text"
+      placeholder="Nome"
+    >
 
-    <button onclick="cadastrar()">Criar conta</button>
-    <button class="secundario" onclick="mostrar('inicio')">Voltar</button>
+    <input
+      id="telefone"
+      type="text"
+      placeholder="Telefone"
+    >
 
-    <div id="msgCadastro" class="mensagem"></div>
+    <input
+      id="emailCadastro"
+      type="email"
+      placeholder="E-mail"
+    >
+
+    <input
+      id="senhaCadastro"
+      type="password"
+      placeholder="Senha"
+    >
+
+    <button onclick="cadastrar()">
+      Criar conta
+    </button>
+
+    <button
+      class="secundario"
+      onclick="mostrar('inicio')"
+    >
+      Voltar
+    </button>
+
+    <div
+      id="msgCadastro"
+      class="mensagem"
+    ></div>
+
   </div>
 
+
+  <!-- LOGIN -->
   <div id="login" class="oculto">
+
     <h2>Entrar</h2>
 
-    <input id="emailLogin" type="email" placeholder="E-mail">
-    <input id="senhaLogin" type="password" placeholder="Senha">
+    <input
+      id="emailLogin"
+      type="email"
+      placeholder="E-mail"
+    >
 
-    <button onclick="entrar()">Entrar</button>
-    <button class="secundario" onclick="mostrar('inicio')">Voltar</button>
+    <input
+      id="senhaLogin"
+      type="password"
+      placeholder="Senha"
+    >
 
-    <div id="msgLogin" class="mensagem"></div>
+    <button onclick="entrar()">
+      Entrar
+    </button>
+
+    <button
+      class="secundario"
+      onclick="mostrar('inicio')"
+    >
+      Voltar
+    </button>
+
+    <div
+      id="msgLogin"
+      class="mensagem"
+    ></div>
+
   </div>
 
-<div id="painel" class="oculto">
-  <h2>Encontro VIP</h2>
 
-  <p id="boasVindas"></p>
+  <!-- PAINEL -->
+  <div id="painel" class="oculto">
 
-  <button onclick="mostrar('criarAnuncio')">Criar meu anúncio</button>
-  <button onclick="listarAnuncios()">Ver anúncios</button>
+    <h2>Encontro VIP</h2>
 
-  <button class="secundario" onclick="sair()">Sair</button>
+    <p id="boasVindas"></p>
+
+    <button onclick="mostrar('criarAnuncio')">
+      Criar meu anúncio
+    </button>
+
+    <button onclick="listarAnuncios()">
+      Ver anúncios
+    </button>
+
+    <button
+      class="secundario"
+      onclick="sair()"
+    >
+      Sair
+    </button>
+
+  </div>
+
+
+  <!-- CRIAR ANÚNCIO -->
+  <div id="criarAnuncio" class="oculto">
+
+    <h2>Criar meu anúncio</h2>
+
+    <input
+      id="nomeAnuncio"
+      type="text"
+      placeholder="Nome"
+    >
+
+    <input
+      id="idadeAnuncio"
+      type="number"
+      placeholder="Idade"
+    >
+
+    <input
+      id="cidadeAnuncio"
+      type="text"
+      placeholder="Cidade"
+    >
+
+    <textarea
+      id="descricaoAnuncio"
+      placeholder="Descrição"
+    ></textarea>
+
+    <input
+      id="fotoAnuncio"
+      type="text"
+      placeholder="URL da foto"
+    >
+
+    <button onclick="criarAnuncio()">
+      Publicar anúncio
+    </button>
+
+    <button
+      class="secundario"
+      onclick="mostrar('painel')"
+    >
+      Voltar
+    </button>
+
+    <div
+      id="msgAnuncio"
+      class="mensagem"
+    ></div>
+
+  </div>
+
+
+  <!-- LISTA DE ANÚNCIOS -->
+  <div id="listaAnuncios" class="oculto">
+
+    <h2>Anúncios</h2>
+
+    <div id="conteudoAnuncios"></div>
+
+    <button
+      class="secundario"
+      onclick="mostrar('painel')"
+    >
+      Voltar
+    </button>
+
+  </div>
+
 </div>
 
-<div id="criarAnuncio" class="oculto">
-  <h2>Criar meu anúncio</h2>
-
-  <input id="nomeAnuncio" type="text" placeholder="Nome">
-
-  <input id="idadeAnuncio" type="number" placeholder="Idade">
-
-  <input id="cidadeAnuncio" type="text" placeholder="Cidade">
-
-  <textarea id="descricaoAnuncio" placeholder="Descrição"></textarea>
-
-  <input id="fotoAnuncio" type="text" placeholder="URL da foto">
-
-  <button onclick="criarAnuncio()">Publicar anúncio</button>
-
-  <button class="secundario" onclick="mostrar('painel')">Voltar</button>
-
-  <div id="msgAnuncio" class="mensagem"></div>
-</div>
-
-</div>
 
 <script>
 
-const SUPABASE_URL = "https://avgnulmolujgedfdjdhb.supabase.co";
-const SUPABASE_KEY = "sb_publishable_Q_IvM4UGgiB4qZGzSXEuig_uP9oda_f";
+/* =========================
+   SUPABASE
+========================= */
 
-const supabaseClient = supabase.createClient(
-  SUPABASE_URL,
-  SUPABASE_KEY
-);
+const SUPABASE_URL =
+  "https://avgnulmolujgedfdjdhb.supabase.co";
+
+const SUPABASE_KEY =
+  "sb_publishable_Q_IvM4UGgiB4qZGzSXEuig_uP9oda_f";
+
+const supabaseClient =
+  supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+  );
+
+
+/* =========================
+   TROCAR DE TELA
+========================= */
 
 function mostrar(tela) {
-  document.getElementById("inicio").classList.add("oculto");
-  document.getElementById("cadastro").classList.add("oculto");
-  document.getElementById("login").classList.add("oculto");
-  document.getElementById("painel").classList.add("oculto");
 
-  document.getElementById(tela).classList.remove("oculto");
+  const telas = [
+    "inicio",
+    "cadastro",
+    "login",
+    "painel",
+    "criarAnuncio",
+    "listaAnuncios"
+  ];
+
+  telas.forEach(function(id) {
+
+    const elemento =
+      document.getElementById(id);
+
+    if (elemento) {
+      elemento.classList.add("oculto");
+    }
+
+  });
+
+  const telaEscolhida =
+    document.getElementById(tela);
+
+  if (telaEscolhida) {
+    telaEscolhida.classList.remove("oculto");
+  }
+
 }
+
+
+/* =========================
+   CADASTRAR CONTA
+========================= */
 
 async function cadastrar() {
 
-  const nome = document.getElementById("nome").value.trim();
-  const telefone = document.getElementById("telefone").value.trim();
-  const email = document.getElementById("emailCadastro").value.trim();
-  const senha = document.getElementById("senhaCadastro").value;
+  const nome =
+    document.getElementById("nome").value.trim();
 
-  const mensagem = document.getElementById("msgCadastro");
+  const telefone =
+    document.getElementById("telefone").value.trim();
+
+  const email =
+    document.getElementById("emailCadastro").value.trim();
+
+  const senha =
+    document.getElementById("senhaCadastro").value;
+
+  const mensagem =
+    document.getElementById("msgCadastro");
+
 
   if (!nome || !email || !senha) {
-    mensagem.textContent = "Preencha nome, e-mail e senha.";
+
+    mensagem.textContent =
+      "Preencha nome, e-mail e senha.";
+
     return;
   }
 
-  mensagem.textContent = "Criando conta...";
 
-  const { data, error } = await supabaseClient.auth.signUp({
-    email: email,
-    password: senha
-  });
+  mensagem.textContent =
+    "Criando conta...";
+
+
+  const { data, error } =
+    await supabaseClient.auth.signUp({
+
+      email: email,
+
+      password: senha
+
+    });
+
 
   if (error) {
-    mensagem.textContent = error.message;
+
+    mensagem.textContent =
+      error.message;
+
     return;
   }
+
 
   if (data.user) {
 
-    const { error: erroPerfil } = await supabaseClient
-      .from("profiles")
-      .insert({
-        id: data.user.id,
-        nome: nome,
-        telefone: telefone,
-        tipo: "usuario",
-        ativo: true
-      });
+    const { error: erroPerfil } =
+      await supabaseClient
+        .from("profiles")
+        .insert({
+
+          id: data.user.id,
+
+          nome: nome,
+
+          telefone: telefone,
+
+          tipo: "usuario",
+
+          ativo: true
+
+        });
+
 
     if (erroPerfil) {
-      mensagem.textContent = erroPerfil.message;
+
+      mensagem.textContent =
+        erroPerfil.message;
+
       return;
     }
+
   }
 
-  mensagem.textContent = "Conta criada com sucesso!";
+
+  mensagem.textContent =
+    "Conta criada com sucesso!";
+
 
   document.getElementById("nome").value = "";
+
   document.getElementById("telefone").value = "";
+
   document.getElementById("emailCadastro").value = "";
+
   document.getElementById("senhaCadastro").value = "";
+
 }
+
+
+/* =========================
+   LOGIN
+========================= */
 
 async function entrar() {
 
-  const email = document.getElementById("emailLogin").value.trim();
-  const senha = document.getElementById("senhaLogin").value;
+  const email =
+    document.getElementById("emailLogin").value.trim();
 
-  const mensagem = document.getElementById("msgLogin");
+  const senha =
+    document.getElementById("senhaLogin").value;
 
-  mensagem.textContent = "Entrando...";
+  const mensagem =
+    document.getElementById("msgLogin");
 
-  const { data, error } = await supabaseClient.auth.signInWithPassword({
-    email: email,
-    password: senha
-  });
 
-  if (error) {
-    mensagem.textContent = error.message;
+  if (!email || !senha) {
+
+    mensagem.textContent =
+      "Digite seu e-mail e sua senha.";
+
     return;
   }
 
-  let nome = email;
 
-  const { data: perfil } = await supabaseClient
-    .from("profiles")
-    .select("nome")
-    .eq("id", data.user.id)
-    .maybeSingle();
+  mensagem.textContent =
+    "Entrando...";
 
-  if (perfil && perfil.nome) {
-    nome = perfil.nome;
+
+  const { data, error } =
+    await supabaseClient.auth.signInWithPassword({
+
+      email: email,
+
+      password: senha
+
+    });
+
+
+  if (error) {
+
+    mensagem.textContent =
+      error.message;
+
+    return;
   }
 
-  document.getElementById("boasVindas").textContent =
+
+  let nome = email;
+
+
+  const { data: perfil } =
+    await supabaseClient
+      .from("profiles")
+      .select("nome")
+      .eq("id", data.user.id)
+      .maybeSingle();
+
+
+  if (perfil && perfil.nome) {
+
+    nome = perfil.nome;
+
+  }
+
+
+  document.getElementById(
+    "boasVindas"
+  ).textContent =
     "Olá, " + nome + "!";
 
+
+  document.getElementById(
+    "emailLogin"
+  ).value = "";
+
+  document.getElementById(
+    "senhaLogin"
+  ).value = "";
+
+
   mostrar("painel");
+
 }
+
+
+/* =========================
+   SAIR
+========================= */
 
 async function sair() {
 
   await supabaseClient.auth.signOut();
 
   mostrar("inicio");
+
 }
 
-  async function favoritarAnuncio(anuncioId) {
 
-  const usuario = (await supabaseClient.auth.getUser()).data.user;
+/* =========================
+   FAVORITAR ANÚNCIO
+========================= */
+
+async function favoritarAnuncio(anuncioId) {
+
+  const resultado =
+    await supabaseClient.auth.getUser();
+
+  const usuario =
+    resultado.data.user;
+
 
   if (!usuario) {
-    alert("Você precisa estar logado.");
+
+    alert(
+      "Você precisa estar logado."
+    );
+
     return;
   }
 
-  const { error } = await supabaseClient
-    .from("favoritos")
-    .insert({
-      usuario_id: usuario.id,
-      anuncio_id: anuncioId
-    });
+
+  const { error } =
+    await supabaseClient
+      .from("favoritos")
+      .insert({
+
+        usuario_id: usuario.id,
+
+        anuncio_id: anuncioId
+
+      });
+
 
   if (error) {
+
     if (error.code === "23505") {
-      alert("Esse anúncio já está nos seus favoritos.");
+
+      alert(
+        "Esse anúncio já está nos seus favoritos."
+      );
+
     } else {
-      alert("Erro ao favoritar: " + error.message);
+
+      alert(
+        "Erro ao favoritar: " +
+        error.message
+      );
+
     }
+
     return;
   }
 
-  alert("Anúncio adicionado aos favoritos!");
-  }
-  
-  async function listarAnuncios() {
 
-  const { data: anuncios, error } = await supabaseClient
-    .from("anuncios")
-    .select("id, nome, idade, cidade, descricao, foto_url")
-    .eq("ativo", true)
-    .order("created_at", { ascending: false });
+  alert(
+    "Anúncio adicionado aos favoritos!"
+  );
+
+}
+
+
+/* =========================
+   LISTAR ANÚNCIOS
+========================= */
+
+async function listarAnuncios() {
+
+  mostrar("listaAnuncios");
+
+
+  const conteudo =
+    document.getElementById(
+      "conteudoAnuncios"
+    );
+
+
+  conteudo.innerHTML =
+    "<p>Carregando anúncios...</p>";
+
+
+  const { data: anuncios, error } =
+    await supabaseClient
+      .from("anuncios")
+      .select(
+        "id, nome, idade, cidade, descricao, foto_url"
+      )
+      .eq("ativo", true)
+      .order(
+        "created_at",
+        { ascending: false }
+      );
+
 
   if (error) {
-    alert("Erro ao carregar anúncios: " + error.message);
+
+    conteudo.innerHTML =
+      "<p>Erro ao carregar anúncios: " +
+      error.message +
+      "</p>";
+
     return;
   }
 
-  let html = `
-    <div id="listaAnuncios">
-      <h2>Anúncios</h2>
-  `;
 
   if (!anuncios || anuncios.length === 0) {
-    html += "<p>Nenhum anúncio encontrado.</p>";
-  } else {
-    anuncios.forEach(anuncio => {
-      html += `
-        <div class="anuncio">
-          <h3>${anuncio.nome}, ${anuncio.idade}</h3>
-          <p><strong>Cidade:</strong> ${anuncio.cidade}</p>
-          <p>${anuncio.descricao}</p>
-          <button onclick="favoritarAnuncio('${anuncio.id}')">
-  Favoritar
-</button>
-        </div>
-      `;
-    });
+
+    conteudo.innerHTML =
+      "<p>Nenhum anúncio encontrado.</p>";
+
+    return;
   }
 
-  html += `
-      <button onclick="mostrar('painel')">Voltar</button>
-    </div>
-  `;
 
-  document.body.insertAdjacentHTML("beforeend", html);
+  let html = "";
 
-document.querySelectorAll(".tela, .oculto").forEach(el => {
-  el.classList.add("oculto");
-});
 
-document.getElementById("listaAnuncios").classList.remove("oculto");
-                                               }
+  anuncios.forEach(function(anuncio) {
 
-  async function criarAnuncio() {
+    html += `
 
-  const usuario = (await supabaseClient.auth.getUser()).data.user;
+      <div class="anuncio">
+
+        <h3>
+          ${anuncio.nome}, ${anuncio.idade}
+        </h3>
+
+        <p>
+          <strong>Cidade:</strong>
+          ${anuncio.cidade}
+        </p>
+
+        <p>
+          ${anuncio.descricao}
+        </p>
+
+        ${
+          anuncio.foto_url
+            ? `
+              <img
+                src="${anuncio.foto_url}"
+                alt="Foto de ${anuncio.nome}"
+              >
+            `
+            : ""
+        }
+
+        <button
+          onclick="favoritarAnuncio('${anuncio.id}')"
+        >
+          Favoritar
+        </button>
+
+      </div>
+
+    `;
+
+  });
+
+
+  conteudo.innerHTML = html;
+
+}
+
+
+/* =========================
+   CRIAR ANÚNCIO
+========================= */
+
+async function criarAnuncio() {
+
+  const resultado =
+    await supabaseClient.auth.getUser();
+
+  const usuario =
+    resultado.data.user;
+
 
   if (!usuario) {
-    document.getElementById("msgAnuncio").textContent =
+
+    document.getElementById(
+      "msgAnuncio"
+    ).textContent =
       "Você precisa estar logado.";
+
     return;
   }
 
-  const nome = document.getElementById("nomeAnuncio").value.trim();
-  const idade = document.getElementById("idadeAnuncio").value;
-  const cidade = document.getElementById("cidadeAnuncio").value.trim();
-  const descricao = document.getElementById("descricaoAnuncio").value.trim();
-  const foto = document.getElementById("fotoAnuncio").value.trim();
 
-  if (!nome || !idade || !cidade || !descricao) {
-    document.getElementById("msgAnuncio").textContent =
+  const nome =
+    document.getElementById(
+      "nomeAnuncio"
+    ).value.trim();
+
+
+  const idade =
+    document.getElementById(
+      "idadeAnuncio"
+    ).value;
+
+
+  const cidade =
+    document.getElementById(
+      "cidadeAnuncio"
+    ).value.trim();
+
+
+  const descricao =
+    document.getElementById(
+      "descricaoAnuncio"
+    ).value.trim();
+
+
+  const foto =
+    document.getElementById(
+      "fotoAnuncio"
+    ).value.trim();
+
+
+  const mensagem =
+    document.getElementById(
+      "msgAnuncio"
+    );
+
+
+  if (
+    !nome ||
+    !idade ||
+    !cidade ||
+    !descricao
+  ) {
+
+    mensagem.textContent =
       "Preencha nome, idade, cidade e descrição.";
+
     return;
   }
 
-  const { error } = await supabaseClient
-    .from("anuncios")
-    .insert({
-      usuario_id: usuario.id,
-      nome: nome,
-      idade: Number(idade),
-      cidade: cidade,
-      descricao: descricao,
-      foto_url: foto || null,
-      ativo: true
-    });
+
+  mensagem.textContent =
+    "Publicando anúncio...";
+
+
+  const { error } =
+    await supabaseClient
+      .from("anuncios")
+      .insert({
+
+        usuario_id: usuario.id,
+
+        nome: nome,
+
+        idade: Number(idade),
+
+        cidade: cidade,
+
+        descricao: descricao,
+
+        foto_url: foto || null,
+
+        ativo: true
+
+      });
+
 
   if (error) {
-    document.getElementById("msgAnuncio").textContent =
-      "Erro ao publicar: " + error.message;
+
+    mensagem.textContent =
+      "Erro ao publicar: " +
+      error.message;
+
     return;
   }
 
-  document.getElementById("msgAnuncio").textContent =
+
+  mensagem.textContent =
     "Anúncio publicado com sucesso!";
 
-  document.getElementById("nomeAnuncio").value = "";
-  document.getElementById("idadeAnuncio").value = "";
-  document.getElementById("cidadeAnuncio").value = "";
-  document.getElementById("descricaoAnuncio").value = "";
-  document.getElementById("fotoAnuncio").value = "";
-  }
+
+  document.getElementById(
+    "nomeAnuncio"
+  ).value = "";
+
+  document.getElementById(
+    "idadeAnuncio"
+  ).value = "";
+
+  document.getElementById(
+    "cidadeAnuncio"
+  ).value = "";
+
+  document.getElementById(
+    "descricaoAnuncio"
+  ).value = "";
+
+  document.getElementById(
+    "fotoAnuncio"
+  ).value = "";
+
+}
 
 </script>
 
 </body>
-</html>
+      </html>
