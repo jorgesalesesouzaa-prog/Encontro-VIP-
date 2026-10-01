@@ -292,7 +292,11 @@ async function sair() {
 
   document.body.insertAdjacentHTML("beforeend", html);
 
-  mostrar("listaAnuncios");
+document.querySelectorAll(".tela, .oculto").forEach(el => {
+  el.classList.add("oculto");
+});
+
+document.getElementById("listaAnuncios").classList.remove("oculto");
   }
 
   async function criarAnuncio() {
