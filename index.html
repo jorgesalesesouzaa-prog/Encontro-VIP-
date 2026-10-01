@@ -280,6 +280,9 @@ async function sair() {
           <h3>${anuncio.nome}, ${anuncio.idade}</h3>
           <p><strong>Cidade:</strong> ${anuncio.cidade}</p>
           <p>${anuncio.descricao}</p>
+          <button onclick="favoritarAnuncio('${anuncio.id}')">
+  Favoritar
+</button>
         </div>
       `;
     });
