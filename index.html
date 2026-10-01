@@ -2081,3 +2081,610 @@ verificarSessao();
 
 </body>
 </html>
+async function abrirConversa(id, nome) {
+
+if (!usuario) {
+
+alert("Faça login primeiro.");
+
+return;
+
+}
+
+
+if (id === usuario.id) {
+
+alert(
+"Você não pode conversar com você mesmo."
+);
+
+return;
+
+}
+
+
+conversaUsuarioId = id;
+
+conversaUsuarioNome =
+nome || "Usuário";
+
+
+const resultado =
+await supabaseClient
+.from("profiles")
+.select("nome")
+.eq("id", id)
+.maybeSingle();
+
+
+if (resultado.data?.nome) {
+
+conversaUsuarioNome =
+resultado.data.nome;
+
+}
+
+
+await carregarChat();
+
+}
+
+
+async function carregarChat() {
+
+mostrar("chatTela");
+
+
+document.getElementById(
+"tituloChat"
+).textContent =
+"Conversa com " +
+conversaUsuarioNome;
+
+
+document.getElementById(
+"novaMensagem"
+).value = "";
+
+
+await buscarMensagensChat();
+
+iniciarAtualizacaoChat();
+
+}
+
+
+async function buscarMensagensChat() {
+
+if (
+!usuario ||
+!conversaUsuarioId
+) {
+
+return;
+
+}
+
+
+const box =
+document.getElementById(
+"conteudoChat"
+);
+
+
+const resultado =
+await supabaseClient
+.from("mensagens")
+.select(
+"id,remetente_id,destinatario_id,mensagem,lida,created_at"
+)
+.or(
+"and(remetente_id.eq." +
+usuario.id +
+",destinatario_id.eq." +
+conversaUsuarioId +
+"),and(remetente_id.eq." +
+conversaUsuarioId +
+",destinatario_id.eq." +
+usuario.id +
+")"
+)
+.order(
+"created_at",
+{ascending:true}
+);
+
+
+if (resultado.error) {
+
+box.innerHTML =
+'<div class="erro">' +
+escapeHtml(
+resultado.error.message
+) +
+"</div>";
+
+return;
+
+}
+
+
+box.innerHTML = "";
+
+
+if (!resultado.data?.length) {
+
+box.innerHTML =
+'<div class="sem-mensagem">' +
+"Nenhuma mensagem ainda." +
+"</div>";
+
+return;
+
+}
+
+
+resultado.data.forEach(
+function(m) {
+
+const balao =
+document.createElement("div");
+
+
+balao.className =
+"balao " +
+(
+m.remetente_id === usuario.id
+? "balao-enviado"
+: "balao-recebido"
+);
+
+
+balao.innerHTML =
+
+"<strong>" +
+
+(
+m.remetente_id === usuario.id
+? "Você"
+: "Usuário"
+) +
+
+"</strong><br>" +
+
+escapeHtml(
+m.mensagem
+) +
+
+'<span class="data-msg">' +
+
+new Date(
+m.created_at
+).toLocaleString(
+"pt-BR"
+) +
+
+"</span>";
+
+
+box.appendChild(balao);
+
+}
+);
+
+
+box.scrollTop =
+box.scrollHeight;
+
+}
+
+
+function iniciarAtualizacaoChat() {
+
+pararAtualizacaoChat();
+
+
+intervaloChat =
+setInterval(
+buscarMensagensChat,
+3000
+);
+
+}
+
+
+function pararAtualizacaoChat() {
+
+if (intervaloChat) {
+
+clearInterval(
+intervaloChat
+);
+
+intervaloChat = null;
+
+}
+
+}
+
+
+async function enviarMensagemChat() {
+
+const input =
+document.getElementById(
+"novaMensagem"
+);
+
+
+const texto =
+input.value.trim();
+
+
+const btn =
+document.getElementById(
+"btnEnviarMensagem"
+);
+
+
+const aviso =
+document.getElementById(
+"chatMensagem"
+);
+
+
+if (!texto) {
+
+return;
+
+}
+
+
+if (
+!usuario ||
+!conversaUsuarioId
+) {
+
+aviso.textContent =
+"Nenhuma conversa selecionada.";
+
+aviso.className = "erro";
+
+return;
+
+}
+
+
+btn.disabled = true;
+
+
+const resultado =
+await supabaseClient
+.from("mensagens")
+.insert({
+
+remetente_id:
+usuario.id,
+
+destinatario_id:
+conversaUsuarioId,
+
+mensagem:
+texto,
+
+lida:
+false
+
+});
+
+
+btn.disabled = false;
+
+
+if (resultado.error) {
+
+aviso.textContent =
+"Erro ao enviar: " +
+resultado.error.message;
+
+aviso.className = "erro";
+
+return;
+
+}
+
+
+input.value = "";
+
+aviso.textContent = "";
+
+
+await buscarMensagensChat();
+
+
+input.focus();
+
+}
+
+
+async function listarConversas() {
+
+if (!usuario) {
+
+alert("Faça login primeiro.");
+
+return;
+
+}
+
+
+pararAtualizacaoChat();
+
+mostrar("listaConversas");
+
+
+const box =
+document.getElementById(
+"conteudoConversas"
+);
+
+
+box.innerHTML =
+"<p>Carregando conversas...</p>";
+
+
+const resultado =
+await supabaseClient
+.from("mensagens")
+.select(
+"id,remetente_id,destinatario_id,mensagem,lida,created_at"
+)
+.or(
+"remetente_id.eq." +
+usuario.id +
+",destinatario_id.eq." +
+usuario.id
+)
+.order(
+"created_at",
+{ascending:false}
+);
+
+
+if (resultado.error) {
+
+box.innerHTML =
+'<p class="erro">' +
+escapeHtml(
+resultado.error.message
+) +
+"</p>";
+
+return;
+
+}
+
+
+if (!resultado.data?.length) {
+
+box.innerHTML =
+'<div class="sem-mensagem">' +
+"Você ainda não possui mensagens." +
+"</div>";
+
+return;
+
+}
+
+
+const conversas =
+new Map();
+
+
+resultado.data.forEach(
+function(m) {
+
+const outro =
+m.remetente_id === usuario.id
+? m.destinatario_id
+: m.remetente_id;
+
+
+if (
+outro !== usuario.id &&
+!conversas.has(outro)
+) {
+
+conversas.set(
+outro,
+m
+);
+
+}
+
+}
+);
+
+
+const ids =
+Array.from(
+conversas.keys()
+);
+
+
+const perfis =
+await supabaseClient
+.from("profiles")
+.select("id,nome")
+.in("id", ids);
+
+
+if (perfis.error) {
+
+box.innerHTML =
+'<p class="erro">' +
+escapeHtml(
+perfis.error.message
+) +
+"</p>";
+
+return;
+
+}
+
+
+const nomes =
+new Map(
+(perfis.data || []).map(
+function(p) {
+
+return [
+p.id,
+p.nome
+];
+
+}
+)
+);
+
+
+box.innerHTML = "";
+
+
+conversas.forEach(
+function(m, id) {
+
+const nome =
+nomes.get(id) ||
+"Usuário";
+
+
+const div =
+document.createElement(
+"div"
+);
+
+
+div.className =
+"conversa";
+
+
+div.innerHTML =
+
+"<strong>💬 " +
+escapeHtml(nome) +
+"</strong>" +
+
+"<p>" +
+escapeHtml(m.mensagem) +
+"</p>" +
+
+'<span class="pequeno">' +
+
+new Date(
+m.created_at
+).toLocaleString(
+"pt-BR"
+) +
+
+"</span>" +
+
+'<button class="btn-roxo">' +
+"Abrir conversa" +
+"</button>";
+
+
+div.querySelector(
+"button"
+).onclick =
+function() {
+
+abrirConversa(
+id,
+nome
+);
+
+};
+
+
+box.appendChild(div);
+
+}
+);
+
+}
+
+
+document.getElementById(
+"novaMensagem"
+).addEventListener(
+"keydown",
+function(e) {
+
+if (
+e.key === "Enter" &&
+!e.shiftKey
+) {
+
+e.preventDefault();
+
+enviarMensagemChat();
+
+}
+
+}
+);
+
+
+supabaseClient.auth.onAuthStateChange(
+function(event) {
+
+if (event === "SIGNED_OUT") {
+
+usuario = null;
+
+conversaUsuarioId = null;
+
+conversaUsuarioNome = "";
+
+pararAtualizacaoChat();
+
+mostrar("inicio");
+
+}
+
+}
+);
+
+
+async function verificarSessao() {
+
+const resultado =
+await supabaseClient.auth
+.getSession();
+
+
+if (
+resultado.data &&
+resultado.data.session
+) {
+
+usuario =
+resultado.data.session.user;
+
+await carregarPainel();
+
+} else {
+
+mostrar("inicio");
+
+}
+
+}
+
+
+verificarSessao();
+
+</script>
+
+</body>
+</html>
