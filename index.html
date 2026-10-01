@@ -62,10 +62,6 @@
       cursor: pointer;
     }
 
-    button:hover {
-      opacity: 0.9;
-    }
-
     .secundario {
       background: #333;
       color: white;
@@ -99,10 +95,6 @@
       border-radius: 10px;
       margin: 10px 0;
     }
-
-    .anuncio button {
-      text-align: center;
-    }
   </style>
 </head>
 
@@ -131,45 +123,23 @@
 
     <h2>Criar conta</h2>
 
-    <input
-      id="nome"
-      type="text"
-      placeholder="Nome"
-    >
+    <input id="nome" type="text" placeholder="Nome">
 
-    <input
-      id="telefone"
-      type="text"
-      placeholder="Telefone"
-    >
+    <input id="telefone" type="text" placeholder="Telefone">
 
-    <input
-      id="emailCadastro"
-      type="email"
-      placeholder="E-mail"
-    >
+    <input id="emailCadastro" type="email" placeholder="E-mail">
 
-    <input
-      id="senhaCadastro"
-      type="password"
-      placeholder="Senha"
-    >
+    <input id="senhaCadastro" type="password" placeholder="Senha">
 
     <button onclick="cadastrar()">
       Criar conta
     </button>
 
-    <button
-      class="secundario"
-      onclick="mostrar('inicio')"
-    >
+    <button class="secundario" onclick="mostrar('inicio')">
       Voltar
     </button>
 
-    <div
-      id="msgCadastro"
-      class="mensagem"
-    ></div>
+    <div id="msgCadastro" class="mensagem"></div>
 
   </div>
 
@@ -179,33 +149,19 @@
 
     <h2>Entrar</h2>
 
-    <input
-      id="emailLogin"
-      type="email"
-      placeholder="E-mail"
-    >
+    <input id="emailLogin" type="email" placeholder="E-mail">
 
-    <input
-      id="senhaLogin"
-      type="password"
-      placeholder="Senha"
-    >
+    <input id="senhaLogin" type="password" placeholder="Senha">
 
     <button onclick="entrar()">
       Entrar
     </button>
 
-    <button
-      class="secundario"
-      onclick="mostrar('inicio')"
-    >
+    <button class="secundario" onclick="mostrar('inicio')">
       Voltar
     </button>
 
-    <div
-      id="msgLogin"
-      class="mensagem"
-    ></div>
+    <div id="msgLogin" class="mensagem"></div>
 
   </div>
 
@@ -225,10 +181,11 @@
       Ver anúncios
     </button>
 
-    <button
-      class="secundario"
-      onclick="sair()"
-    >
+    <button onclick="listarFavoritos()">
+      Meus favoritos
+    </button>
+
+    <button class="secundario" onclick="sair()">
       Sair
     </button>
 
@@ -240,65 +197,51 @@
 
     <h2>Criar meu anúncio</h2>
 
-    <input
-      id="nomeAnuncio"
-      type="text"
-      placeholder="Nome"
-    >
+    <input id="nomeAnuncio" type="text" placeholder="Nome">
 
-    <input
-      id="idadeAnuncio"
-      type="number"
-      placeholder="Idade"
-    >
+    <input id="idadeAnuncio" type="number" placeholder="Idade">
 
-    <input
-      id="cidadeAnuncio"
-      type="text"
-      placeholder="Cidade"
-    >
+    <input id="cidadeAnuncio" type="text" placeholder="Cidade">
 
-    <textarea
-      id="descricaoAnuncio"
-      placeholder="Descrição"
-    ></textarea>
+    <textarea id="descricaoAnuncio" placeholder="Descrição"></textarea>
 
-    <input
-      id="fotoAnuncio"
-      type="text"
-      placeholder="URL da foto"
-    >
+    <input id="fotoAnuncio" type="text" placeholder="URL da foto">
 
     <button onclick="criarAnuncio()">
       Publicar anúncio
     </button>
 
-    <button
-      class="secundario"
-      onclick="mostrar('painel')"
-    >
+    <button class="secundario" onclick="mostrar('painel')">
       Voltar
     </button>
 
-    <div
-      id="msgAnuncio"
-      class="mensagem"
-    ></div>
+    <div id="msgAnuncio" class="mensagem"></div>
 
   </div>
 
 
-  <!-- LISTA DE ANÚNCIOS -->
+  <!-- ANÚNCIOS -->
   <div id="listaAnuncios" class="oculto">
 
     <h2>Anúncios</h2>
 
     <div id="conteudoAnuncios"></div>
 
-    <button
-      class="secundario"
-      onclick="mostrar('painel')"
-    >
+    <button class="secundario" onclick="mostrar('painel')">
+      Voltar
+    </button>
+
+  </div>
+
+
+  <!-- FAVORITOS -->
+  <div id="listaFavoritos" class="oculto">
+
+    <h2>Meus favoritos</h2>
+
+    <div id="conteudoFavoritos"></div>
+
+    <button class="secundario" onclick="mostrar('painel')">
       Voltar
     </button>
 
@@ -338,13 +281,13 @@ function mostrar(tela) {
     "login",
     "painel",
     "criarAnuncio",
-    "listaAnuncios"
+    "listaAnuncios",
+    "listaFavoritos"
   ];
 
   telas.forEach(function(id) {
 
-    const elemento =
-      document.getElementById(id);
+    const elemento = document.getElementById(id);
 
     if (elemento) {
       elemento.classList.add("oculto");
@@ -358,7 +301,6 @@ function mostrar(tela) {
   if (telaEscolhida) {
     telaEscolhida.classList.remove("oculto");
   }
-
 }
 
 
@@ -399,11 +341,8 @@ async function cadastrar() {
 
   const { data, error } =
     await supabaseClient.auth.signUp({
-
       email: email,
-
       password: senha
-
     });
 
 
@@ -422,17 +361,11 @@ async function cadastrar() {
       await supabaseClient
         .from("profiles")
         .insert({
-
           id: data.user.id,
-
           nome: nome,
-
           telefone: telefone,
-
           tipo: "usuario",
-
           ativo: true
-
         });
 
 
@@ -443,7 +376,6 @@ async function cadastrar() {
 
       return;
     }
-
   }
 
 
@@ -452,13 +384,9 @@ async function cadastrar() {
 
 
   document.getElementById("nome").value = "";
-
   document.getElementById("telefone").value = "";
-
   document.getElementById("emailCadastro").value = "";
-
   document.getElementById("senhaCadastro").value = "";
-
 }
 
 
@@ -493,11 +421,8 @@ async function entrar() {
 
   const { data, error } =
     await supabaseClient.auth.signInWithPassword({
-
       email: email,
-
       password: senha
-
     });
 
 
@@ -522,29 +447,19 @@ async function entrar() {
 
 
   if (perfil && perfil.nome) {
-
     nome = perfil.nome;
-
   }
 
 
-  document.getElementById(
-    "boasVindas"
-  ).textContent =
+  document.getElementById("boasVindas").textContent =
     "Olá, " + nome + "!";
 
 
-  document.getElementById(
-    "emailLogin"
-  ).value = "";
-
-  document.getElementById(
-    "senhaLogin"
-  ).value = "";
+  document.getElementById("emailLogin").value = "";
+  document.getElementById("senhaLogin").value = "";
 
 
   mostrar("painel");
-
 }
 
 
@@ -557,7 +472,6 @@ async function sair() {
   await supabaseClient.auth.signOut();
 
   mostrar("inicio");
-
 }
 
 
@@ -576,9 +490,7 @@ async function favoritarAnuncio(anuncioId) {
 
   if (!usuario) {
 
-    alert(
-      "Você precisa estar logado."
-    );
+    alert("Você precisa estar logado.");
 
     return;
   }
@@ -588,11 +500,8 @@ async function favoritarAnuncio(anuncioId) {
     await supabaseClient
       .from("favoritos")
       .insert({
-
         usuario_id: usuario.id,
-
         anuncio_id: anuncioId
-
       });
 
 
@@ -610,7 +519,6 @@ async function favoritarAnuncio(anuncioId) {
         "Erro ao favoritar: " +
         error.message
       );
-
     }
 
     return;
@@ -620,7 +528,6 @@ async function favoritarAnuncio(anuncioId) {
   alert(
     "Anúncio adicionado aos favoritos!"
   );
-
 }
 
 
@@ -634,9 +541,7 @@ async function listarAnuncios() {
 
 
   const conteudo =
-    document.getElementById(
-      "conteudoAnuncios"
-    );
+    document.getElementById("conteudoAnuncios");
 
 
   conteudo.innerHTML =
@@ -723,7 +628,143 @@ async function listarAnuncios() {
 
 
   conteudo.innerHTML = html;
+}
 
+
+/* =========================
+   LISTAR FAVORITOS
+========================= */
+
+async function listarFavoritos() {
+
+  mostrar("listaFavoritos");
+
+
+  const conteudo =
+    document.getElementById("conteudoFavoritos");
+
+
+  conteudo.innerHTML =
+    "<p>Carregando favoritos...</p>";
+
+
+  const resultado =
+    await supabaseClient.auth.getUser();
+
+  const usuario =
+    resultado.data.user;
+
+
+  if (!usuario) {
+
+    conteudo.innerHTML =
+      "<p>Você precisa estar logado.</p>";
+
+    return;
+  }
+
+
+  const { data: favoritos, error } =
+    await supabaseClient
+      .from("favoritos")
+      .select(`
+        id,
+        anuncio_id,
+        anuncios (
+          id,
+          nome,
+          idade,
+          cidade,
+          descricao,
+          foto_url
+        )
+      `)
+      .eq("usuario_id", usuario.id)
+      .order(
+        "created_at",
+        { ascending: false }
+      );
+
+
+  if (error) {
+
+    conteudo.innerHTML =
+      "<p>Erro ao carregar favoritos: " +
+      error.message +
+      "</p>";
+
+    return;
+  }
+
+
+  if (!favoritos || favoritos.length === 0) {
+
+    conteudo.innerHTML =
+      "<p>Você ainda não tem favoritos.</p>";
+
+    return;
+  }
+
+
+  let html = "";
+
+
+  favoritos.forEach(function(item) {
+
+    const anuncio =
+      item.anuncios;
+
+
+    if (!anuncio) {
+      return;
+    }
+
+
+    html += `
+
+      <div class="anuncio">
+
+        <h3>
+          ${anuncio.nome}, ${anuncio.idade}
+        </h3>
+
+        <p>
+          <strong>Cidade:</strong>
+          ${anuncio.cidade}
+        </p>
+
+        <p>
+          ${anuncio.descricao}
+        </p>
+
+        ${
+          anuncio.foto_url
+            ? `
+              <img
+                src="${anuncio.foto_url}"
+                alt="Foto de ${anuncio.nome}"
+              >
+            `
+            : ""
+        }
+
+      </div>
+
+    `;
+
+  });
+
+
+  if (!html) {
+
+    conteudo.innerHTML =
+      "<p>Nenhum favorito encontrado.</p>";
+
+    return;
+  }
+
+
+  conteudo.innerHTML = html;
 }
 
 
@@ -860,10 +901,9 @@ async function criarAnuncio() {
   document.getElementById(
     "fotoAnuncio"
   ).value = "";
-
 }
 
 </script>
 
 </body>
-      </html>
+  </html>
