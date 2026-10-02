@@ -1497,6 +1497,83 @@ async function editarAnuncio(id) {
 
   mostrar("editarAnuncio");
 }
+
+  async function salvarEdicaoAnuncio() {
+
+  if (!usuario) {
+    mostrar("login");
+    return;
+  }
+
+  const nome =
+    document.getElementById("editarNome").value.trim();
+
+  const idade =
+    document.getElementById("editarIdade").value.trim();
+
+  const cidade =
+    document.getElementById("editarCidade").value.trim();
+
+  const descricao =
+    document.getElementById("editarDescricao").value.trim();
+
+  const foto_url =
+    document.getElementById("editarFoto").value.trim();
+
+  const mensagem =
+    document.getElementById("editarAnuncioMensagem");
+
+  if (!nome || !idade || !cidade || !descricao) {
+    mensagem.className = "erro";
+    mensagem.textContent =
+      "Preencha nome, idade, cidade e descrição.";
+    return;
+  }
+
+  mensagem.className = "";
+  mensagem.textContent = "Salvando alterações...";
+
+  const { data, error } =
+    await supabaseClient
+      .from("anuncios")
+      .update({
+        nome: nome,
+        idade: idade,
+        cidade: cidade,
+        descricao: descricao,
+        foto_url: foto_url || null
+      })
+      .eq("usuario_id", usuario.id)
+      .select();
+
+  if (error) {
+
+    console.error(
+      "Erro ao atualizar anúncio:",
+      error
+    );
+
+    mensagem.className = "erro";
+    mensagem.textContent =
+      "Erro ao salvar alterações.";
+
+    return;
+  }
+
+  if (!data || data.length === 0) {
+
+    mensagem.className = "erro";
+    mensagem.textContent =
+      "Nenhum anúncio foi atualizado.";
+
+    return;
+  }
+
+  mensagem.className = "sucesso";
+  mensagem.textContent =
+    "Anúncio atualizado com sucesso!";
+
+}
   
 
 /* FAVORITAR */
