@@ -1197,9 +1197,7 @@ async function salvarPerfil() {
 async function criarAnuncio() {
 
   if (!usuario) {
-
     mostrar("login");
-
     return;
   }
 
@@ -1215,8 +1213,10 @@ async function criarAnuncio() {
   const descricao =
     document.getElementById("anDescricao").value.trim();
 
-  const foto =
-    document.getElementById("anFoto").value.trim();
+  const arquivos =
+    Array.from(
+      document.getElementById("anFotos").files || []
+    );
 
   const mensagem =
     document.getElementById("anMensagem");
@@ -1244,10 +1244,49 @@ async function criarAnuncio() {
     return;
   }
 
+  if (arquivos.length > 5) {
+
+    mensagem.className = "erro";
+
+    mensagem.textContent =
+      "Você pode selecionar no máximo 5 fotos.";
+
+    return;
+  }
+
+  for (const arquivo of arquivos) {
+
+    if (
+      ![
+        "image/jpeg",
+        "image/png",
+        "image/webp"
+      ].includes(arquivo.type)
+    ) {
+
+      mensagem.className = "erro";
+
+      mensagem.textContent =
+        "Use somente fotos JPG, PNG ou WebP.";
+
+      return;
+    }
+
+    if (arquivo.size > 10 * 1024 * 1024) {
+
+      mensagem.className = "erro";
+
+      mensagem.textContent =
+        "Cada foto deve ter no máximo 10 MB.";
+
+      return;
+    }
+  }
+
   try {
 
     mensagem.textContent =
-      "Publicando anúncio...";
+      "Criando anúncio...";
 
     const resultado =
       await supabaseClient
@@ -1258,9 +1297,12 @@ async function criarAnuncio() {
           idade: idade,
           cidade: cidade,
           descricao: descricao,
-          foto_url: foto || null,
+          foto_url: null,
+          foto_principal: null,
           ativo: true
-        });
+        })
+        .select("id")
+        .single();
 
     if (resultado.error) {
 
@@ -1277,6 +1319,106 @@ async function criarAnuncio() {
       return;
     }
 
+    const anuncioId =
+      resultado.data.id;
+
+    const fotosSalvas = [];
+
+    for (let i = 0; i < arquivos.length; i++) {
+
+      const arquivo = arquivos[i];
+
+      const extensao =
+        arquivo.name
+          .split(".")
+          .pop()
+          .toLowerCase();
+
+      const caminho =
+        usuario.id +
+        "/" +
+        anuncioId +
+        "/" +
+        crypto.randomUUID() +
+        "." +
+        extensao;
+
+      mensagem.textContent =
+        "Enviando foto " +
+        (i + 1) +
+        " de " +
+        arquivos.length +
+        "...";
+
+      const upload =
+        await supabaseClient
+          .storage
+          .from("fotos-anuncios")
+          .upload(caminho, arquivo);
+
+      if (upload.error) {
+
+        console.error(
+          "Erro ao enviar foto:",
+          upload.error
+        );
+
+        mensagem.className = "erro";
+
+        mensagem.textContent =
+          "Erro ao enviar uma das fotos.";
+
+        return;
+      }
+
+      const url =
+        supabaseClient
+          .storage
+          .from("fotos-anuncios")
+          .getPublicUrl(caminho)
+          .data
+          .publicUrl;
+
+      fotosSalvas.push({
+        anuncio_id: anuncioId,
+        usuario_id: usuario.id,
+        foto_url: url,
+        ordem: i
+      });
+    }
+
+    if (fotosSalvas.length > 0) {
+
+      const salvarFotos =
+        await supabaseClient
+          .from("anuncio_fotos")
+          .insert(fotosSalvas);
+
+      if (salvarFotos.error) {
+
+        console.error(
+          "Erro ao salvar fotos:",
+          salvarFotos.error
+        );
+
+        mensagem.className = "erro";
+
+        mensagem.textContent =
+          "As fotos foram enviadas, mas não foram vinculadas ao anúncio.";
+
+        return;
+      }
+
+      await supabaseClient
+        .from("anuncios")
+        .update({
+          foto_url: fotosSalvas[0].foto_url,
+          foto_principal: fotosSalvas[0].foto_url
+        })
+        .eq("id", anuncioId)
+        .eq("usuario_id", usuario.id);
+    }
+
     mensagem.className = "sucesso";
 
     mensagem.textContent =
@@ -1286,7 +1428,7 @@ async function criarAnuncio() {
     document.getElementById("anIdade").value = "";
     document.getElementById("anCidade").value = "";
     document.getElementById("anDescricao").value = "";
-    document.getElementById("anFoto").value = "";
+    document.getElementById("anFotos").value = "";
 
   } catch (erro) {
 
