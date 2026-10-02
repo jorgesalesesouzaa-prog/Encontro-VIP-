@@ -372,7 +372,15 @@
         class="btn-roxo"
         onclick="listarConversas()"
       >
-        Minhas mensagens
+           Minhas mensagens
+      </button>
+
+      <button
+        type="button"
+        class="btn-roxo"
+        onclick="abrirMeuPerfil()"
+      >
+        👤 Meu perfil
       </button>
 
       <button
@@ -387,6 +395,130 @@
 
   </div>
 
+    <!-- MEU PERFIL -->
+  <div id="meuPerfil" class="hidden">
+
+    <div class="card">
+
+      <h2>👤 Meu perfil</h2>
+
+      <input
+        id="perfilNome"
+        type="text"
+        placeholder="Nome"
+      >
+
+      <input
+        id="perfilTelefone"
+        type="text"
+        placeholder="Telefone"
+      >
+
+      <p id="perfilEmail"></p>
+
+      <button
+        type="button"
+        class="btn-principal"
+        onclick="salvarPerfil()"
+      >
+        Salvar alterações
+      </button>
+
+      <button
+        type="button"
+        class="btn-secundario"
+        onclick="mostrar('painel')"
+      >
+        Voltar
+      </button>
+
+      <p id="perfilMensagem"></p>
+
+    </div>
+
+  </div>
+
+async function abrirMeuPerfil() {
+
+  if (!usuario) {
+    mostrar("login");
+    return;
+  }
+
+  const mensagem = document.getElementById("perfilMensagem");
+
+  mensagem.className = "";
+  mensagem.textContent = "Carregando perfil...";
+
+  document.getElementById("perfilEmail").textContent =
+    "E-mail: " + (usuario.email || "");
+
+  const { data, error } = await supabaseClient
+    .from("profiles")
+    .select("nome, telefone")
+    .eq("id", usuario.id)
+    .maybeSingle();
+
+  if (error) {
+    mensagem.className = "erro";
+    mensagem.textContent = "Erro ao carregar perfil.";
+    console.error(error);
+    return;
+  }
+
+  document.getElementById("perfilNome").value =
+    data?.nome || "";
+
+  document.getElementById("perfilTelefone").value =
+    data?.telefone || "";
+
+  mensagem.textContent = "";
+
+  mostrar("meuPerfil");
+}
+
+
+async function salvarPerfil() {
+
+  if (!usuario) {
+    mostrar("login");
+    return;
+  }
+
+  const nome = document.getElementById("perfilNome").value.trim();
+  const telefone = document.getElementById("perfilTelefone").value.trim();
+  const mensagem = document.getElementById("perfilMensagem");
+
+  if (!nome) {
+    mensagem.className = "erro";
+    mensagem.textContent = "Digite seu nome.";
+    return;
+  }
+
+  mensagem.className = "";
+  mensagem.textContent = "Salvando...";
+
+  const { error } = await supabaseClient
+    .from("profiles")
+    .update({
+      nome: nome,
+      telefone: telefone
+    })
+    .eq("id", usuario.id);
+
+  if (error) {
+    mensagem.className = "erro";
+    mensagem.textContent = "Erro ao salvar perfil.";
+    console.error(error);
+    return;
+  }
+
+  document.getElementById("olaUsuario").textContent =
+    "Olá, " + nome + "!";
+
+  mensagem.className = "sucesso";
+  mensagem.textContent = "Perfil atualizado com sucesso!";
+}
 
   <!-- CRIAR ANÚNCIO -->
   <div id="criarAnuncio" class="hidden">
@@ -630,17 +762,18 @@ function escapeHtml(valor) {
 
 function mostrar(tela) {
 
-  const telas = [
-    "inicio",
-    "cadastro",
-    "login",
-    "painel",
-    "criarAnuncio",
-    "listaAnuncios",
-    "listaFavoritos",
-    "listaConversas",
-    "chatTela"
-  ];
+const telas = [
+  "inicio",
+  "cadastro",
+  "login",
+  "painel",
+  "meuPerfil",
+  "criarAnuncio",
+  "listaAnuncios",
+  "listaFavoritos",
+  "listaConversas",
+  "chatTela"
+];
 
   telas.forEach(function(id) {
 
