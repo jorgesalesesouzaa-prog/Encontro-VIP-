@@ -1430,6 +1430,74 @@ async function listarAnuncios() {
   }
 }
 
+  /* EDITAR ANÚNCIO */
+
+async function editarAnuncio(id) {
+
+  if (!usuario) {
+    mostrar("login");
+    return;
+  }
+
+  const mensagem =
+    document.getElementById("editarAnuncioMensagem");
+
+  mensagem.className = "";
+  mensagem.textContent = "Carregando anúncio...";
+
+  const { data, error } =
+    await supabaseClient
+      .from("anuncios")
+      .select(
+        "id,usuario_id,nome,idade,cidade,descricao,foto_url"
+      )
+      .eq("id", id)
+      .eq("usuario_id", usuario.id)
+      .maybeSingle();
+
+  if (error) {
+
+    console.error(
+      "Erro ao carregar anúncio:",
+      error
+    );
+
+    mensagem.className = "erro";
+    mensagem.textContent =
+      "Erro ao carregar anúncio.";
+
+    return;
+  }
+
+  if (!data) {
+
+    mensagem.className = "erro";
+    mensagem.textContent =
+      "Anúncio não encontrado.";
+
+    return;
+  }
+
+  document.getElementById("editarNome").value =
+    data.nome || "";
+
+  document.getElementById("editarIdade").value =
+    data.idade || "";
+
+  document.getElementById("editarCidade").value =
+    data.cidade || "";
+
+  document.getElementById("editarDescricao").value =
+    data.descricao || "";
+
+  document.getElementById("editarFoto").value =
+    data.foto_url || "";
+
+  mensagem.textContent = "";
+
+  mostrar("editarAnuncio");
+}
+  
 
 /* FAVORITAR */
 
