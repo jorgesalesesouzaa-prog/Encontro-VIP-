@@ -1323,19 +1323,28 @@ async function listarAnuncios() {
               ❤️ Favoritar
             </button>
 
-            ${
-              usuario &&
-              anuncio.usuario_id !== usuario.id
+                        ${
+              usuario && anuncio.usuario_id === usuario.id
                 ? `
                   <button
                     type="button"
-                    class="btn-principal"
-                    onclick="abrirConversa('${anuncio.usuario_id}', '${escapeHtml(anuncio.nome).replace(/'/g, "\\'")}')"
+                    class="btn-roxo"
+                    onclick="editarAnuncio('${anuncio.id}')"
                   >
-                    💬 Enviar mensagem
+                    ✏️ Editar anúncio
                   </button>
                 `
-                : ""
+                : usuario
+                  ? `
+                    <button
+                      type="button"
+                      class="btn-principal"
+                      onclick="abrirConversa('${anuncio.usuario_id}', '${escapeHtml(anuncio.nome).replace(/'/g, "\\'")}')"
+                    >
+                      💬 Enviar mensagem
+                    </button>
+                  `
+                  : ""
             }
 
           </div>
