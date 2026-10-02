@@ -1574,6 +1574,57 @@ async function editarAnuncio(id) {
     "Anúncio atualizado com sucesso!";
 
 }
+
+  async function excluirMeuAnuncio() {
+
+  if (!usuario) {
+    mostrar("login");
+    return;
+  }
+
+  const confirmar =
+    confirm("Tem certeza que deseja excluir este anúncio?");
+
+  if (!confirmar) {
+    return;
+  }
+
+  const mensagem =
+    document.getElementById("editarAnuncioMensagem");
+
+  mensagem.className = "";
+  mensagem.textContent = "Excluindo anúncio...";
+
+  const { error } =
+    await supabaseClient
+      .from("anuncios")
+      .update({
+        ativo: false
+      })
+      .eq("usuario_id", usuario.id);
+
+  if (error) {
+
+    console.error(
+      "Erro ao excluir anúncio:",
+      error
+    );
+
+    mensagem.className = "erro";
+    mensagem.textContent =
+      "Erro ao excluir anúncio.";
+
+    return;
+  }
+
+  mensagem.className = "sucesso";
+  mensagem.textContent =
+    "Anúncio excluído com sucesso!";
+
+  setTimeout(function() {
+    mostrar("painel");
+  }, 1200);
+}
   
 
 /* FAVORITAR */
