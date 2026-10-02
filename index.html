@@ -1494,24 +1494,106 @@ async function listarAnuncios() {
       return;
     }
 
+    const idsAnuncios =
+      anuncios.map(function(anuncio) {
+        return anuncio.id;
+      });
+
+    const resultadoFotos =
+      await supabaseClient
+        .from("anuncio_fotos")
+        .select(
+          "id,anuncio_id,foto_url,ordem"
+        )
+        .in("anuncio_id", idsAnuncios)
+        .order("ordem", {
+          ascending: true
+        });
+
+    if (resultadoFotos.error) {
+
+      console.error(
+        "Erro ao buscar fotos:",
+        resultadoFotos.error
+      );
+
+      conteudo.innerHTML =
+        '<div class="erro">Erro ao carregar fotos dos anúncios.</div>';
+
+      return;
+    }
+
+    const fotos =
+      resultadoFotos.data || [];
+
     conteudo.innerHTML =
       anuncios.map(function(anuncio) {
 
-        const foto =
-          anuncio.foto_url
-            ? `
-              <img
-                src="${escapeHtml(anuncio.foto_url)}"
-                alt="Foto de ${escapeHtml(anuncio.nome)}"
-                onerror="this.style.display='none'"
-              >
-            `
-            : "";
+        const fotosDoAnuncio =
+          fotos.filter(function(foto) {
+            return foto.anuncio_id === anuncio.id;
+          });
+
+        let galeria = "";
+
+        if (fotosDoAnuncio.length > 0) {
+
+          galeria = `
+            <div
+              style="
+                display:flex;
+                gap:10px;
+                overflow-x:auto;
+                margin-bottom:15px;
+                padding-bottom:5px;
+              "
+            >
+              ${
+                fotosDoAnuncio.map(function(foto) {
+
+                  return `
+                    <img
+                      src="${escapeHtml(foto.foto_url)}"
+                      alt="Foto de ${escapeHtml(anuncio.nome)}"
+                      style="
+                        width:220px;
+                        height:280px;
+                        object-fit:cover;
+                        border-radius:10px;
+                        flex-shrink:0;
+                      "
+                      onerror="this.style.display='none'"
+                    >
+                  `;
+
+                }).join("")
+              }
+            </div>
+          `;
+
+        } else if (anuncio.foto_url) {
+
+          galeria = `
+            <img
+              src="${escapeHtml(anuncio.foto_url)}"
+              alt="Foto de ${escapeHtml(anuncio.nome)}"
+              style="
+                width:220px;
+                height:280px;
+                object-fit:cover;
+                border-radius:10px;
+                margin-bottom:15px;
+              "
+              onerror="this.style.display='none'"
+            >
+          `;
+
+        }
 
         return `
           <div class="anuncio">
 
-            ${foto}
+            ${galeria}
 
             <h3>
               ${escapeHtml(anuncio.nome)}
@@ -1535,7 +1617,7 @@ async function listarAnuncios() {
               ❤️ Favoritar
             </button>
 
-                        ${
+            ${
               usuario && anuncio.usuario_id === usuario.id
                 ? `
                   <button
@@ -1575,7 +1657,6 @@ async function listarAnuncios() {
       '<div class="erro">Erro ao carregar anúncios.</div>';
   }
 }
-
   /* EDITAR ANÚNCIO */
 
 async function editarAnuncio(id) {
