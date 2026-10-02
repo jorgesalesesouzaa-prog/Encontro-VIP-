@@ -524,7 +524,73 @@
 
   </div>
 
+<!-- EDITAR ANÚNCIO -->
+<div id="editarAnuncio" class="hidden">
 
+  <div class="card">
+
+    <h2>✏️ Editar anúncio</h2>
+
+    <input
+      id="editarNome"
+      type="text"
+      placeholder="Nome"
+    >
+
+    <input
+      id="editarIdade"
+      type="number"
+      placeholder="Idade"
+    >
+
+    <input
+      id="editarCidade"
+      type="text"
+      placeholder="Cidade"
+    >
+
+    <textarea
+      id="editarDescricao"
+      placeholder="Descrição do anúncio"
+    ></textarea>
+
+    <input
+      id="editarFoto"
+      type="url"
+      placeholder="URL da foto"
+    >
+
+    <button
+      type="button"
+      class="btn-principal"
+      onclick="salvarEdicaoAnuncio()"
+    >
+      Salvar alterações
+    </button>
+
+    <button
+      type="button"
+      class="btn-perigo"
+      onclick="excluirMeuAnuncio()"
+    >
+      🗑️ Excluir anúncio
+    </button>
+
+    <button
+      type="button"
+      class="btn-secundario"
+      onclick="mostrar('listaAnuncios')"
+    >
+      Voltar
+    </button>
+
+    <p id="editarAnuncioMensagem"></p>
+
+  </div>
+
+</div>
+
+  
   <!-- FAVORITOS -->
   <div id="listaFavoritos" class="hidden">
 
