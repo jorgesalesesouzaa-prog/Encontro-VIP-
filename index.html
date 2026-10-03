@@ -1809,6 +1809,104 @@ async function listarAnuncios() {
   }
 }
 
+  
+function filtrarAnuncios() {
+
+  const cidade =
+    document
+      .getElementById("filtroCidade")
+      .value
+      .trim()
+      .toLowerCase();
+
+  const idadeMin =
+    Number(
+      document.getElementById("filtroIdadeMin").value
+    ) || 18;
+
+  const idadeMax =
+    Number(
+      document.getElementById("filtroIdadeMax").value
+    ) || 999;
+
+  const anuncios =
+    document.querySelectorAll(".anuncio");
+
+  anuncios.forEach(function(anuncio) {
+
+    const texto =
+      anuncio.innerText.toLowerCase();
+
+    const encontrouCidade =
+      !cidade ||
+      texto.includes(cidade);
+
+    const titulo =
+      anuncio.querySelector("h3");
+
+    let idade = 0;
+
+    if (titulo) {
+
+      const textoTitulo =
+        titulo.innerText;
+
+      const partes =
+        textoTitulo.split("-");
+
+      if (partes.length > 1) {
+        idade =
+          Number(
+            partes[partes.length - 1].trim()
+          );
+      }
+    }
+
+    const encontrouIdade =
+      idade >= idadeMin &&
+      idade <= idadeMax;
+
+    if (
+      encontrouCidade &&
+      encontrouIdade
+    ) {
+
+      anuncio.style.display = "";
+
+    } else {
+
+      anuncio.style.display = "none";
+
+    }
+
+  });
+}
+
+
+function limparFiltros() {
+
+  document.getElementById(
+    "filtroCidade"
+  ).value = "";
+
+  document.getElementById(
+    "filtroIdadeMin"
+  ).value = "";
+
+  document.getElementById(
+    "filtroIdadeMax"
+  ).value = "";
+
+  const anuncios =
+    document.querySelectorAll(".anuncio");
+
+  anuncios.forEach(function(anuncio) {
+
+    anuncio.style.display = "";
+
+  });
+}
+  
 
 function trocarFotoGaleria(anuncioId, direcao) {
 
