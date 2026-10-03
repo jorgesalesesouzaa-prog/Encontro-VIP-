@@ -1471,6 +1471,7 @@ async function listarAnuncios() {
         });
 
     if (resultado.error) {
+
       console.error(
         "Erro ao buscar anúncios:",
         resultado.error
@@ -1486,6 +1487,7 @@ async function listarAnuncios() {
       resultado.data || [];
 
     if (anuncios.length === 0) {
+
       conteudo.innerHTML =
         '<div class="sem-mensagem">Nenhum anúncio publicado ainda.</div>';
 
@@ -1509,6 +1511,7 @@ async function listarAnuncios() {
         });
 
     if (resultadoFotos.error) {
+
       console.error(
         "Erro ao buscar fotos:",
         resultadoFotos.error
@@ -1523,34 +1526,50 @@ async function listarAnuncios() {
     const fotos =
       resultadoFotos.data || [];
 
+    window.galeriasAnuncios = {};
+    window.fotosAtuaisAnuncios = {};
+
     conteudo.innerHTML =
       anuncios.map(function(anuncio) {
 
-        const fotosDoAnuncio =
+        let fotosDoAnuncio =
           fotos.filter(function(foto) {
             return foto.anuncio_id === anuncio.id;
           });
 
-        const primeiraFoto =
-          fotosDoAnuncio.length > 0
-            ? fotosDoAnuncio[0].foto_url
-            : anuncio.foto_url;
+        if (
+          fotosDoAnuncio.length === 0 &&
+          anuncio.foto_url
+        ) {
+          fotosDoAnuncio = [
+            {
+              foto_url: anuncio.foto_url,
+              ordem: 0
+            }
+          ];
+        }
 
-        const outrasFotos =
-          fotosDoAnuncio.slice(1);
+        const urls =
+          fotosDoAnuncio.map(function(foto) {
+            return foto.foto_url;
+          });
+
+        window.galeriasAnuncios[anuncio.id] = urls;
+        window.fotosAtuaisAnuncios[anuncio.id] = 0;
 
         let galeria = "";
 
-        if (primeiraFoto) {
+        if (urls.length > 0) {
 
           galeria = `
             <div style="
+              position:relative;
               margin-bottom:15px;
             ">
 
               <img
                 id="foto-principal-${anuncio.id}"
-                src="${escapeHtml(primeiraFoto)}"
+                src="${escapeHtml(urls[0])}"
                 alt="Foto de ${escapeHtml(anuncio.nome)}"
                 style="
                   display:block;
@@ -1562,12 +1581,69 @@ async function listarAnuncios() {
                   margin:0 auto 10px auto;
                   cursor:pointer;
                 "
-                onclick="abrirFotoGrande('${escapeHtml(primeiraFoto)}')"
+                onclick="abrirFotoGrande('${escapeHtml(urls[0])}')"
                 onerror="this.style.display='none'"
               >
 
               ${
-                fotosDoAnuncio.length > 1
+                urls.length > 1
+                  ? `
+                    <button
+                      type="button"
+                      onclick="trocarFotoGaleria('${anuncio.id}', -1)"
+                      style="
+                        position:absolute;
+                        left:10px;
+                        top:190px;
+                        width:42px;
+                        height:42px;
+                        border:none;
+                        border-radius:50%;
+                        background:rgba(0,0,0,0.65);
+                        color:white;
+                        font-size:24px;
+                        cursor:pointer;
+                      "
+                    >
+                      ‹
+                    </button>
+
+                    <button
+                      type="button"
+                      onclick="trocarFotoGaleria('${anuncio.id}', 1)"
+                      style="
+                        position:absolute;
+                        right:10px;
+                        top:190px;
+                        width:42px;
+                        height:42px;
+                        border:none;
+                        border-radius:50%;
+                        background:rgba(0,0,0,0.65);
+                        color:white;
+                        font-size:24px;
+                        cursor:pointer;
+                      "
+                    >
+                      ›
+                    </button>
+
+                    <div
+                      id="contador-fotos-${anuncio.id}"
+                      style="
+                        text-align:center;
+                        font-weight:bold;
+                        margin-bottom:10px;
+                      "
+                    >
+                      1 / ${urls.length}
+                    </div>
+                  `
+                  : ""
+              }
+
+              ${
+                urls.length > 1
                   ? `
                     <div style="
                       display:flex;
@@ -1577,11 +1653,11 @@ async function listarAnuncios() {
                     ">
 
                       ${
-                        fotosDoAnuncio.map(function(foto) {
+                        urls.map(function(url, indice) {
 
                           return `
                             <img
-                              src="${escapeHtml(foto.foto_url)}"
+                              src="${escapeHtml(url)}"
                               alt="Miniatura"
                               style="
                                 width:75px;
@@ -1590,11 +1666,8 @@ async function listarAnuncios() {
                                 border-radius:8px;
                                 flex-shrink:0;
                                 cursor:pointer;
-                                border:2px solid transparent;
                               "
-                              onclick="
-                                document.getElementById('foto-principal-${anuncio.id}').src='${escapeHtml(foto.foto_url)}';
-                              "
+                              onclick="selecionarFotoGaleria('${anuncio.id}', ${indice})"
                               onerror="this.style.display='none'"
                             >
                           `;
@@ -1678,6 +1751,113 @@ async function listarAnuncios() {
     conteudo.innerHTML =
       '<div class="erro">Erro ao carregar anúncios.</div>';
   }
+}
+
+
+function trocarFotoGaleria(anuncioId, direcao) {
+
+  const fotos =
+    window.galeriasAnuncios &&
+    window.galeriasAnuncios[anuncioId];
+
+  if (!fotos || fotos.length === 0) {
+    return;
+  }
+
+  let indice =
+    window.fotosAtuaisAnuncios[anuncioId] || 0;
+
+  indice += direcao;
+
+  if (indice < 0) {
+    indice = fotos.length - 1;
+  }
+
+  if (indice >= fotos.length) {
+    indice = 0;
+  }
+
+  selecionarFotoGaleria(
+    anuncioId,
+    indice
+  );
+}
+
+
+function selecionarFotoGaleria(anuncioId, indice) {
+
+  const fotos =
+    window.galeriasAnuncios &&
+    window.galeriasAnuncios[anuncioId];
+
+  if (!fotos || !fotos[indice]) {
+    return;
+  }
+
+  window.fotosAtuaisAnuncios[anuncioId] =
+    indice;
+
+  const imagem =
+    document.getElementById(
+      "foto-principal-" + anuncioId
+    );
+
+  if (imagem) {
+    imagem.src = fotos[indice];
+
+    imagem.onclick = function() {
+      abrirFotoGrande(fotos[indice]);
+    };
+  }
+
+  const contador =
+    document.getElementById(
+      "contador-fotos-" + anuncioId
+    );
+
+  if (contador) {
+    contador.textContent =
+      (indice + 1) + " / " + fotos.length;
+  }
+}
+
+
+function abrirFotoGrande(url) {
+
+  const janela =
+    document.createElement("div");
+
+  janela.style.position = "fixed";
+  janela.style.top = "0";
+  janela.style.left = "0";
+  janela.style.width = "100%";
+  janela.style.height = "100%";
+  janela.style.background = "rgba(0,0,0,0.92)";
+  janela.style.display = "flex";
+  janela.style.alignItems = "center";
+  janela.style.justifyContent = "center";
+  janela.style.zIndex = "99999";
+  janela.style.padding = "20px";
+  janela.style.boxSizing = "border-box";
+  janela.style.cursor = "pointer";
+
+  janela.innerHTML = `
+    <img
+      src="${escapeHtml(url)}"
+      style="
+        max-width:100%;
+        max-height:100%;
+        object-fit:contain;
+        border-radius:10px;
+      "
+    >
+  `;
+
+  janela.onclick = function() {
+    janela.remove();
+  };
+
+  document.body.appendChild(janela);
 }
 
 
