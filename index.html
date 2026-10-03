@@ -510,6 +510,62 @@
 
       <h2>Anúncios</h2>
 
+      <div
+  style="
+    margin:15px 0;
+    padding:15px;
+    border-radius:12px;
+    background:#f5f5f5;
+  "
+>
+
+  <h3 style="margin-top:0;">
+    🔎 Filtrar anúncios
+  </h3>
+
+  <input
+    id="filtroCidade"
+    type="text"
+    placeholder="Cidade"
+    oninput="filtrarAnuncios()"
+  >
+
+  <div
+    style="
+      display:flex;
+      gap:10px;
+      margin-top:10px;
+    "
+  >
+
+    <input
+      id="filtroIdadeMin"
+      type="number"
+      min="18"
+      placeholder="Idade mínima"
+      oninput="filtrarAnuncios()"
+    >
+
+    <input
+      id="filtroIdadeMax"
+      type="number"
+      min="18"
+      placeholder="Idade máxima"
+      oninput="filtrarAnuncios()"
+    >
+
+  </div>
+
+  <button
+    type="button"
+    class="btn-secundario"
+    onclick="limparFiltros()"
+    style="margin-top:10px;"
+  >
+    Limpar filtros
+  </button>
+
+</div>
       <div id="conteudoAnuncios">
         <div class="sem-mensagem">
           Carregando anúncios...
