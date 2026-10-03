@@ -1741,61 +1741,98 @@ async function listarAnuncios() {
 
         }
 
-        return `
-          <div class="anuncio">
+  return `
+  <div
+    class="anuncio"
+    style="
+      margin-bottom:25px;
+      padding:15px;
+      border-radius:16px;
+      box-shadow:0 3px 12px rgba(0,0,0,0.12);
+      background:white;
+    "
+  >
 
-            ${galeria}
+    ${galeria}
 
-            <h3>
-              ${escapeHtml(anuncio.nome)}
-              - ${escapeHtml(anuncio.idade)}
-            </h3>
+    <div style="
+      text-align:left;
+      padding:0 5px;
+    ">
 
-            <p>
-              <strong>Cidade:</strong>
-              ${escapeHtml(anuncio.cidade)}
-            </p>
+      <h3 style="
+        margin:8px 0;
+        font-size:22px;
+      ">
+        ${escapeHtml(anuncio.nome)}
+        <span style="
+          font-weight:normal;
+          font-size:18px;
+        ">
+          - ${escapeHtml(anuncio.idade)}
+        </span>
+      </h3>
 
-            <p>
-              ${escapeHtml(anuncio.descricao)}
-            </p>
+      <p style="
+        margin:8px 0;
+        font-size:16px;
+      ">
+        📍
+        <strong>Cidade:</strong>
+        ${escapeHtml(anuncio.cidade)}
+      </p>
 
-            <button
-              type="button"
-              class="btn-roxo"
-              onclick="favoritarAnuncio('${anuncio.id}')"
-            >
-              ❤️ Favoritar
-            </button>
+      <p style="
+        margin:12px 0 16px 0;
+        line-height:1.5;
+      ">
+        ${escapeHtml(anuncio.descricao)}
+      </p>
 
-            ${
-              usuario && anuncio.usuario_id === usuario.id
-                ? `
-                  <button
-                    type="button"
-                    class="btn-roxo"
-                    onclick="editarAnuncio('${anuncio.id}')"
-                  >
-                    ✏️ Editar anúncio
-                  </button>
-                `
-                : usuario
-                  ? `
-                    <button
-                      type="button"
-                      class="btn-principal"
-                      onclick="abrirConversa('${anuncio.usuario_id}', '${escapeHtml(anuncio.nome).replace(/'/g, "\\'")}')"
-                    >
-                      💬 Enviar mensagem
-                    </button>
-                  `
-                  : ""
-            }
+      <div style="
+        display:flex;
+        flex-wrap:wrap;
+        gap:8px;
+      ">
 
-          </div>
-        `;
+        <button
+          type="button"
+          class="btn-roxo"
+          onclick="favoritarAnuncio('${anuncio.id}')"
+        >
+          ❤️ Favoritar
+        </button>
 
-      }).join("");
+        ${
+          usuario && anuncio.usuario_id === usuario.id
+            ? `
+              <button
+                type="button"
+                class="btn-roxo"
+                onclick="editarAnuncio('${anuncio.id}')"
+              >
+                ✏️ Editar anúncio
+              </button>
+            `
+            : usuario
+              ? `
+                <button
+                  type="button"
+                  class="btn-principal"
+                  onclick="abrirConversa('${anuncio.usuario_id}', '${escapeHtml(anuncio.nome).replace(/'/g, "\\'")}')"
+                >
+                  💬 Enviar mensagem
+                </button>
+              `
+              : ""
+        }
+
+      </div>
+
+    </div>
+
+  </div>
+`;
 
   } catch (erro) {
 
