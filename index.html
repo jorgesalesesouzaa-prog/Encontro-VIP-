@@ -2070,7 +2070,7 @@ function abrirDestaque(anuncioId) {
           </p>
 
           ${
-            item.status === "pendente"
+            item.status === "pendente" || item.status === "aprovado"
               ? `
                 <button
                   type="button"
