@@ -1,11 +1,12 @@
 <!DOCTYPE html>
+
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>Encontro VIP</title>
-  
+
   <style>
     * {
       box-sizing: border-box;
@@ -123,6 +124,23 @@
       margin: 12px 0;
     }
 
+    .anuncio-destaque {
+      border: 3px solid #d4a017;
+      box-shadow: 0 4px 16px rgba(212,160,23,0.25);
+    }
+
+    .selo-destaque {
+      display: inline-block;
+      background: #fff3cd;
+      color: #8a6500;
+      border: 1px solid #e0b84c;
+      border-radius: 20px;
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
     .anuncio img {
       width: 100%;
       max-height: 350px;
@@ -194,6 +212,7 @@
       margin: 15px 0;
     }
   </style>
+
 </head>
 
 <body>
@@ -201,596 +220,626 @@
 <div class="container">
 
   <!-- INÍCIO -->
+
   <div id="inicio">
 
-    <div class="card centro">
+```
+<div class="card centro">
 
-      <h1>Encontro VIP</h1>
+  <h1>Encontro VIP</h1>
 
-      <p>
-        Conecte-se de forma simples e segura.
-      </p>
+  <p>
+    Conecte-se de forma simples e segura.
+  </p>
 
-      <div class="aviso">
-        <strong>18+:</strong>
-        Este site é destinado exclusivamente
-        a pessoas maiores de 18 anos.
-      </div>
-
-      <button
-        type="button"
-        class="btn-principal"
-        onclick="mostrar('cadastro')"
-      >
-        Criar conta
-      </button>
-
-      <button
-        type="button"
-        class="btn-secundario"
-        onclick="mostrar('login')"
-      >
-        Entrar
-      </button>
-
-    </div>
-
+  <div class="aviso">
+    <strong>18+:</strong>
+    Este site é destinado exclusivamente
+    a pessoas maiores de 18 anos.
   </div>
 
+  <button
+    type="button"
+    class="btn-principal"
+    onclick="mostrar('cadastro')"
+  >
+    Criar conta
+  </button>
+
+  <button
+    type="button"
+    class="btn-secundario"
+    onclick="mostrar('login')"
+  >
+    Entrar
+  </button>
+
+</div>
+```
+
+  </div>
 
   <!-- CADASTRO -->
+
   <div id="cadastro" class="hidden">
 
-    <div class="card">
+```
+<div class="card">
 
-      <h2>Criar conta</h2>
-
-      <input
-        id="cadNome"
-        type="text"
-        placeholder="Nome"
-      >
-
-      <input
-        id="cadTelefone"
-        type="text"
-        placeholder="Telefone"
-      >
-
-      <input
-        id="cadEmail"
-        type="email"
-        placeholder="E-mail"
-      >
-
-      <input
-        id="cadSenha"
-        type="password"
-        placeholder="Senha"
-      >
-
-      <button
-        type="button"
-        class="btn-principal"
-        onclick="cadastrar()"
-      >
-        Criar minha conta
-      </button>
-
-      <button
-        type="button"
-        class="btn-secundario"
-        onclick="mostrar('inicio')"
-      >
-        Voltar
-      </button>
-
-      <p id="cadMensagem"></p>
-
-    </div>
-
-  </div>
-
-
-  <!-- LOGIN -->
-  <div id="login" class="hidden">
-
-    <div class="card">
-
-      <h2>Entrar</h2>
-
-      <input
-        id="loginEmail"
-        type="email"
-        placeholder="E-mail"
-      >
-
-      <input
-        id="loginSenha"
-        type="password"
-        placeholder="Senha"
-      >
-
-      <button
-        type="button"
-        class="btn-principal"
-        onclick="entrar()"
-      >
-        Entrar
-      </button>
-
-      <button
-        type="button"
-        class="btn-secundario"
-        onclick="mostrar('inicio')"
-      >
-        Voltar
-      </button>
-
-      <p id="loginMensagem"></p>
-
-    </div>
-
-  </div>
-
-
-  <!-- PAINEL -->
-  <div id="painel" class="hidden">
-
-    <div class="card">
-
-      <h2 id="olaUsuario">
-        Olá!
-      </h2>
-
-      <button
-        type="button"
-        class="btn-principal"
-        onclick="mostrar('criarAnuncio')"
-      >
-        Criar meu anúncio
-      </button>
-
-      <button
-        type="button"
-        class="btn-roxo"
-        onclick="listarAnuncios()"
-      >
-        Ver anúncios
-      </button>
-
-      <button
-        type="button"
-        class="btn-roxo"
-        onclick="listarFavoritos()"
-      >
-        Meus favoritos
-      </button>
-
-      <button
-        type="button"
-        class="btn-roxo"
-        onclick="listarConversas()"
-      >
-           Minhas mensagens
-      </button>
-
-      <button
-        type="button"
-        class="btn-roxo"
-        onclick="abrirMeuPerfil()"
-      >
-        👤 Meu perfil
-      </button>
-
-<button
-  type="button"
-  class="btn-roxo"
-  onclick="abrirAdmin()"
->
-  ⚙️ Administração
-</button>
-      
-      <button
-        type="button"
-        class="btn-perigo"
-        onclick="sair()"
-      >
-        Sair
-      </button>
-
-    </div>
-
-  </div>
-
-    <!-- MEU PERFIL -->
-  <div id="meuPerfil" class="hidden">
-
-    <div class="card">
-
-      <h2>👤 Meu perfil</h2>
-
-      <input
-        id="perfilNome"
-        type="text"
-        placeholder="Nome"
-      >
-
-      <input
-        id="perfilTelefone"
-        type="text"
-        placeholder="Telefone"
-      >
-
-      <p id="perfilEmail"></p>
-
-      <button
-        type="button"
-        class="btn-principal"
-        onclick="salvarPerfil()"
-      >
-        Salvar alterações
-      </button>
-
-      <button
-        type="button"
-        class="btn-secundario"
-        onclick="mostrar('painel')"
-      >
-        Voltar
-      </button>
-
-     <p id="perfilMensagem"></p>
-
-    </div>
-
-  </div>
-
-
-  <!-- ADMINISTRAÇÃO -->
-  <div id="admin" class="hidden">
-
-    <div class="card">
-
-      <h2>⚙️ Administração</h2>
-
-      <p>
-        Aqui você poderá analisar as solicitações de destaque.
-      </p>
-
-      <div id="conteudoAdmin">
-        <div class="sem-mensagem">
-          Carregando...
-        </div>
-      </div>
-
-      <button
-        type="button"
-        class="btn-secundario"
-        onclick="mostrar('painel')"
-      >
-        Voltar
-      </button>
-
-    </div>
-
-  </div>
-
-
-  <!-- CRIAR ANÚNCIO -->
-  <div id="criarAnuncio" class="hidden">
-
-    <div class="card">
-
-      <h2>Criar meu anúncio</h2>
-
-      <input
-        id="anNome"
-        type="text"
-        placeholder="Nome"
-      >
-
-      <input
-        id="anIdade"
-        type="number"
-        min="18"
-        placeholder="Idade"
-      >
-
-      <input
-        id="anCidade"
-        type="text"
-        placeholder="Cidade"
-      >
-
-      <textarea
-        id="anDescricao"
-        placeholder="Fale um pouco sobre você..."
-      ></textarea>
-
-     <input
-  id="anFotos"
-  type="file"
-  accept="image/jpeg,image/png,image/webp"
-  multiple
->
-
-<small>
-  Você pode selecionar até 5 fotos.
-</small>
-      <button
-        type="button"
-        class="btn-verde"
-        onclick="criarAnuncio()"
-      >
-        Publicar anúncio
-      </button>
-
-      <button
-        type="button"
-        class="btn-secundario"
-        onclick="mostrar('painel')"
-      >
-        Voltar
-      </button>
-
-      <p id="anMensagem"></p>
-
-    </div>
-
-  </div>
-
-
-  <!-- LISTA DE ANÚNCIOS -->
-  <div id="listaAnuncios" class="hidden">
-
-    <div class="card">
-
-      <h2>Anúncios</h2>
-
-      <div
-  style="
-    margin:15px 0;
-    padding:15px;
-    border-radius:12px;
-    background:#f5f5f5;
-  "
->
-
-  <h3 style="margin-top:0;">
-    🔎 Filtrar anúncios
-  </h3>
+  <h2>Criar conta</h2>
 
   <input
-    id="filtroCidade"
+    id="cadNome"
     type="text"
-    placeholder="Cidade"
-    oninput="filtrarAnuncios()"
+    placeholder="Nome"
   >
 
-  <div
-    style="
-      display:flex;
-      gap:10px;
-      margin-top:10px;
-    "
+  <input
+    id="cadTelefone"
+    type="text"
+    placeholder="Telefone"
   >
 
-    <input
-      id="filtroIdadeMin"
-      type="number"
-      min="18"
-      placeholder="Idade mínima"
-      oninput="filtrarAnuncios()"
-    >
+  <input
+    id="cadEmail"
+    type="email"
+    placeholder="E-mail"
+  >
 
-    <input
-      id="filtroIdadeMax"
-      type="number"
-      min="18"
-      placeholder="Idade máxima"
-      oninput="filtrarAnuncios()"
-    >
+  <input
+    id="cadSenha"
+    type="password"
+    placeholder="Senha"
+  >
 
+  <button
+    type="button"
+    class="btn-principal"
+    onclick="cadastrar()"
+  >
+    Criar minha conta
+  </button>
+
+  <button
+    type="button"
+    class="btn-secundario"
+    onclick="mostrar('inicio')"
+  >
+    Voltar
+  </button>
+
+  <p id="cadMensagem"></p>
+
+</div>
+```
+
+  </div>
+
+  <!-- LOGIN -->
+
+  <div id="login" class="hidden">
+
+```
+<div class="card">
+
+  <h2>Entrar</h2>
+
+  <input
+    id="loginEmail"
+    type="email"
+    placeholder="E-mail"
+  >
+
+  <input
+    id="loginSenha"
+    type="password"
+    placeholder="Senha"
+  >
+
+  <button
+    type="button"
+    class="btn-principal"
+    onclick="entrar()"
+  >
+    Entrar
+  </button>
+
+  <button
+    type="button"
+    class="btn-secundario"
+    onclick="mostrar('inicio')"
+  >
+    Voltar
+  </button>
+
+  <p id="loginMensagem"></p>
+
+</div>
+```
+
+  </div>
+
+  <!-- PAINEL -->
+
+  <div id="painel" class="hidden">
+
+```
+<div class="card">
+
+  <h2 id="olaUsuario">
+    Olá!
+  </h2>
+
+  <button
+    type="button"
+    class="btn-principal"
+    onclick="mostrar('criarAnuncio')"
+  >
+    Criar meu anúncio
+  </button>
+
+  <button
+    type="button"
+    class="btn-roxo"
+    onclick="listarAnuncios()"
+  >
+    Ver anúncios
+  </button>
+
+  <button
+    type="button"
+    class="btn-roxo"
+    onclick="listarFavoritos()"
+  >
+    Meus favoritos
+  </button>
+
+  <button
+    type="button"
+    class="btn-roxo"
+    onclick="listarConversas()"
+  >
+    Minhas mensagens
+  </button>
+
+  <button
+    type="button"
+    class="btn-roxo"
+    onclick="abrirMeuPerfil()"
+  >
+    👤 Meu perfil
+  </button>
+
+  <button
+    type="button"
+    class="btn-roxo"
+    onclick="abrirAdmin()"
+  >
+    ⚙️ Administração
+  </button>
+
+  <button
+    type="button"
+    class="btn-perigo"
+    onclick="sair()"
+  >
+    Sair
+  </button>
+
+</div>
+```
+
+  </div>
+
+  <!-- MEU PERFIL -->
+
+  <div id="meuPerfil" class="hidden">
+
+```
+<div class="card">
+
+  <h2>👤 Meu perfil</h2>
+
+  <input
+    id="perfilNome"
+    type="text"
+    placeholder="Nome"
+  >
+
+  <input
+    id="perfilTelefone"
+    type="text"
+    placeholder="Telefone"
+  >
+
+  <p id="perfilEmail"></p>
+
+  <button
+    type="button"
+    class="btn-principal"
+    onclick="salvarPerfil()"
+  >
+    Salvar alterações
+  </button>
+
+  <button
+    type="button"
+    class="btn-secundario"
+    onclick="mostrar('painel')"
+  >
+    Voltar
+  </button>
+
+  <p id="perfilMensagem"></p>
+
+</div>
+```
+
+  </div>
+
+  <!-- ADMINISTRAÇÃO -->
+
+  <div id="admin" class="hidden">
+
+```
+<div class="card">
+
+  <h2>⚙️ Administração</h2>
+
+  <p>
+    Aqui você poderá analisar as solicitações de destaque.
+  </p>
+
+  <div id="conteudoAdmin">
+    <div class="sem-mensagem">
+      Carregando...
+    </div>
   </div>
 
   <button
     type="button"
     class="btn-secundario"
-    onclick="limparFiltros()"
-    style="margin-top:10px;"
+    onclick="mostrar('painel')"
   >
-    Limpar filtros
+    Voltar
   </button>
 
 </div>
-      <div id="conteudoAnuncios">
-        <div class="sem-mensagem">
-          Carregando anúncios...
-        </div>
-      </div>
-
-      <button
-        type="button"
-        class="btn-secundario"
-        onclick="mostrar('painel')"
-      >
-        Voltar
-      </button>
-
-    </div>
+```
 
   </div>
 
-<!-- EDITAR ANÚNCIO -->
-<div id="editarAnuncio" class="hidden">
+  <!-- CRIAR ANÚNCIO -->
 
-  <div class="card">
+  <div id="criarAnuncio" class="hidden">
 
-    <h2>✏️ Editar anúncio</h2>
+```
+<div class="card">
+
+  <h2>Criar meu anúncio</h2>
+
+  <input
+    id="anNome"
+    type="text"
+    placeholder="Nome"
+  >
+
+  <input
+    id="anIdade"
+    type="number"
+    min="18"
+    placeholder="Idade"
+  >
+
+  <input
+    id="anCidade"
+    type="text"
+    placeholder="Cidade"
+  >
+
+  <textarea
+    id="anDescricao"
+    placeholder="Fale um pouco sobre você..."
+  ></textarea>
+
+  <input
+    id="anFotos"
+    type="file"
+    accept="image/jpeg,image/png,image/webp"
+    multiple
+  >
+
+  <small>
+    Você pode selecionar até 5 fotos.
+  </small>
+
+  <button
+    type="button"
+    class="btn-verde"
+    onclick="criarAnuncio()"
+  >
+    Publicar anúncio
+  </button>
+
+  <button
+    type="button"
+    class="btn-secundario"
+    onclick="mostrar('painel')"
+  >
+    Voltar
+  </button>
+
+  <p id="anMensagem"></p>
+
+</div>
+```
+
+  </div>
+
+  <!-- LISTA DE ANÚNCIOS -->
+
+  <div id="listaAnuncios" class="hidden">
+
+```
+<div class="card">
+
+  <h2>Anúncios</h2>
+
+  <div
+    style="
+      margin:15px 0;
+      padding:15px;
+      border-radius:12px;
+      background:#f5f5f5;
+    "
+  >
+
+    <h3 style="margin-top:0;">
+      🔎 Filtrar anúncios
+    </h3>
 
     <input
-      id="editarNome"
-      type="text"
-      placeholder="Nome"
-    >
-
-    <input
-      id="editarIdade"
-      type="number"
-      placeholder="Idade"
-    >
-
-    <input
-      id="editarCidade"
+      id="filtroCidade"
       type="text"
       placeholder="Cidade"
+      oninput="filtrarAnuncios()"
     >
 
-    <textarea
-      id="editarDescricao"
-      placeholder="Descrição do anúncio"
-    ></textarea>
-
-    <input
-      id="editarFoto"
-      type="url"
-      placeholder="URL da foto"
+    <div
+      style="
+        display:flex;
+        gap:10px;
+        margin-top:10px;
+      "
     >
 
-    <button
-      type="button"
-      class="btn-principal"
-      onclick="salvarEdicaoAnuncio()"
-    >
-      Salvar alterações
-    </button>
+      <input
+        id="filtroIdadeMin"
+        type="number"
+        min="18"
+        placeholder="Idade mínima"
+        oninput="filtrarAnuncios()"
+      >
 
-    <button
-      type="button"
-      class="btn-perigo"
-      onclick="excluirMeuAnuncio()"
-    >
-      🗑️ Excluir anúncio
-    </button>
+      <input
+        id="filtroIdadeMax"
+        type="number"
+        min="18"
+        placeholder="Idade máxima"
+        oninput="filtrarAnuncios()"
+      >
+
+    </div>
 
     <button
       type="button"
       class="btn-secundario"
-      onclick="mostrar('listaAnuncios')"
+      onclick="limparFiltros()"
+      style="margin-top:10px;"
     >
-      Voltar
+      Limpar filtros
     </button>
 
-    <p id="editarAnuncioMensagem"></p>
+  </div>
+
+  <div id="conteudoAnuncios">
+    <div class="sem-mensagem">
+      Carregando anúncios...
+    </div>
+  </div>
+
+  <button
+    type="button"
+    class="btn-secundario"
+    onclick="mostrar('painel')"
+  >
+    Voltar
+  </button>
+
+</div>
+```
 
   </div>
 
-</div>
+  <!-- EDITAR ANÚNCIO -->
 
-  
+  <div id="editarAnuncio" class="hidden">
+
+```
+<div class="card">
+
+  <h2>✏️ Editar anúncio</h2>
+
+  <input
+    id="editarNome"
+    type="text"
+    placeholder="Nome"
+  >
+
+  <input
+    id="editarIdade"
+    type="number"
+    min="18"
+    placeholder="Idade"
+  >
+
+  <input
+    id="editarCidade"
+    type="text"
+    placeholder="Cidade"
+  >
+
+  <textarea
+    id="editarDescricao"
+    placeholder="Descrição do anúncio"
+  ></textarea>
+
+  <input
+    id="editarFoto"
+    type="url"
+    placeholder="URL da foto"
+  >
+
+  <button
+    type="button"
+    class="btn-principal"
+    onclick="salvarEdicaoAnuncio()"
+  >
+    Salvar alterações
+  </button>
+
+  <button
+    type="button"
+    class="btn-perigo"
+    onclick="excluirMeuAnuncio()"
+  >
+    🗑️ Excluir anúncio
+  </button>
+
+  <button
+    type="button"
+    class="btn-secundario"
+    onclick="mostrar('listaAnuncios')"
+  >
+    Voltar
+  </button>
+
+  <p id="editarAnuncioMensagem"></p>
+
+</div>
+```
+
+  </div>
+
   <!-- FAVORITOS -->
+
   <div id="listaFavoritos" class="hidden">
 
-    <div class="card">
+```
+<div class="card">
 
-      <h2>Meus favoritos</h2>
+  <h2>Meus favoritos</h2>
 
-      <div id="conteudoFavoritos">
-        <div class="sem-mensagem">
-          Carregando favoritos...
-        </div>
-      </div>
-
-      <button
-        type="button"
-        class="btn-secundario"
-        onclick="mostrar('painel')"
-      >
-        Voltar
-      </button>
-
+  <div id="conteudoFavoritos">
+    <div class="sem-mensagem">
+      Carregando favoritos...
     </div>
-
   </div>
 
+  <button
+    type="button"
+    class="btn-secundario"
+    onclick="mostrar('painel')"
+  >
+    Voltar
+  </button>
+
+</div>
+```
+
+  </div>
 
   <!-- CONVERSAS -->
+
   <div id="listaConversas" class="hidden">
 
-    <div class="card">
+```
+<div class="card">
 
-      <h2>Minhas mensagens</h2>
+  <h2>Minhas mensagens</h2>
 
-      <div id="conteudoConversas">
-        <div class="sem-mensagem">
-          Carregando conversas...
-        </div>
-      </div>
-
-      <button
-        type="button"
-        class="btn-secundario"
-        onclick="mostrar('painel')"
-      >
-        Voltar
-      </button>
-
+  <div id="conteudoConversas">
+    <div class="sem-mensagem">
+      Carregando conversas...
     </div>
+  </div>
+
+  <button
+    type="button"
+    class="btn-secundario"
+    onclick="mostrar('painel')"
+  >
+    Voltar
+  </button>
+
+</div>
+```
 
   </div>
 
-
   <!-- CHAT -->
+
   <div id="chatTela" class="hidden">
 
-    <div class="card">
+```
+<div class="card">
 
-      <h2 id="tituloChat">
-        Conversa
-      </h2>
+  <h2 id="tituloChat">
+    Conversa
+  </h2>
 
-      <div
-        id="conteudoChat"
-        class="chat"
-      >
-        <div class="sem-mensagem">
-          Carregando conversa...
-        </div>
-      </div>
-
-      <textarea
-        id="novaMensagem"
-        placeholder="Digite sua mensagem..."
-      ></textarea>
-
-      <button
-        type="button"
-        id="btnEnviarMensagem"
-        class="btn-principal"
-        onclick="enviarMensagemChat()"
-      >
-        Enviar mensagem
-      </button>
-
-      <button
-        type="button"
-        class="btn-secundario"
-        onclick="pararAtualizacaoChat(); mostrar('listaConversas')"
-      >
-        Voltar
-      </button>
-
-      <p id="chatMensagem"></p>
-
+  <div
+    id="conteudoChat"
+    class="chat"
+  >
+    <div class="sem-mensagem">
+      Carregando conversa...
     </div>
+  </div>
+
+  <textarea
+    id="novaMensagem"
+    placeholder="Digite sua mensagem..."
+  ></textarea>
+
+  <button
+    type="button"
+    id="btnEnviarMensagem"
+    class="btn-principal"
+    onclick="enviarMensagemChat()"
+  >
+    Enviar mensagem
+  </button>
+
+  <button
+    type="button"
+    class="btn-secundario"
+    onclick="pararAtualizacaoChat(); mostrar('listaConversas')"
+  >
+    Voltar
+  </button>
+
+  <p id="chatMensagem"></p>
+
+</div>
+```
 
   </div>
 
 </div>
 
-
 <!-- SUPABASE -->
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
@@ -823,6 +872,8 @@ let conversaUsuarioNome = "";
 
 let intervaloChat = null;
 
+let anuncioEditandoId = null;
+
 
 /* ESCAPAR HTML */
 
@@ -845,22 +896,25 @@ function escapeHtml(valor) {
 
 function mostrar(tela) {
 
-const telas = [
-  "inicio",
-  "cadastro",
-  "login",
-  "painel",
-  "meuPerfil",
-  "criarAnuncio",
-  "listaAnuncios",
-  "listaFavoritos",
-  "listaConversas",
-  "chatTela"
-];
+  const telas = [
+    "inicio",
+    "cadastro",
+    "login",
+    "painel",
+    "meuPerfil",
+    "admin",
+    "criarAnuncio",
+    "listaAnuncios",
+    "editarAnuncio",
+    "listaFavoritos",
+    "listaConversas",
+    "chatTela"
+  ];
 
   telas.forEach(function(id) {
 
-    const elemento = document.getElementById(id);
+    const elemento =
+      document.getElementById(id);
 
     if (elemento) {
       elemento.classList.add("hidden");
@@ -868,7 +922,8 @@ const telas = [
 
   });
 
-  const destino = document.getElementById(tela);
+  const destino =
+    document.getElementById(tela);
 
   if (destino) {
 
@@ -881,7 +936,10 @@ const telas = [
 
   } else {
 
-    console.error("Tela não encontrada:", tela);
+    console.error(
+      "Tela não encontrada:",
+      tela
+    );
 
   }
 }
@@ -967,12 +1025,6 @@ async function cadastrar() {
 
       return;
     }
-
-
-    /*
-      Se o Supabase confirmar automaticamente
-      o usuário, criamos o perfil imediatamente.
-    */
 
     if (resultado.data.session) {
 
@@ -1194,8 +1246,13 @@ async function sair() {
 
   conversaUsuarioNome = "";
 
+  anuncioEditandoId = null;
+
   mostrar("inicio");
 }
+
+
+/* MEU PERFIL */
 
 async function abrirMeuPerfil() {
 
@@ -1204,24 +1261,31 @@ async function abrirMeuPerfil() {
     return;
   }
 
-  const mensagem = document.getElementById("perfilMensagem");
+  const mensagem =
+    document.getElementById("perfilMensagem");
 
   mensagem.className = "";
-  mensagem.textContent = "Carregando perfil...";
+  mensagem.textContent =
+    "Carregando perfil...";
 
   document.getElementById("perfilEmail").textContent =
     "E-mail: " + (usuario.email || "");
 
-  const { data, error } = await supabaseClient
-    .from("profiles")
-    .select("nome, telefone")
-    .eq("id", usuario.id)
-    .maybeSingle();
+  const { data, error } =
+    await supabaseClient
+      .from("profiles")
+      .select("nome, telefone")
+      .eq("id", usuario.id)
+      .maybeSingle();
 
   if (error) {
+
     mensagem.className = "erro";
-    mensagem.textContent = "Erro ao carregar perfil.";
+    mensagem.textContent =
+      "Erro ao carregar perfil.";
+
     console.error(error);
+
     return;
   }
 
@@ -1254,26 +1318,35 @@ async function salvarPerfil() {
     document.getElementById("perfilMensagem");
 
   if (!nome) {
+
     mensagem.className = "erro";
-    mensagem.textContent = "Digite seu nome.";
+    mensagem.textContent =
+      "Digite seu nome.";
+
     return;
   }
 
   mensagem.className = "";
-  mensagem.textContent = "Salvando...";
+  mensagem.textContent =
+    "Salvando...";
 
-  const { error } = await supabaseClient
-    .from("profiles")
-    .update({
-      nome: nome,
-      telefone: telefone
-    })
-    .eq("id", usuario.id);
+  const { error } =
+    await supabaseClient
+      .from("profiles")
+      .update({
+        nome: nome,
+        telefone: telefone
+      })
+      .eq("id", usuario.id);
 
   if (error) {
+
     mensagem.className = "erro";
-    mensagem.textContent = "Erro ao salvar perfil.";
+    mensagem.textContent =
+      "Erro ao salvar perfil.";
+
     console.error(error);
+
     return;
   }
 
@@ -1281,13 +1354,14 @@ async function salvarPerfil() {
     "Olá, " + nome + "!";
 
   mensagem.className = "sucesso";
+
   mensagem.textContent =
     "Perfil atualizado com sucesso!";
 }
 
 
 /* CRIAR ANÚNCIO */
-  
+
 async function criarAnuncio() {
 
   if (!usuario) {
@@ -1299,7 +1373,9 @@ async function criarAnuncio() {
     document.getElementById("anNome").value.trim();
 
   const idade =
-    Number(document.getElementById("anIdade").value);
+    Number(
+      document.getElementById("anIdade").value
+    );
 
   const cidade =
     document.getElementById("anCidade").value.trim();
@@ -1318,7 +1394,12 @@ async function criarAnuncio() {
   mensagem.className = "";
   mensagem.textContent = "";
 
-  if (!nome || !idade || !cidade || !descricao) {
+  if (
+    !nome ||
+    !idade ||
+    !cidade ||
+    !descricao
+  ) {
 
     mensagem.className = "erro";
 
@@ -1366,7 +1447,10 @@ async function criarAnuncio() {
       return;
     }
 
-    if (arquivo.size > 10 * 1024 * 1024) {
+    if (
+      arquivo.size >
+      10 * 1024 * 1024
+    ) {
 
       mensagem.className = "erro";
 
@@ -1418,9 +1502,14 @@ async function criarAnuncio() {
 
     const fotosSalvas = [];
 
-    for (let i = 0; i < arquivos.length; i++) {
+    for (
+      let i = 0;
+      i < arquivos.length;
+      i++
+    ) {
 
-      const arquivo = arquivos[i];
+      const arquivo =
+        arquivos[i];
 
       const extensao =
         arquivo.name
@@ -1448,7 +1537,10 @@ async function criarAnuncio() {
         await supabaseClient
           .storage
           .from("fotos-anuncios")
-          .upload(caminho, arquivo);
+          .upload(
+            caminho,
+            arquivo
+          );
 
       if (upload.error) {
 
@@ -1506,8 +1598,11 @@ async function criarAnuncio() {
       await supabaseClient
         .from("anuncios")
         .update({
-          foto_url: fotosSalvas[0].foto_url,
-          foto_principal: fotosSalvas[0].foto_url
+          foto_url:
+            fotosSalvas[0].foto_url,
+
+          foto_principal:
+            fotosSalvas[0].foto_url
         })
         .eq("id", anuncioId)
         .eq("usuario_id", usuario.id);
@@ -1557,9 +1652,12 @@ async function listarAnuncios() {
       await supabaseClient
         .from("anuncios")
         .select(
-          "id,usuario_id,nome,idade,cidade,descricao,foto_url"
+          "id,usuario_id,nome,idade,cidade,descricao,foto_url,destaque,destaque_ate"
         )
         .eq("ativo", true)
+        .order("destaque", {
+          ascending: false
+        })
         .order("created_at", {
           ascending: false
         });
@@ -1599,7 +1697,10 @@ async function listarAnuncios() {
         .select(
           "id,anuncio_id,foto_url,ordem"
         )
-        .in("anuncio_id", idsAnuncios)
+        .in(
+          "anuncio_id",
+          idsAnuncios
+        )
         .order("ordem", {
           ascending: true
         });
@@ -1635,6 +1736,7 @@ async function listarAnuncios() {
           fotosDoAnuncio.length === 0 &&
           anuncio.foto_url
         ) {
+
           fotosDoAnuncio = [
             {
               foto_url: anuncio.foto_url,
@@ -1648,8 +1750,20 @@ async function listarAnuncios() {
             return foto.foto_url;
           });
 
-        window.galeriasAnuncios[anuncio.id] = urls;
-        window.fotosAtuaisAnuncios[anuncio.id] = 0;
+        window.galeriasAnuncios[
+          anuncio.id
+        ] = urls;
+
+        window.fotosAtuaisAnuncios[
+          anuncio.id
+        ] = 0;
+
+        const destaqueAtivo =
+          anuncio.destaque === true &&
+          anuncio.destaque_ate &&
+          new Date(
+            anuncio.destaque_ate
+          ) > new Date();
 
         let galeria = "";
 
@@ -1747,7 +1861,10 @@ async function listarAnuncios() {
                     ">
 
                       ${
-                        urls.map(function(url, indice) {
+                        urls.map(function(
+                          url,
+                          indice
+                        ) {
 
                           return `
                             <img
@@ -1779,106 +1896,126 @@ async function listarAnuncios() {
 
         }
 
-  return `
-  <div
-    class="anuncio"
-    style="
-      margin-bottom:25px;
-      padding:15px;
-      border-radius:16px;
-      box-shadow:0 3px 12px rgba(0,0,0,0.12);
-      background:white;
-    "
-  >
+        return `
+          <div
+            class="anuncio ${
+              destaqueAtivo
+                ? "anuncio-destaque"
+                : ""
+            }"
+            style="
+              margin-bottom:25px;
+              padding:15px;
+              border-radius:16px;
+              box-shadow:0 3px 12px rgba(0,0,0,0.12);
+              background:white;
+            "
+          >
 
-    ${galeria}
+            ${
+              destaqueAtivo
+                ? `
+                  <div class="selo-destaque">
+                    ⭐ DESTAQUE
+                  </div>
+                `
+                : ""
+            }
 
-    <div style="
-      text-align:left;
-      padding:0 5px;
-    ">
+            ${galeria}
 
-      <h3 style="
-        margin:8px 0;
-        font-size:22px;
-      ">
-        ${escapeHtml(anuncio.nome)}
-        <span style="
-          font-weight:normal;
-          font-size:18px;
-        ">
-          - ${escapeHtml(anuncio.idade)}
-        </span>
-      </h3>
+            <div style="
+              text-align:left;
+              padding:0 5px;
+            ">
 
-      <p style="
-        margin:8px 0;
-        font-size:16px;
-      ">
-        📍
-        <strong>Cidade:</strong>
-        ${escapeHtml(anuncio.cidade)}
-      </p>
+              <h3 style="
+                margin:8px 0;
+                font-size:22px;
+              ">
+                ${
+                  destaqueAtivo
+                    ? "⭐ "
+                    : ""
+                }
+                ${escapeHtml(anuncio.nome)}
+                <span style="
+                  font-weight:normal;
+                  font-size:18px;
+                ">
+                  - ${escapeHtml(anuncio.idade)}
+                </span>
+              </h3>
 
-      <p style="
-        margin:12px 0 16px 0;
-        line-height:1.5;
-      ">
-        ${escapeHtml(anuncio.descricao)}
-      </p>
+              <p style="
+                margin:8px 0;
+                font-size:16px;
+              ">
+                📍
+                <strong>Cidade:</strong>
+                ${escapeHtml(anuncio.cidade)}
+              </p>
 
-      <div style="
-        display:flex;
-        flex-wrap:wrap;
-        gap:8px;
-      ">
+              <p style="
+                margin:12px 0 16px 0;
+                line-height:1.5;
+              ">
+                ${escapeHtml(anuncio.descricao)}
+              </p>
 
-        <button
-          type="button"
-          class="btn-roxo"
-          onclick="favoritarAnuncio('${anuncio.id}')"
-        >
-          ❤️ Favoritar
-        </button>
+              <div style="
+                display:flex;
+                flex-wrap:wrap;
+                gap:8px;
+              ">
 
-${
-  usuario && anuncio.usuario_id === usuario.id
-    ? `
-      <button
-        type="button"
-        class="btn-roxo"
-        onclick="editarAnuncio('${anuncio.id}')"
-      >
-        ✏️ Editar anúncio
-      </button>
+                <button
+                  type="button"
+                  class="btn-roxo"
+                  onclick="favoritarAnuncio('${anuncio.id}')"
+                >
+                  ❤️ Favoritar
+                </button>
 
-      <button
-        type="button"
-        class="btn-roxo"
-        onclick="abrirDestaque('${anuncio.id}')"
-      >
-        ⭐ Destacar anúncio
-      </button>
-    `
-    : usuario
-      ? `
-        <button
-          type="button"
-          class="btn-principal"
-          onclick="abrirConversa('${anuncio.usuario_id}', '${escapeHtml(anuncio.nome).replace(/'/g, "\\'")}')"
-        >
-          💬 Enviar mensagem
-        </button>
-      `
-      : ""
-}
+                ${
+                  usuario &&
+                  anuncio.usuario_id === usuario.id
+                    ? `
+                      <button
+                        type="button"
+                        class="btn-roxo"
+                        onclick="editarAnuncio('${anuncio.id}')"
+                      >
+                        ✏️ Editar anúncio
+                      </button>
 
-      </div>
+                      <button
+                        type="button"
+                        class="btn-roxo"
+                        onclick="abrirDestaque('${anuncio.id}')"
+                      >
+                        ⭐ Destacar anúncio
+                      </button>
+                    `
+                    : usuario
+                      ? `
+                        <button
+                          type="button"
+                          class="btn-principal"
+                          onclick="abrirConversa('${anuncio.usuario_id}', '${escapeHtml(anuncio.nome).replace(/'/g, "\\'")}')"
+                        >
+                          💬 Enviar mensagem
+                        </button>
+                      `
+                      : ""
+                }
 
-    </div>
+              </div>
 
-   </div>
-`;
+            </div>
+
+          </div>
+        `;
 
       }).join("");
 
@@ -1894,7 +2031,9 @@ ${
   }
 }
 
-  
+
+/* SOLICITAR DESTAQUE */
+
 function abrirDestaque(anuncioId) {
 
   if (!usuario) {
@@ -1915,22 +2054,31 @@ function abrirDestaque(anuncioId) {
     return;
   }
 
-  criarSolicitacaoDestaque(anuncioId, valor);
+  criarSolicitacaoDestaque(
+    anuncioId,
+    valor
+  );
 }
 
-  
-  async function criarSolicitacaoDestaque(anuncioId, valor) {
+
+async function criarSolicitacaoDestaque(
+  anuncioId,
+  valor
+) {
 
   if (!usuario) {
     mostrar("login");
     return;
   }
 
-  const inicio = new Date();
+  const inicio =
+    new Date();
 
-  const fim = new Date(
-    inicio.getTime() + 24 * 60 * 60 * 1000
-  );
+  const fim =
+    new Date(
+      inicio.getTime() +
+      24 * 60 * 60 * 1000
+    );
 
   const resultado =
     await supabaseClient
@@ -1945,6 +2093,7 @@ function abrirDestaque(anuncioId) {
       });
 
   if (resultado.error) {
+
     console.error(
       "Erro ao criar solicitação de destaque:",
       resultado.error
@@ -1965,8 +2114,10 @@ function abrirDestaque(anuncioId) {
   );
 }
 
-  
-  async function abrirAdmin() {
+
+/* ADMIN */
+
+async function abrirAdmin() {
 
   if (!usuario) {
     mostrar("login");
@@ -1980,17 +2131,23 @@ function abrirDestaque(anuncioId) {
       .eq("id", usuario.id)
       .maybeSingle();
 
-  if (resultado.error || !resultado.data) {
+  if (
+    resultado.error ||
+    !resultado.data
+  ) {
+
     alert("Acesso negado.");
+
     return;
   }
 
   mostrar("admin");
+
   listarSolicitacoesDestaque();
 }
 
 
-  async function listarSolicitacoesDestaque() {
+async function listarSolicitacoesDestaque() {
 
   const conteudo =
     document.getElementById("conteudoAdmin");
@@ -2015,7 +2172,9 @@ function abrirDestaque(anuncioId) {
           cidade
         )
       `)
-      .order("created_at", { ascending: false });
+      .order("created_at", {
+        ascending: false
+      });
 
   if (resultado.error) {
 
@@ -2030,7 +2189,10 @@ function abrirDestaque(anuncioId) {
     return;
   }
 
-  if (!resultado.data || resultado.data.length === 0) {
+  if (
+    !resultado.data ||
+    resultado.data.length === 0
+  ) {
 
     conteudo.innerHTML =
       '<div class="sem-mensagem">Nenhuma solicitação encontrada.</div>';
@@ -2042,10 +2204,12 @@ function abrirDestaque(anuncioId) {
     resultado.data.map(function(item) {
 
       const nomeAnuncio =
-        item.anuncios?.nome || "Anúncio";
+        item.anuncios?.nome ||
+        "Anúncio";
 
       const cidade =
-        item.anuncios?.cidade || "";
+        item.anuncios?.cidade ||
+        "";
 
       return `
         <div class="anuncio">
@@ -2061,7 +2225,11 @@ function abrirDestaque(anuncioId) {
 
           <p>
             <strong>Valor:</strong>
-            R$ ${Number(item.valor).toFixed(2).replace(".", ",")}
+            R$ ${
+              Number(item.valor)
+                .toFixed(2)
+                .replace(".", ",")
+            }
           </p>
 
           <p>
@@ -2070,7 +2238,7 @@ function abrirDestaque(anuncioId) {
           </p>
 
           ${
-            item.status === "pendente" || item.status === "aprovado"
+            item.status === "pendente"
               ? `
                 <button
                   type="button"
@@ -2080,7 +2248,13 @@ function abrirDestaque(anuncioId) {
                   ✅ Aprovar destaque
                 </button>
               `
-              : ""
+              : item.status === "aprovado"
+                ? `
+                  <p class="sucesso">
+                    ⭐ Destaque aprovado
+                  </p>
+                `
+                : ""
           }
 
         </div>
@@ -2090,17 +2264,22 @@ function abrirDestaque(anuncioId) {
 }
 
 
-  async function aprovarDestaque(destaqueId) {
+/* APROVAR DESTAQUE */
+
+async function aprovarDestaque(
+  destaqueId
+) {
 
   if (!usuario) {
     mostrar("login");
     return;
   }
 
-  const confirmar = confirm(
-    "Deseja aprovar este destaque?\n\n" +
-    "O anúncio ficará destacado por 24 horas."
-  );
+  const confirmar =
+    confirm(
+      "Deseja aprovar este destaque?\n\n" +
+      "O anúncio ficará destacado por 24 horas."
+    );
 
   if (!confirmar) {
     return;
@@ -2113,16 +2292,26 @@ function abrirDestaque(anuncioId) {
       .eq("id", destaqueId)
       .single();
 
-  if (busca.error || !busca.data) {
-    alert("Não foi possível encontrar o anúncio.");
+  if (
+    busca.error ||
+    !busca.data
+  ) {
+
+    alert(
+      "Não foi possível encontrar o anúncio."
+    );
+
     return;
   }
 
-  const inicio = new Date();
+  const inicio =
+    new Date();
 
-  const fim = new Date(
-    inicio.getTime() + 24 * 60 * 60 * 1000
-  );
+  const fim =
+    new Date(
+      inicio.getTime() +
+      24 * 60 * 60 * 1000
+    );
 
   const destaque =
     await supabaseClient
@@ -2135,8 +2324,15 @@ function abrirDestaque(anuncioId) {
       .eq("id", destaqueId);
 
   if (destaque.error) {
-    console.error(destaque.error);
-    alert("Erro ao aprovar o destaque.");
+
+    console.error(
+      destaque.error
+    );
+
+    alert(
+      "Erro ao aprovar o destaque."
+    );
+
     return;
   }
 
@@ -2145,13 +2341,24 @@ function abrirDestaque(anuncioId) {
       .from("anuncios")
       .update({
         destaque: true,
-        destaque_ate: fim.toISOString()
+        destaque_ate:
+          fim.toISOString()
       })
-      .eq("id", busca.data.anuncio_id);
+      .eq(
+        "id",
+        busca.data.anuncio_id
+      );
 
   if (anuncio.error) {
-    console.error(anuncio.error);
-    alert("O destaque foi aprovado, mas não foi possível ativá-lo no anúncio.");
+
+    console.error(
+      anuncio.error
+    );
+
+    alert(
+      "O destaque foi aprovado, mas não foi possível ativá-lo no anúncio."
+    );
+
     return;
   }
 
@@ -2162,8 +2369,10 @@ function abrirDestaque(anuncioId) {
 
   listarSolicitacoesDestaque();
 }
-  
-  
+
+
+/* FILTROS */
+
 function filtrarAnuncios() {
 
   const cidade =
@@ -2175,25 +2384,32 @@ function filtrarAnuncios() {
 
   const idadeMin =
     Number(
-      document.getElementById("filtroIdadeMin").value
+      document
+        .getElementById("filtroIdadeMin")
+        .value
     ) || 18;
 
   const idadeMax =
     Number(
-      document.getElementById("filtroIdadeMax").value
+      document
+        .getElementById("filtroIdadeMax")
+        .value
     ) || 999;
 
   const anuncios =
-    document.querySelectorAll(".anuncio");
+    document.querySelectorAll(
+      "#conteudoAnuncios .anuncio"
+    );
 
   anuncios.forEach(function(anuncio) {
 
-    const texto =
-      anuncio.innerText.toLowerCase();
+    const cidadeAnuncio =
+      anuncio.innerText
+        .toLowerCase();
 
     const encontrouCidade =
       !cidade ||
-      texto.includes(cidade);
+      cidadeAnuncio.includes(cidade);
 
     const titulo =
       anuncio.querySelector("h3");
@@ -2209,9 +2425,12 @@ function filtrarAnuncios() {
         textoTitulo.split("-");
 
       if (partes.length > 1) {
+
         idade =
           Number(
-            partes[partes.length - 1].trim()
+            partes[
+              partes.length - 1
+            ].trim()
           );
       }
     }
@@ -2220,18 +2439,11 @@ function filtrarAnuncios() {
       idade >= idadeMin &&
       idade <= idadeMax;
 
-    if (
+    anuncio.style.display =
       encontrouCidade &&
       encontrouIdade
-    ) {
-
-      anuncio.style.display = "";
-
-    } else {
-
-      anuncio.style.display = "none";
-
-    }
+        ? ""
+        : "none";
 
   });
 }
@@ -2252,7 +2464,9 @@ function limparFiltros() {
   ).value = "";
 
   const anuncios =
-    document.querySelectorAll(".anuncio");
+    document.querySelectorAll(
+      "#conteudoAnuncios .anuncio"
+    );
 
   anuncios.forEach(function(anuncio) {
 
@@ -2260,28 +2474,43 @@ function limparFiltros() {
 
   });
 }
-  
 
-function trocarFotoGaleria(anuncioId, direcao) {
+
+/* GALERIA */
+
+function trocarFotoGaleria(
+  anuncioId,
+  direcao
+) {
 
   const fotos =
     window.galeriasAnuncios &&
-    window.galeriasAnuncios[anuncioId];
+    window.galeriasAnuncios[
+      anuncioId
+    ];
 
-  if (!fotos || fotos.length === 0) {
+  if (
+    !fotos ||
+    fotos.length === 0
+  ) {
     return;
   }
 
   let indice =
-    window.fotosAtuaisAnuncios[anuncioId] || 0;
+    window.fotosAtuaisAnuncios[
+      anuncioId
+    ] || 0;
 
   indice += direcao;
 
   if (indice < 0) {
-    indice = fotos.length - 1;
+    indice =
+      fotos.length - 1;
   }
 
-  if (indice >= fotos.length) {
+  if (
+    indice >= fotos.length
+  ) {
     indice = 0;
   }
 
@@ -2292,40 +2521,61 @@ function trocarFotoGaleria(anuncioId, direcao) {
 }
 
 
-function selecionarFotoGaleria(anuncioId, indice) {
+function selecionarFotoGaleria(
+  anuncioId,
+  indice
+) {
 
   const fotos =
     window.galeriasAnuncios &&
-    window.galeriasAnuncios[anuncioId];
+    window.galeriasAnuncios[
+      anuncioId
+    ];
 
-  if (!fotos || !fotos[indice]) {
+  if (
+    !fotos ||
+    !fotos[indice]
+  ) {
     return;
   }
 
-  window.fotosAtuaisAnuncios[anuncioId] =
-    indice;
+  window.fotosAtuaisAnuncios[
+    anuncioId
+  ] = indice;
 
   const imagem =
     document.getElementById(
-      "foto-principal-" + anuncioId
+      "foto-principal-" +
+      anuncioId
     );
 
   if (imagem) {
-    imagem.src = fotos[indice];
 
-    imagem.onclick = function() {
-      abrirFotoGrande(fotos[indice]);
-    };
+    imagem.src =
+      fotos[indice];
+
+    imagem.onclick =
+      function() {
+
+        abrirFotoGrande(
+          fotos[indice]
+        );
+
+      };
   }
 
   const contador =
     document.getElementById(
-      "contador-fotos-" + anuncioId
+      "contador-fotos-" +
+      anuncioId
     );
 
   if (contador) {
+
     contador.textContent =
-      (indice + 1) + " / " + fotos.length;
+      (indice + 1) +
+      " / " +
+      fotos.length;
   }
 }
 
@@ -2340,14 +2590,17 @@ function abrirFotoGrande(url) {
   janela.style.left = "0";
   janela.style.width = "100%";
   janela.style.height = "100%";
-  janela.style.background = "rgba(0,0,0,0.92)";
+  janela.style.background =
+    "rgba(0,0,0,0.92)";
   janela.style.display = "flex";
   janela.style.alignItems = "center";
   janela.style.justifyContent = "center";
   janela.style.zIndex = "99999";
   janela.style.padding = "20px";
-  janela.style.boxSizing = "border-box";
-  janela.style.cursor = "pointer";
+  janela.style.boxSizing =
+    "border-box";
+  janela.style.cursor =
+    "pointer";
 
   janela.innerHTML = `
     <img
@@ -2361,54 +2614,18 @@ function abrirFotoGrande(url) {
     >
   `;
 
-  janela.onclick = function() {
-    janela.remove();
-  };
+  janela.onclick =
+    function() {
+      janela.remove();
+    };
 
-  document.body.appendChild(janela);
+  document.body.appendChild(
+    janela
+  );
 }
 
 
-function abrirFotoGrande(url) {
-
-  const janela =
-    document.createElement("div");
-
-  janela.style.position = "fixed";
-  janela.style.top = "0";
-  janela.style.left = "0";
-  janela.style.width = "100%";
-  janela.style.height = "100%";
-  janela.style.background = "rgba(0,0,0,0.92)";
-  janela.style.display = "flex";
-  janela.style.alignItems = "center";
-  janela.style.justifyContent = "center";
-  janela.style.zIndex = "99999";
-  janela.style.padding = "20px";
-  janela.style.boxSizing = "border-box";
-  janela.style.cursor = "pointer";
-
-  janela.innerHTML = `
-    <img
-      src="${escapeHtml(url)}"
-      style="
-        max-width:100%;
-        max-height:100%;
-        object-fit:contain;
-        border-radius:10px;
-      "
-    >
-  `;
-
-  janela.onclick = function() {
-    janela.remove();
-  };
-
-  document.body.appendChild(janela);
-}
-  
-  
-  /* EDITAR ANÚNCIO */
+/* EDITAR ANÚNCIO */
 
 async function editarAnuncio(id) {
 
@@ -2417,11 +2634,16 @@ async function editarAnuncio(id) {
     return;
   }
 
+  anuncioEditandoId = id;
+
   const mensagem =
-    document.getElementById("editarAnuncioMensagem");
+    document.getElementById(
+      "editarAnuncioMensagem"
+    );
 
   mensagem.className = "";
-  mensagem.textContent = "Carregando anúncio...";
+  mensagem.textContent =
+    "Carregando anúncio...";
 
   const { data, error } =
     await supabaseClient
@@ -2441,6 +2663,7 @@ async function editarAnuncio(id) {
     );
 
     mensagem.className = "erro";
+
     mensagem.textContent =
       "Erro ao carregar anúncio.";
 
@@ -2450,25 +2673,36 @@ async function editarAnuncio(id) {
   if (!data) {
 
     mensagem.className = "erro";
+
     mensagem.textContent =
       "Anúncio não encontrado.";
 
     return;
   }
 
-  document.getElementById("editarNome").value =
+  document.getElementById(
+    "editarNome"
+  ).value =
     data.nome || "";
 
-  document.getElementById("editarIdade").value =
+  document.getElementById(
+    "editarIdade"
+  ).value =
     data.idade || "";
 
-  document.getElementById("editarCidade").value =
+  document.getElementById(
+    "editarCidade"
+  ).value =
     data.cidade || "";
 
-  document.getElementById("editarDescricao").value =
+  document.getElementById(
+    "editarDescricao"
+  ).value =
     data.descricao || "";
 
-  document.getElementById("editarFoto").value =
+  document.getElementById(
+    "editarFoto"
+  ).value =
     data.foto_url || "";
 
   mensagem.textContent = "";
@@ -2476,40 +2710,87 @@ async function editarAnuncio(id) {
   mostrar("editarAnuncio");
 }
 
-  async function salvarEdicaoAnuncio() {
+
+async function salvarEdicaoAnuncio() {
 
   if (!usuario) {
     mostrar("login");
     return;
   }
 
+  if (!anuncioEditandoId) {
+
+    alert(
+      "Nenhum anúncio selecionado."
+    );
+
+    return;
+  }
+
   const nome =
-    document.getElementById("editarNome").value.trim();
+    document
+      .getElementById("editarNome")
+      .value
+      .trim();
 
   const idade =
-    document.getElementById("editarIdade").value.trim();
+    Number(
+      document
+        .getElementById("editarIdade")
+        .value
+    );
 
   const cidade =
-    document.getElementById("editarCidade").value.trim();
+    document
+      .getElementById("editarCidade")
+      .value
+      .trim();
 
   const descricao =
-    document.getElementById("editarDescricao").value.trim();
+    document
+      .getElementById("editarDescricao")
+      .value
+      .trim();
 
   const foto_url =
-    document.getElementById("editarFoto").value.trim();
+    document
+      .getElementById("editarFoto")
+      .value
+      .trim();
 
   const mensagem =
-    document.getElementById("editarAnuncioMensagem");
+    document.getElementById(
+      "editarAnuncioMensagem"
+    );
 
-  if (!nome || !idade || !cidade || !descricao) {
+  if (
+    !nome ||
+    !idade ||
+    !cidade ||
+    !descricao
+  ) {
+
     mensagem.className = "erro";
+
     mensagem.textContent =
       "Preencha nome, idade, cidade e descrição.";
+
+    return;
+  }
+
+  if (idade < 18) {
+
+    mensagem.className = "erro";
+
+    mensagem.textContent =
+      "O anúncio é permitido somente para maiores de 18 anos.";
+
     return;
   }
 
   mensagem.className = "";
-  mensagem.textContent = "Salvando alterações...";
+  mensagem.textContent =
+    "Salvando alterações...";
 
   const { data, error } =
     await supabaseClient
@@ -2519,9 +2800,17 @@ async function editarAnuncio(id) {
         idade: idade,
         cidade: cidade,
         descricao: descricao,
-        foto_url: foto_url || null
+        foto_url:
+          foto_url || null
       })
-      .eq("usuario_id", usuario.id)
+      .eq(
+        "id",
+        anuncioEditandoId
+      )
+      .eq(
+        "usuario_id",
+        usuario.id
+      )
       .select();
 
   if (error) {
@@ -2532,15 +2821,20 @@ async function editarAnuncio(id) {
     );
 
     mensagem.className = "erro";
+
     mensagem.textContent =
       "Erro ao salvar alterações.";
 
     return;
   }
 
-  if (!data || data.length === 0) {
+  if (
+    !data ||
+    data.length === 0
+  ) {
 
     mensagem.className = "erro";
+
     mensagem.textContent =
       "Nenhum anúncio foi atualizado.";
 
@@ -2548,30 +2842,47 @@ async function editarAnuncio(id) {
   }
 
   mensagem.className = "sucesso";
+
   mensagem.textContent =
     "Anúncio atualizado com sucesso!";
-
 }
 
-  async function excluirMeuAnuncio() {
+
+/* EXCLUIR ANÚNCIO */
+
+async function excluirMeuAnuncio() {
 
   if (!usuario) {
     mostrar("login");
     return;
   }
 
+  if (!anuncioEditandoId) {
+
+    alert(
+      "Nenhum anúncio selecionado."
+    );
+
+    return;
+  }
+
   const confirmar =
-    confirm("Tem certeza que deseja excluir este anúncio?");
+    confirm(
+      "Tem certeza que deseja excluir este anúncio?"
+    );
 
   if (!confirmar) {
     return;
   }
 
   const mensagem =
-    document.getElementById("editarAnuncioMensagem");
+    document.getElementById(
+      "editarAnuncioMensagem"
+    );
 
   mensagem.className = "";
-  mensagem.textContent = "Excluindo anúncio...";
+  mensagem.textContent =
+    "Excluindo anúncio...";
 
   const { error } =
     await supabaseClient
@@ -2579,7 +2890,14 @@ async function editarAnuncio(id) {
       .update({
         ativo: false
       })
-      .eq("usuario_id", usuario.id);
+      .eq(
+        "id",
+        anuncioEditandoId
+      )
+      .eq(
+        "usuario_id",
+        usuario.id
+      );
 
   if (error) {
 
@@ -2589,6 +2907,7 @@ async function editarAnuncio(id) {
     );
 
     mensagem.className = "erro";
+
     mensagem.textContent =
       "Erro ao excluir anúncio.";
 
@@ -2596,18 +2915,25 @@ async function editarAnuncio(id) {
   }
 
   mensagem.className = "sucesso";
+
   mensagem.textContent =
     "Anúncio excluído com sucesso!";
 
+  anuncioEditandoId = null;
+
   setTimeout(function() {
+
     mostrar("painel");
+
   }, 1200);
 }
-  
+
 
 /* FAVORITAR */
 
-async function favoritarAnuncio(anuncioId) {
+async function favoritarAnuncio(
+  anuncioId
+) {
 
   if (!usuario) {
 
@@ -2622,8 +2948,14 @@ async function favoritarAnuncio(anuncioId) {
       await supabaseClient
         .from("favoritos")
         .select("id")
-        .eq("usuario_id", usuario.id)
-        .eq("anuncio_id", anuncioId)
+        .eq(
+          "usuario_id",
+          usuario.id
+        )
+        .eq(
+          "anuncio_id",
+          anuncioId
+        )
         .maybeSingle();
 
     if (existente.error) {
@@ -2696,7 +3028,9 @@ async function listarFavoritos() {
   mostrar("listaFavoritos");
 
   const conteudo =
-    document.getElementById("conteudoFavoritos");
+    document.getElementById(
+      "conteudoFavoritos"
+    );
 
   conteudo.innerHTML =
     '<div class="sem-mensagem">Carregando favoritos...</div>';
@@ -2726,7 +3060,10 @@ async function listarFavoritos() {
             foto_url
           )
         `)
-        .eq("usuario_id", usuario.id)
+        .eq(
+          "usuario_id",
+          usuario.id
+        )
         .order("id", {
           ascending: false
         });
@@ -2829,7 +3166,10 @@ async function listarFavoritos() {
 
 /* ABRIR CONVERSA */
 
-async function abrirConversa(id, nome) {
+async function abrirConversa(
+  id,
+  nome
+) {
 
   if (!usuario) {
 
@@ -2849,14 +3189,22 @@ async function abrirConversa(id, nome) {
 
   conversaUsuarioId = id;
 
-  conversaUsuarioNome = nome || "Usuário";
+  conversaUsuarioNome =
+    nome || "Usuário";
 
-  document.getElementById("tituloChat").textContent =
-    "Conversa com " + conversaUsuarioNome;
+  document.getElementById(
+    "tituloChat"
+  ).textContent =
+    "Conversa com " +
+    conversaUsuarioNome;
 
-  document.getElementById("novaMensagem").value = "";
+  document.getElementById(
+    "novaMensagem"
+  ).value = "";
 
-  document.getElementById("chatMensagem").textContent = "";
+  document.getElementById(
+    "chatMensagem"
+  ).textContent = "";
 
   mostrar("chatTela");
 
@@ -2870,7 +3218,10 @@ async function abrirConversa(id, nome) {
 
 async function carregarChat() {
 
-  if (!usuario || !conversaUsuarioId) {
+  if (
+    !usuario ||
+    !conversaUsuarioId
+  ) {
     return;
   }
 
@@ -2882,12 +3233,17 @@ async function carregarChat() {
 
 async function buscarMensagensChat() {
 
-  if (!usuario || !conversaUsuarioId) {
+  if (
+    !usuario ||
+    !conversaUsuarioId
+  ) {
     return;
   }
 
   const conteudo =
-    document.getElementById("conteudoChat");
+    document.getElementById(
+      "conteudoChat"
+    );
 
   try {
 
@@ -2941,7 +3297,8 @@ async function buscarMensagensChat() {
       mensagens.map(function(msg) {
 
         const enviada =
-          msg.remetente_id === usuario.id;
+          msg.remetente_id ===
+          usuario.id;
 
         const classe =
           enviada
@@ -3007,7 +3364,9 @@ function pararAtualizacaoChat() {
 
   if (intervaloChat) {
 
-    clearInterval(intervaloChat);
+    clearInterval(
+      intervaloChat
+    );
 
     intervaloChat = null;
   }
@@ -3018,18 +3377,25 @@ function pararAtualizacaoChat() {
 
 async function enviarMensagemChat() {
 
-  if (!usuario || !conversaUsuarioId) {
+  if (
+    !usuario ||
+    !conversaUsuarioId
+  ) {
     return;
   }
 
   const campo =
-    document.getElementById("novaMensagem");
+    document.getElementById(
+      "novaMensagem"
+    );
 
   const texto =
     campo.value.trim();
 
   const mensagem =
-    document.getElementById("chatMensagem");
+    document.getElementById(
+      "chatMensagem"
+    );
 
   mensagem.className = "";
   mensagem.textContent = "";
@@ -3039,7 +3405,9 @@ async function enviarMensagemChat() {
   }
 
   const botao =
-    document.getElementById("btnEnviarMensagem");
+    document.getElementById(
+      "btnEnviarMensagem"
+    );
 
   botao.disabled = true;
 
@@ -3049,10 +3417,17 @@ async function enviarMensagemChat() {
       await supabaseClient
         .from("mensagens")
         .insert({
-          remetente_id: usuario.id,
-          destinatario_id: conversaUsuarioId,
-          mensagem: texto,
-          lida: false
+          remetente_id:
+            usuario.id,
+
+          destinatario_id:
+            conversaUsuarioId,
+
+          mensagem:
+            texto,
+
+          lida:
+            false
         });
 
     if (resultado.error) {
@@ -3100,7 +3475,9 @@ async function listarConversas() {
   mostrar("listaConversas");
 
   const conteudo =
-    document.getElementById("conteudoConversas");
+    document.getElementById(
+      "conteudoConversas"
+    );
 
   conteudo.innerHTML =
     '<div class="sem-mensagem">Carregando conversas...</div>';
@@ -3169,26 +3546,38 @@ async function listarConversas() {
         mensagens[i];
 
       const outroId =
-        msg.remetente_id === usuario.id
+        msg.remetente_id ===
+        usuario.id
           ? msg.destinatario_id
           : msg.remetente_id;
 
       if (
         outroId &&
-        !idsAdicionados.has(outroId)
+        !idsAdicionados.has(
+          outroId
+        )
       ) {
 
-        idsAdicionados.add(outroId);
+        idsAdicionados.add(
+          outroId
+        );
 
         conversas.push({
-          usuarioId: outroId,
-          ultimaMensagem: msg.mensagem,
-          data: msg.created_at
+          usuarioId:
+            outroId,
+
+          ultimaMensagem:
+            msg.mensagem,
+
+          data:
+            msg.created_at
         });
       }
     }
 
-    if (conversas.length === 0) {
+    if (
+      conversas.length === 0
+    ) {
 
       conteudo.innerHTML =
         '<div class="sem-mensagem">Você ainda não possui conversas.</div>';
@@ -3197,9 +3586,11 @@ async function listarConversas() {
     }
 
     const ids =
-      conversas.map(function(conversa) {
-        return conversa.usuarioId;
-      });
+      conversas.map(
+        function(conversa) {
+          return conversa.usuarioId;
+        }
+      );
 
     const perfis =
       await supabaseClient
@@ -3217,63 +3608,71 @@ async function listarConversas() {
 
     const mapaNomes = {};
 
-    (perfis.data || []).forEach(
-      function(perfil) {
+    (perfis.data || [])
+      .forEach(
+        function(perfil) {
 
-        mapaNomes[perfil.id] =
-          perfil.nome || "Usuário";
+          mapaNomes[
+            perfil.id
+          ] =
+            perfil.nome ||
+            "Usuário";
 
-      }
-    );
+        }
+      );
 
     conteudo.innerHTML =
-      conversas.map(function(conversa) {
+      conversas.map(
+        function(conversa) {
 
-        const nome =
-          mapaNomes[conversa.usuarioId] ||
-          "Usuário";
+          const nome =
+            mapaNomes[
+              conversa.usuarioId
+            ] ||
+            "Usuário";
 
-        let dataFormatada = "";
+          let dataFormatada = "";
 
-        if (conversa.data) {
+          if (conversa.data) {
 
-          dataFormatada =
-            new Date(
-              conversa.data
-            ).toLocaleString(
-              "pt-BR"
-            );
+            dataFormatada =
+              new Date(
+                conversa.data
+              ).toLocaleString(
+                "pt-BR"
+              );
+          }
+
+          return `
+            <div class="conversa">
+
+              <h3>
+                ${escapeHtml(nome)}
+              </h3>
+
+              <p>
+                ${escapeHtml(conversa.ultimaMensagem)}
+              </p>
+
+              <span class="pequeno">
+                ${escapeHtml(dataFormatada)}
+              </span>
+
+              <br>
+
+              <button
+                type="button"
+                class="btn-principal"
+                onclick="abrirConversa('${conversa.usuarioId}', '${escapeHtml(nome).replace(/'/g, "\\'")}')"
+              >
+                Abrir conversa
+              </button>
+
+            </div>
+          `;
+
         }
-
-        return `
-          <div class="conversa">
-
-            <h3>
-              ${escapeHtml(nome)}
-            </h3>
-
-            <p>
-              ${escapeHtml(conversa.ultimaMensagem)}
-            </p>
-
-            <span class="pequeno">
-              ${escapeHtml(dataFormatada)}
-            </span>
-
-            <br>
-
-            <button
-              type="button"
-              class="btn-principal"
-              onclick="abrirConversa('${conversa.usuarioId}', '${escapeHtml(nome).replace(/'/g, "\\'")}')"
-            >
-              Abrir conversa
-            </button>
-
-          </div>
-        `;
-
-      }).join("");
+      ).join("");
 
   } catch (erro) {
 
@@ -3291,7 +3690,9 @@ async function listarConversas() {
 /* ENTER NO CHAT */
 
 document
-  .getElementById("novaMensagem")
+  .getElementById(
+    "novaMensagem"
+  )
   .addEventListener(
     "keydown",
     function(event) {
@@ -3313,14 +3714,19 @@ document
 /* AUTENTICAÇÃO */
 
 supabaseClient.auth.onAuthStateChange(
-  function(event, session) {
+  function(
+    event,
+    session
+  ) {
 
     console.log(
       "Evento de autenticação:",
       event
     );
 
-    if (event === "SIGNED_IN") {
+    if (
+      event === "SIGNED_IN"
+    ) {
 
       usuario =
         session
@@ -3333,13 +3739,17 @@ supabaseClient.auth.onAuthStateChange(
       }
     }
 
-    if (event === "SIGNED_OUT") {
+    if (
+      event === "SIGNED_OUT"
+    ) {
 
       usuario = null;
 
       conversaUsuarioId = null;
 
       conversaUsuarioNome = "";
+
+      anuncioEditandoId = null;
 
       pararAtualizacaoChat();
 
@@ -3357,7 +3767,9 @@ async function verificarSessao() {
   try {
 
     const resultado =
-      await supabaseClient.auth.getSession();
+      await supabaseClient
+        .auth
+        .getSession();
 
     const session =
       resultado.data.session;
@@ -3386,7 +3798,7 @@ async function verificarSessao() {
     mostrar("inicio");
   }
 }
-  
+
 
 /* INICIAR */
 
