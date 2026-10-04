@@ -1988,6 +1988,106 @@ function abrirDestaque(anuncioId) {
   mostrar("admin");
   listarSolicitacoesDestaque();
 }
+
+
+  async function listarSolicitacoesDestaque() {
+
+  const conteudo =
+    document.getElementById("conteudoAdmin");
+
+  conteudo.innerHTML =
+    '<div class="sem-mensagem">Carregando solicitações...</div>';
+
+  const resultado =
+    await supabaseClient
+      .from("anuncio_destaques")
+      .select(`
+        id,
+        anuncio_id,
+        usuario_id,
+        inicio,
+        fim,
+        valor,
+        status,
+        created_at,
+        anuncios (
+          nome,
+          cidade
+        )
+      `)
+      .order("created_at", { ascending: false });
+
+  if (resultado.error) {
+
+    console.error(
+      "Erro ao carregar solicitações:",
+      resultado.error
+    );
+
+    conteudo.innerHTML =
+      '<div class="erro">Erro ao carregar solicitações.</div>';
+
+    return;
+  }
+
+  if (!resultado.data || resultado.data.length === 0) {
+
+    conteudo.innerHTML =
+      '<div class="sem-mensagem">Nenhuma solicitação encontrada.</div>';
+
+    return;
+  }
+
+  conteudo.innerHTML =
+    resultado.data.map(function(item) {
+
+      const nomeAnuncio =
+        item.anuncios?.nome || "Anúncio";
+
+      const cidade =
+        item.anuncios?.cidade || "";
+
+      return `
+        <div class="anuncio">
+
+          <h3>
+            ⭐ ${escapeHtml(nomeAnuncio)}
+          </h3>
+
+          <p>
+            <strong>Cidade:</strong>
+            ${escapeHtml(cidade)}
+          </p>
+
+          <p>
+            <strong>Valor:</strong>
+            R$ ${Number(item.valor).toFixed(2).replace(".", ",")}
+          </p>
+
+          <p>
+            <strong>Status:</strong>
+            ${escapeHtml(item.status)}
+          </p>
+
+          ${
+            item.status === "pendente"
+              ? `
+                <button
+                  type="button"
+                  class="btn-principal"
+                  onclick="aprovarDestaque('${item.id}')"
+                >
+                  ✅ Aprovar destaque
+                </button>
+              `
+              : ""
+          }
+
+        </div>
+      `;
+
+    }).join("");
+}
   
   
 function filtrarAnuncios() {
