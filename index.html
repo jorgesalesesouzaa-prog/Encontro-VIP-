@@ -2088,6 +2088,55 @@ function abrirDestaque(anuncioId) {
 
     }).join("");
 }
+
+
+  async function aprovarDestaque(destaqueId) {
+
+  if (!usuario) {
+    mostrar("login");
+    return;
+  }
+
+  const confirmar = confirm(
+    "Deseja aprovar este destaque?\n\n" +
+    "O anúncio ficará destacado por 24 horas."
+  );
+
+  if (!confirmar) {
+    return;
+  }
+
+  const inicio = new Date();
+
+  const fim = new Date(
+    inicio.getTime() + 24 * 60 * 60 * 1000
+  );
+
+  const resultado =
+    await supabaseClient
+      .from("anuncio_destaques")
+      .update({
+        status: "aprovado",
+        inicio: inicio.toISOString(),
+        fim: fim.toISOString()
+      })
+      .eq("id", destaqueId);
+
+  if (resultado.error) {
+
+    console.error(
+      "Erro ao aprovar destaque:",
+      resultado.error
+    );
+
+    alert("Erro ao aprovar o destaque.");
+    return;
+  }
+
+  alert("⭐ Destaque aprovado com sucesso!");
+
+  listarSolicitacoesDestaque();
+}
   
   
 function filtrarAnuncios() {
