@@ -2106,13 +2106,25 @@ function abrirDestaque(anuncioId) {
     return;
   }
 
+  const busca =
+    await supabaseClient
+      .from("anuncio_destaques")
+      .select("anuncio_id")
+      .eq("id", destaqueId)
+      .single();
+
+  if (busca.error || !busca.data) {
+    alert("Não foi possível encontrar o anúncio.");
+    return;
+  }
+
   const inicio = new Date();
 
   const fim = new Date(
     inicio.getTime() + 24 * 60 * 60 * 1000
   );
 
-  const resultado =
+  const destaque =
     await supabaseClient
       .from("anuncio_destaques")
       .update({
@@ -2122,18 +2134,31 @@ function abrirDestaque(anuncioId) {
       })
       .eq("id", destaqueId);
 
-  if (resultado.error) {
-
-    console.error(
-      "Erro ao aprovar destaque:",
-      resultado.error
-    );
-
+  if (destaque.error) {
+    console.error(destaque.error);
     alert("Erro ao aprovar o destaque.");
     return;
   }
 
-  alert("⭐ Destaque aprovado com sucesso!");
+  const anuncio =
+    await supabaseClient
+      .from("anuncios")
+      .update({
+        destaque: true,
+        destaque_ate: fim.toISOString()
+      })
+      .eq("id", busca.data.anuncio_id);
+
+  if (anuncio.error) {
+    console.error(anuncio.error);
+    alert("O destaque foi aprovado, mas não foi possível ativá-lo no anúncio.");
+    return;
+  }
+
+  alert(
+    "⭐ Destaque aprovado com sucesso!\n\n" +
+    "O anúncio ficará destacado por 24 horas."
+  );
 
   listarSolicitacoesDestaque();
 }
