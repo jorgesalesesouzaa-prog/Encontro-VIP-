@@ -1857,6 +1857,77 @@ ${
 }
 
   
+function abrirDestaque(anuncioId) {
+
+  if (!usuario) {
+    mostrar("login");
+    return;
+  }
+
+  const valor = "9.90";
+
+  const confirmar =
+    confirm(
+      "⭐ Destacar anúncio por 24 horas\n\n" +
+      "Valor: R$ 9,90\n\n" +
+      "Deseja continuar?"
+    );
+
+  if (!confirmar) {
+    return;
+  }
+
+  criarSolicitacaoDestaque(anuncioId, valor);
+}
+
+  
+  async function criarSolicitacaoDestaque(anuncioId, valor) {
+
+  if (!usuario) {
+    mostrar("login");
+    return;
+  }
+
+  const inicio = new Date();
+
+  const fim = new Date(
+    inicio.getTime() + 24 * 60 * 60 * 1000
+  );
+
+  const resultado =
+    await supabaseClient
+      .from("anuncio_destaques")
+      .insert({
+        anuncio_id: anuncioId,
+        usuario_id: usuario.id,
+        inicio: inicio.toISOString(),
+        fim: fim.toISOString(),
+        valor: Number(valor),
+        status: "pendente"
+      });
+
+  if (resultado.error) {
+    console.error(
+      "Erro ao criar solicitação de destaque:",
+      resultado.error
+    );
+
+    alert(
+      "Não foi possível criar a solicitação de destaque."
+    );
+
+    return;
+  }
+
+  alert(
+    "⭐ Solicitação de destaque criada!\n\n" +
+    "Valor: R$ 9,90\n" +
+    "Duração: 24 horas\n\n" +
+    "Status: aguardando pagamento."
+  );
+}
+  
+  
 function filtrarAnuncios() {
 
   const cidade =
