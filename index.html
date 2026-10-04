@@ -1964,6 +1964,30 @@ function abrirDestaque(anuncioId) {
     "Status: aguardando pagamento."
   );
 }
+
+  
+  async function abrirAdmin() {
+
+  if (!usuario) {
+    mostrar("login");
+    return;
+  }
+
+  const resultado =
+    await supabaseClient
+      .from("admins")
+      .select("id")
+      .eq("id", usuario.id)
+      .maybeSingle();
+
+  if (resultado.error || !resultado.data) {
+    alert("Acesso negado.");
+    return;
+  }
+
+  mostrar("admin");
+  listarSolicitacoesDestaque();
+}
   
   
 function filtrarAnuncios() {
