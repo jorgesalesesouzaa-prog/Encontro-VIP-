@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
@@ -211,634 +210,554 @@
       font-size: 14px;
       margin: 15px 0;
     }
-  </style>
 
+    .pix-box {
+      background: #f7f1fa;
+      border: 2px solid #6a1b9a;
+      border-radius: 15px;
+      padding: 20px;
+      margin-top: 20px;
+      text-align: center;
+    }
+
+    .pix-qr {
+      max-width: 280px;
+      width: 100%;
+      margin: 15px auto;
+      display: block;
+      border-radius: 10px;
+      background: white;
+      padding: 10px;
+    }
+
+    .pix-codigo {
+      width: 100%;
+      min-height: 120px;
+      resize: none;
+      font-size: 13px;
+      background: white;
+    }
+
+    .valor-pix {
+      font-size: 25px;
+      font-weight: bold;
+      color: #6a1b9a;
+      margin: 10px 0;
+    }
+  </style>
 </head>
 
 <body>
 
 <div class="container">
 
-  <!-- INÍCIO -->
-
   <div id="inicio">
+    <div class="card centro">
+      <h1>Encontro VIP</h1>
 
-```
-<div class="card centro">
+      <p>
+        Conecte-se de forma simples e segura.
+      </p>
 
-  <h1>Encontro VIP</h1>
+      <div class="aviso">
+        <strong>18+:</strong>
+        Este site é destinado exclusivamente
+        a pessoas maiores de 18 anos.
+      </div>
 
-  <p>
-    Conecte-se de forma simples e segura.
-  </p>
+      <button
+        type="button"
+        class="btn-principal"
+        onclick="mostrar('cadastro')"
+      >
+        Criar conta
+      </button>
 
-  <div class="aviso">
-    <strong>18+:</strong>
-    Este site é destinado exclusivamente
-    a pessoas maiores de 18 anos.
+      <button
+        type="button"
+        class="btn-secundario"
+        onclick="mostrar('login')"
+      >
+        Entrar
+      </button>
+    </div>
   </div>
-
-  <button
-    type="button"
-    class="btn-principal"
-    onclick="mostrar('cadastro')"
-  >
-    Criar conta
-  </button>
-
-  <button
-    type="button"
-    class="btn-secundario"
-    onclick="mostrar('login')"
-  >
-    Entrar
-  </button>
-
-</div>
-```
-
-  </div>
-
-  <!-- CADASTRO -->
 
   <div id="cadastro" class="hidden">
+    <div class="card">
+      <h2>Criar conta</h2>
 
-```
-<div class="card">
+      <input id="cadNome" type="text" placeholder="Nome">
+      <input id="cadTelefone" type="text" placeholder="Telefone">
+      <input id="cadEmail" type="email" placeholder="E-mail">
+      <input id="cadSenha" type="password" placeholder="Senha">
 
-  <h2>Criar conta</h2>
+      <button
+        type="button"
+        class="btn-principal"
+        onclick="cadastrar()"
+      >
+        Criar minha conta
+      </button>
 
-  <input
-    id="cadNome"
-    type="text"
-    placeholder="Nome"
-  >
+      <button
+        type="button"
+        class="btn-secundario"
+        onclick="mostrar('inicio')"
+      >
+        Voltar
+      </button>
 
-  <input
-    id="cadTelefone"
-    type="text"
-    placeholder="Telefone"
-  >
-
-  <input
-    id="cadEmail"
-    type="email"
-    placeholder="E-mail"
-  >
-
-  <input
-    id="cadSenha"
-    type="password"
-    placeholder="Senha"
-  >
-
-  <button
-    type="button"
-    class="btn-principal"
-    onclick="cadastrar()"
-  >
-    Criar minha conta
-  </button>
-
-  <button
-    type="button"
-    class="btn-secundario"
-    onclick="mostrar('inicio')"
-  >
-    Voltar
-  </button>
-
-  <p id="cadMensagem"></p>
-
-</div>
-```
-
+      <p id="cadMensagem"></p>
+    </div>
   </div>
-
-  <!-- LOGIN -->
 
   <div id="login" class="hidden">
+    <div class="card">
+      <h2>Entrar</h2>
 
-```
-<div class="card">
+      <input id="loginEmail" type="email" placeholder="E-mail">
+      <input id="loginSenha" type="password" placeholder="Senha">
 
-  <h2>Entrar</h2>
+      <button
+        type="button"
+        class="btn-principal"
+        onclick="entrar()"
+      >
+        Entrar
+      </button>
 
-  <input
-    id="loginEmail"
-    type="email"
-    placeholder="E-mail"
-  >
+      <button
+        type="button"
+        class="btn-secundario"
+        onclick="mostrar('inicio')"
+      >
+        Voltar
+      </button>
 
-  <input
-    id="loginSenha"
-    type="password"
-    placeholder="Senha"
-  >
-
-  <button
-    type="button"
-    class="btn-principal"
-    onclick="entrar()"
-  >
-    Entrar
-  </button>
-
-  <button
-    type="button"
-    class="btn-secundario"
-    onclick="mostrar('inicio')"
-  >
-    Voltar
-  </button>
-
-  <p id="loginMensagem"></p>
-
-</div>
-```
-
+      <p id="loginMensagem"></p>
+    </div>
   </div>
-
-  <!-- PAINEL -->
 
   <div id="painel" class="hidden">
+    <div class="card">
 
-```
-<div class="card">
+      <h2 id="olaUsuario">Olá!</h2>
 
-  <h2 id="olaUsuario">
-    Olá!
-  </h2>
+      <button
+        type="button"
+        class="btn-principal"
+        onclick="mostrar('criarAnuncio')"
+      >
+        Criar meu anúncio
+      </button>
 
-  <button
-    type="button"
-    class="btn-principal"
-    onclick="mostrar('criarAnuncio')"
-  >
-    Criar meu anúncio
-  </button>
+      <button
+        type="button"
+        class="btn-roxo"
+        onclick="listarAnuncios()"
+      >
+        Ver anúncios
+      </button>
 
-  <button
-    type="button"
-    class="btn-roxo"
-    onclick="listarAnuncios()"
-  >
-    Ver anúncios
-  </button>
+      <button
+        type="button"
+        class="btn-roxo"
+        onclick="listarFavoritos()"
+      >
+        Meus favoritos
+      </button>
 
-  <button
-    type="button"
-    class="btn-roxo"
-    onclick="listarFavoritos()"
-  >
-    Meus favoritos
-  </button>
+      <button
+        type="button"
+        class="btn-roxo"
+        onclick="listarConversas()"
+      >
+        Minhas mensagens
+      </button>
 
-  <button
-    type="button"
-    class="btn-roxo"
-    onclick="listarConversas()"
-  >
-    Minhas mensagens
-  </button>
+      <button
+        type="button"
+        class="btn-roxo"
+        onclick="abrirMeuPerfil()"
+      >
+        👤 Meu perfil
+      </button>
 
-  <button
-    type="button"
-    class="btn-roxo"
-    onclick="abrirMeuPerfil()"
-  >
-    👤 Meu perfil
-  </button>
+      <button
+        type="button"
+        class="btn-roxo"
+        onclick="abrirAdmin()"
+      >
+        ⚙️ Administração
+      </button>
 
-  <button
-    type="button"
-    class="btn-roxo"
-    onclick="abrirAdmin()"
-  >
-    ⚙️ Administração
-  </button>
+      <button
+        type="button"
+        class="btn-perigo"
+        onclick="sair()"
+      >
+        Sair
+      </button>
 
-  <button
-    type="button"
-    class="btn-perigo"
-    onclick="sair()"
-  >
-    Sair
-  </button>
-
-</div>
-```
-
+    </div>
   </div>
-
-  <!-- MEU PERFIL -->
 
   <div id="meuPerfil" class="hidden">
+    <div class="card">
 
-```
-<div class="card">
+      <h2>👤 Meu perfil</h2>
 
-  <h2>👤 Meu perfil</h2>
+      <input id="perfilNome" type="text" placeholder="Nome">
+      <input id="perfilTelefone" type="text" placeholder="Telefone">
 
-  <input
-    id="perfilNome"
-    type="text"
-    placeholder="Nome"
-  >
+      <p id="perfilEmail"></p>
 
-  <input
-    id="perfilTelefone"
-    type="text"
-    placeholder="Telefone"
-  >
+      <button
+        type="button"
+        class="btn-principal"
+        onclick="salvarPerfil()"
+      >
+        Salvar alterações
+      </button>
 
-  <p id="perfilEmail"></p>
+      <button
+        type="button"
+        class="btn-secundario"
+        onclick="mostrar('painel')"
+      >
+        Voltar
+      </button>
 
-  <button
-    type="button"
-    class="btn-principal"
-    onclick="salvarPerfil()"
-  >
-    Salvar alterações
-  </button>
+      <p id="perfilMensagem"></p>
 
-  <button
-    type="button"
-    class="btn-secundario"
-    onclick="mostrar('painel')"
-  >
-    Voltar
-  </button>
-
-  <p id="perfilMensagem"></p>
-
-</div>
-```
-
+    </div>
   </div>
-
-  <!-- ADMINISTRAÇÃO -->
 
   <div id="admin" class="hidden">
+    <div class="card">
 
-```
-<div class="card">
+      <h2>⚙️ Administração</h2>
 
-  <h2>⚙️ Administração</h2>
+      <p>
+        Aqui você poderá analisar as solicitações de destaque.
+      </p>
 
-  <p>
-    Aqui você poderá analisar as solicitações de destaque.
-  </p>
+      <div id="conteudoAdmin">
+        <div class="sem-mensagem">
+          Carregando...
+        </div>
+      </div>
 
-  <div id="conteudoAdmin">
-    <div class="sem-mensagem">
-      Carregando...
+      <button
+        type="button"
+        class="btn-secundario"
+        onclick="mostrar('painel')"
+      >
+        Voltar
+      </button>
+
     </div>
   </div>
-
-  <button
-    type="button"
-    class="btn-secundario"
-    onclick="mostrar('painel')"
-  >
-    Voltar
-  </button>
-
-</div>
-```
-
-  </div>
-
-  <!-- CRIAR ANÚNCIO -->
 
   <div id="criarAnuncio" class="hidden">
+    <div class="card">
 
-```
-<div class="card">
+      <h2>Criar meu anúncio</h2>
 
-  <h2>Criar meu anúncio</h2>
+      <input id="anNome" type="text" placeholder="Nome">
 
-  <input
-    id="anNome"
-    type="text"
-    placeholder="Nome"
-  >
+      <input
+        id="anIdade"
+        type="number"
+        min="18"
+        placeholder="Idade"
+      >
 
-  <input
-    id="anIdade"
-    type="number"
-    min="18"
-    placeholder="Idade"
-  >
+      <input id="anCidade" type="text" placeholder="Cidade">
 
-  <input
-    id="anCidade"
-    type="text"
-    placeholder="Cidade"
-  >
+      <textarea
+        id="anDescricao"
+        placeholder="Fale um pouco sobre você..."
+      ></textarea>
 
-  <textarea
-    id="anDescricao"
-    placeholder="Fale um pouco sobre você..."
-  ></textarea>
+      <input
+        id="anFotos"
+        type="file"
+        accept="image/jpeg,image/png,image/webp"
+        multiple
+      >
 
-  <input
-    id="anFotos"
-    type="file"
-    accept="image/jpeg,image/png,image/webp"
-    multiple
-  >
+      <small>
+        Você pode selecionar até 5 fotos.
+      </small>
 
-  <small>
-    Você pode selecionar até 5 fotos.
-  </small>
+      <button
+        type="button"
+        class="btn-verde"
+        onclick="criarAnuncio()"
+      >
+        Publicar anúncio
+      </button>
 
-  <button
-    type="button"
-    class="btn-verde"
-    onclick="criarAnuncio()"
-  >
-    Publicar anúncio
-  </button>
+      <button
+        type="button"
+        class="btn-secundario"
+        onclick="mostrar('painel')"
+      >
+        Voltar
+      </button>
 
-  <button
-    type="button"
-    class="btn-secundario"
-    onclick="mostrar('painel')"
-  >
-    Voltar
-  </button>
+      <p id="anMensagem"></p>
 
-  <p id="anMensagem"></p>
-
-</div>
-```
-
+    </div>
   </div>
-
-  <!-- LISTA DE ANÚNCIOS -->
 
   <div id="listaAnuncios" class="hidden">
+    <div class="card">
 
-```
-<div class="card">
+      <h2>Anúncios</h2>
 
-  <h2>Anúncios</h2>
-
-  <div
-    style="
-      margin:15px 0;
-      padding:15px;
-      border-radius:12px;
-      background:#f5f5f5;
-    "
-  >
-
-    <h3 style="margin-top:0;">
-      🔎 Filtrar anúncios
-    </h3>
-
-    <input
-      id="filtroCidade"
-      type="text"
-      placeholder="Cidade"
-      oninput="filtrarAnuncios()"
-    >
-
-    <div
-      style="
-        display:flex;
-        gap:10px;
-        margin-top:10px;
-      "
-    >
-
-      <input
-        id="filtroIdadeMin"
-        type="number"
-        min="18"
-        placeholder="Idade mínima"
-        oninput="filtrarAnuncios()"
+      <div
+        style="
+          margin:15px 0;
+          padding:15px;
+          border-radius:12px;
+          background:#f5f5f5;
+        "
       >
 
-      <input
-        id="filtroIdadeMax"
-        type="number"
-        min="18"
-        placeholder="Idade máxima"
-        oninput="filtrarAnuncios()"
+        <h3 style="margin-top:0;">
+          🔎 Filtrar anúncios
+        </h3>
+
+        <input
+          id="filtroCidade"
+          type="text"
+          placeholder="Cidade"
+          oninput="filtrarAnuncios()"
+        >
+
+        <div
+          style="
+            display:flex;
+            gap:10px;
+            margin-top:10px;
+          "
+        >
+
+          <input
+            id="filtroIdadeMin"
+            type="number"
+            min="18"
+            placeholder="Idade mínima"
+            oninput="filtrarAnuncios()"
+          >
+
+          <input
+            id="filtroIdadeMax"
+            type="number"
+            min="18"
+            placeholder="Idade máxima"
+            oninput="filtrarAnuncios()"
+          >
+
+        </div>
+
+        <button
+          type="button"
+          class="btn-secundario"
+          onclick="limparFiltros()"
+        >
+          Limpar filtros
+        </button>
+
+      </div>
+
+      <div id="conteudoAnuncios">
+        <div class="sem-mensagem">
+          Carregando anúncios...
+        </div>
+      </div>
+
+      <button
+        type="button"
+        class="btn-secundario"
+        onclick="mostrar('painel')"
       >
+        Voltar
+      </button>
 
     </div>
-
-    <button
-      type="button"
-      class="btn-secundario"
-      onclick="limparFiltros()"
-      style="margin-top:10px;"
-    >
-      Limpar filtros
-    </button>
-
   </div>
-
-  <div id="conteudoAnuncios">
-    <div class="sem-mensagem">
-      Carregando anúncios...
-    </div>
-  </div>
-
-  <button
-    type="button"
-    class="btn-secundario"
-    onclick="mostrar('painel')"
-  >
-    Voltar
-  </button>
-
-</div>
-```
-
-  </div>
-
-  <!-- EDITAR ANÚNCIO -->
 
   <div id="editarAnuncio" class="hidden">
+    <div class="card">
 
-```
-<div class="card">
+      <h2>✏️ Editar anúncio</h2>
 
-  <h2>✏️ Editar anúncio</h2>
+      <input id="editarNome" type="text" placeholder="Nome">
 
-  <input
-    id="editarNome"
-    type="text"
-    placeholder="Nome"
-  >
+      <input
+        id="editarIdade"
+        type="number"
+        min="18"
+        placeholder="Idade"
+      >
 
-  <input
-    id="editarIdade"
-    type="number"
-    min="18"
-    placeholder="Idade"
-  >
+      <input id="editarCidade" type="text" placeholder="Cidade">
 
-  <input
-    id="editarCidade"
-    type="text"
-    placeholder="Cidade"
-  >
+      <textarea
+        id="editarDescricao"
+        placeholder="Descrição do anúncio"
+      ></textarea>
 
-  <textarea
-    id="editarDescricao"
-    placeholder="Descrição do anúncio"
-  ></textarea>
+      <input
+        id="editarFoto"
+        type="url"
+        placeholder="URL da foto"
+      >
 
-  <input
-    id="editarFoto"
-    type="url"
-    placeholder="URL da foto"
-  >
+      <button
+        type="button"
+        class="btn-principal"
+        onclick="salvarEdicaoAnuncio()"
+      >
+        Salvar alterações
+      </button>
 
-  <button
-    type="button"
-    class="btn-principal"
-    onclick="salvarEdicaoAnuncio()"
-  >
-    Salvar alterações
-  </button>
+      <button
+        type="button"
+        class="btn-perigo"
+        onclick="excluirMeuAnuncio()"
+      >
+        🗑️ Excluir anúncio
+      </button>
 
-  <button
-    type="button"
-    class="btn-perigo"
-    onclick="excluirMeuAnuncio()"
-  >
-    🗑️ Excluir anúncio
-  </button>
+      <button
+        type="button"
+        class="btn-secundario"
+        onclick="mostrar('listaAnuncios')"
+      >
+        Voltar
+      </button>
 
-  <button
-    type="button"
-    class="btn-secundario"
-    onclick="mostrar('listaAnuncios')"
-  >
-    Voltar
-  </button>
+      <p id="editarAnuncioMensagem"></p>
 
-  <p id="editarAnuncioMensagem"></p>
-
-</div>
-```
-
+    </div>
   </div>
-
-  <!-- FAVORITOS -->
 
   <div id="listaFavoritos" class="hidden">
+    <div class="card">
 
-```
-<div class="card">
+      <h2>Meus favoritos</h2>
 
-  <h2>Meus favoritos</h2>
+      <div id="conteudoFavoritos">
+        <div class="sem-mensagem">
+          Carregando favoritos...
+        </div>
+      </div>
 
-  <div id="conteudoFavoritos">
-    <div class="sem-mensagem">
-      Carregando favoritos...
+      <button
+        type="button"
+        class="btn-secundario"
+        onclick="mostrar('painel')"
+      >
+        Voltar
+      </button>
+
     </div>
   </div>
-
-  <button
-    type="button"
-    class="btn-secundario"
-    onclick="mostrar('painel')"
-  >
-    Voltar
-  </button>
-
-</div>
-```
-
-  </div>
-
-  <!-- CONVERSAS -->
 
   <div id="listaConversas" class="hidden">
+    <div class="card">
 
-```
-<div class="card">
+      <h2>Minhas mensagens</h2>
 
-  <h2>Minhas mensagens</h2>
+      <div id="conteudoConversas">
+        <div class="sem-mensagem">
+          Carregando conversas...
+        </div>
+      </div>
 
-  <div id="conteudoConversas">
-    <div class="sem-mensagem">
-      Carregando conversas...
+      <button
+        type="button"
+        class="btn-secundario"
+        onclick="mostrar('painel')"
+      >
+        Voltar
+      </button>
+
     </div>
   </div>
-
-  <button
-    type="button"
-    class="btn-secundario"
-    onclick="mostrar('painel')"
-  >
-    Voltar
-  </button>
-
-</div>
-```
-
-  </div>
-
-  <!-- CHAT -->
 
   <div id="chatTela" class="hidden">
+    <div class="card">
 
-```
-<div class="card">
+      <h2 id="tituloChat">
+        Conversa
+      </h2>
 
-  <h2 id="tituloChat">
-    Conversa
-  </h2>
+      <div id="conteudoChat" class="chat">
+        <div class="sem-mensagem">
+          Carregando conversa...
+        </div>
+      </div>
 
-  <div
-    id="conteudoChat"
-    class="chat"
-  >
-    <div class="sem-mensagem">
-      Carregando conversa...
+      <textarea
+        id="novaMensagem"
+        placeholder="Digite sua mensagem..."
+      ></textarea>
+
+      <button
+        type="button"
+        id="btnEnviarMensagem"
+        class="btn-principal"
+        onclick="enviarMensagemChat()"
+      >
+        Enviar mensagem
+      </button>
+
+      <button
+        type="button"
+        class="btn-secundario"
+        onclick="pararAtualizacaoChat(); mostrar('listaConversas')"
+      >
+        Voltar
+      </button>
+
+      <p id="chatMensagem"></p>
+
     </div>
   </div>
 
-  <textarea
-    id="novaMensagem"
-    placeholder="Digite sua mensagem..."
-  ></textarea>
+  <!-- PAGAMENTO PIX -->
 
-  <button
-    type="button"
-    id="btnEnviarMensagem"
-    class="btn-principal"
-    onclick="enviarMensagemChat()"
-  >
-    Enviar mensagem
-  </button>
+  <div id="pagamentoPix" class="hidden">
+    <div class="card">
 
-  <button
-    type="button"
-    class="btn-secundario"
-    onclick="pararAtualizacaoChat(); mostrar('listaConversas')"
-  >
-    Voltar
-  </button>
+      <h2>⭐ Pagamento do destaque</h2>
 
-  <p id="chatMensagem"></p>
+      <div id="conteudoPix">
 
-</div>
-```
+        <div class="sem-mensagem">
+          Preparando pagamento...
+        </div>
 
+      </div>
+
+      <button
+        type="button"
+        class="btn-secundario"
+        onclick="mostrar('listaAnuncios')"
+      >
+        Voltar para anúncios
+      </button>
+
+    </div>
   </div>
 
 </div>
-
-<!-- SUPABASE -->
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
@@ -847,7 +766,7 @@
 console.log("Encontro VIP: JavaScript carregado");
 
 
-/* CONFIGURAÇÃO SUPABASE */
+/* SUPABASE */
 
 const SUPABASE_URL =
   "https://avgnulmolujgedfdjdhb.supabase.co";
@@ -908,7 +827,8 @@ function mostrar(tela) {
     "editarAnuncio",
     "listaFavoritos",
     "listaConversas",
-    "chatTela"
+    "chatTela",
+    "pagamentoPix"
   ];
 
   telas.forEach(function(id) {
@@ -933,13 +853,6 @@ function mostrar(tela) {
       top: 0,
       behavior: "smooth"
     });
-
-  } else {
-
-    console.error(
-      "Tela não encontrada:",
-      tela
-    );
 
   }
 }
@@ -970,7 +883,6 @@ async function cadastrar() {
   if (!nome || !email || !senha) {
 
     mensagem.className = "erro";
-
     mensagem.textContent =
       "Preencha nome, e-mail e senha.";
 
@@ -980,7 +892,6 @@ async function cadastrar() {
   if (senha.length < 6) {
 
     mensagem.className = "erro";
-
     mensagem.textContent =
       "A senha precisa ter pelo menos 6 caracteres.";
 
@@ -994,19 +905,13 @@ async function cadastrar() {
 
     const resultado =
       await supabaseClient.auth.signUp({
-        email: email,
+        email,
         password: senha
       });
 
     if (resultado.error) {
 
-      console.error(
-        "Erro no cadastro:",
-        resultado.error
-      );
-
       mensagem.className = "erro";
-
       mensagem.textContent =
         resultado.error.message;
 
@@ -1019,7 +924,6 @@ async function cadastrar() {
     if (!novoUsuario) {
 
       mensagem.className = "erro";
-
       mensagem.textContent =
         "Não foi possível criar a conta.";
 
@@ -1033,21 +937,15 @@ async function cadastrar() {
           .from("profiles")
           .upsert({
             id: novoUsuario.id,
-            nome: nome,
-            telefone: telefone,
+            nome,
+            telefone,
             tipo: "usuario",
             ativo: true
           });
 
       if (perfil.error) {
 
-        console.error(
-          "Erro ao criar perfil:",
-          perfil.error
-        );
-
         mensagem.className = "erro";
-
         mensagem.textContent =
           "Conta criada, mas houve um problema ao salvar seu perfil.";
 
@@ -1058,7 +956,6 @@ async function cadastrar() {
         resultado.data.session.user;
 
       mensagem.className = "sucesso";
-
       mensagem.textContent =
         "Conta criada com sucesso!";
 
@@ -1067,14 +964,11 @@ async function cadastrar() {
       document.getElementById("cadEmail").value = "";
       document.getElementById("cadSenha").value = "";
 
-      setTimeout(function() {
-        carregarPainel();
-      }, 800);
+      setTimeout(carregarPainel, 800);
 
     } else {
 
       mensagem.className = "sucesso";
-
       mensagem.textContent =
         "Conta criada. Verifique seu e-mail para confirmar a conta.";
 
@@ -1087,15 +981,11 @@ async function cadastrar() {
 
   } catch (erro) {
 
-    console.error(
-      "Erro inesperado no cadastro:",
-      erro
-    );
+    console.error(erro);
 
     mensagem.className = "erro";
-
     mensagem.textContent =
-      "Erro inesperado. Abra o console para verificar.";
+      "Erro inesperado. Verifique o console.";
   }
 }
 
@@ -1119,7 +1009,6 @@ async function entrar() {
   if (!email || !senha) {
 
     mensagem.className = "erro";
-
     mensagem.textContent =
       "Digite seu e-mail e sua senha.";
 
@@ -1133,19 +1022,13 @@ async function entrar() {
 
     const resultado =
       await supabaseClient.auth.signInWithPassword({
-        email: email,
+        email,
         password: senha
       });
 
     if (resultado.error) {
 
-      console.error(
-        "Erro no login:",
-        resultado.error
-      );
-
       mensagem.className = "erro";
-
       mensagem.textContent =
         resultado.error.message;
 
@@ -1161,20 +1044,16 @@ async function entrar() {
 
   } catch (erro) {
 
-    console.error(
-      "Erro inesperado no login:",
-      erro
-    );
+    console.error(erro);
 
     mensagem.className = "erro";
-
     mensagem.textContent =
       "Erro inesperado. Verifique o console.";
   }
 }
 
 
-/* CARREGAR PAINEL */
+/* PAINEL */
 
 async function carregarPainel() {
 
@@ -1192,37 +1071,24 @@ async function carregarPainel() {
   if (!usuario) {
 
     mostrar("inicio");
-
     return;
   }
 
   let nomeUsuario = "usuário";
 
-  try {
+  const resultado =
+    await supabaseClient
+      .from("profiles")
+      .select("nome")
+      .eq("id", usuario.id)
+      .maybeSingle();
 
-    const resultado =
-      await supabaseClient
-        .from("profiles")
-        .select("nome")
-        .eq("id", usuario.id)
-        .maybeSingle();
-
-    if (
-      !resultado.error &&
-      resultado.data &&
-      resultado.data.nome
-    ) {
-
-      nomeUsuario =
-        resultado.data.nome;
-    }
-
-  } catch (erro) {
-
-    console.error(
-      "Erro ao carregar perfil:",
-      erro
-    );
+  if (
+    !resultado.error &&
+    resultado.data?.nome
+  ) {
+    nomeUsuario =
+      resultado.data.nome;
   }
 
   document.getElementById("olaUsuario").textContent =
@@ -1241,18 +1107,15 @@ async function sair() {
   await supabaseClient.auth.signOut();
 
   usuario = null;
-
   conversaUsuarioId = null;
-
   conversaUsuarioNome = "";
-
   anuncioEditandoId = null;
 
   mostrar("inicio");
 }
 
 
-/* MEU PERFIL */
+/* PERFIL */
 
 async function abrirMeuPerfil() {
 
@@ -1283,8 +1146,6 @@ async function abrirMeuPerfil() {
     mensagem.className = "erro";
     mensagem.textContent =
       "Erro ao carregar perfil.";
-
-    console.error(error);
 
     return;
   }
@@ -1326,7 +1187,6 @@ async function salvarPerfil() {
     return;
   }
 
-  mensagem.className = "";
   mensagem.textContent =
     "Salvando...";
 
@@ -1334,8 +1194,8 @@ async function salvarPerfil() {
     await supabaseClient
       .from("profiles")
       .update({
-        nome: nome,
-        telefone: telefone
+        nome,
+        telefone
       })
       .eq("id", usuario.id);
 
@@ -1345,8 +1205,6 @@ async function salvarPerfil() {
     mensagem.textContent =
       "Erro ao salvar perfil.";
 
-    console.error(error);
-
     return;
   }
 
@@ -1354,7 +1212,6 @@ async function salvarPerfil() {
     "Olá, " + nome + "!";
 
   mensagem.className = "sucesso";
-
   mensagem.textContent =
     "Perfil atualizado com sucesso!";
 }
@@ -1373,9 +1230,7 @@ async function criarAnuncio() {
     document.getElementById("anNome").value.trim();
 
   const idade =
-    Number(
-      document.getElementById("anIdade").value
-    );
+    Number(document.getElementById("anIdade").value);
 
   const cidade =
     document.getElementById("anCidade").value.trim();
@@ -1391,18 +1246,9 @@ async function criarAnuncio() {
   const mensagem =
     document.getElementById("anMensagem");
 
-  mensagem.className = "";
-  mensagem.textContent = "";
-
-  if (
-    !nome ||
-    !idade ||
-    !cidade ||
-    !descricao
-  ) {
+  if (!nome || !idade || !cidade || !descricao) {
 
     mensagem.className = "erro";
-
     mensagem.textContent =
       "Preencha nome, idade, cidade e descrição.";
 
@@ -1412,7 +1258,6 @@ async function criarAnuncio() {
   if (idade < 18) {
 
     mensagem.className = "erro";
-
     mensagem.textContent =
       "O anúncio é permitido somente para maiores de 18 anos.";
 
@@ -1422,7 +1267,6 @@ async function criarAnuncio() {
   if (arquivos.length > 5) {
 
     mensagem.className = "erro";
-
     mensagem.textContent =
       "Você pode selecionar no máximo 5 fotos.";
 
@@ -1440,20 +1284,15 @@ async function criarAnuncio() {
     ) {
 
       mensagem.className = "erro";
-
       mensagem.textContent =
         "Use somente fotos JPG, PNG ou WebP.";
 
       return;
     }
 
-    if (
-      arquivo.size >
-      10 * 1024 * 1024
-    ) {
+    if (arquivo.size > 10 * 1024 * 1024) {
 
       mensagem.className = "erro";
-
       mensagem.textContent =
         "Cada foto deve ter no máximo 10 MB.";
 
@@ -1471,10 +1310,10 @@ async function criarAnuncio() {
         .from("anuncios")
         .insert({
           usuario_id: usuario.id,
-          nome: nome,
-          idade: idade,
-          cidade: cidade,
-          descricao: descricao,
+          nome,
+          idade,
+          cidade,
+          descricao,
           foto_url: null,
           foto_principal: null,
           ativo: true
@@ -1484,13 +1323,7 @@ async function criarAnuncio() {
 
     if (resultado.error) {
 
-      console.error(
-        "Erro ao criar anúncio:",
-        resultado.error
-      );
-
       mensagem.className = "erro";
-
       mensagem.textContent =
         resultado.error.message;
 
@@ -1502,14 +1335,9 @@ async function criarAnuncio() {
 
     const fotosSalvas = [];
 
-    for (
-      let i = 0;
-      i < arquivos.length;
-      i++
-    ) {
+    for (let i = 0; i < arquivos.length; i++) {
 
-      const arquivo =
-        arquivos[i];
+      const arquivo = arquivos[i];
 
       const extensao =
         arquivo.name
@@ -1537,20 +1365,11 @@ async function criarAnuncio() {
         await supabaseClient
           .storage
           .from("fotos-anuncios")
-          .upload(
-            caminho,
-            arquivo
-          );
+          .upload(caminho, arquivo);
 
       if (upload.error) {
 
-        console.error(
-          "Erro ao enviar foto:",
-          upload.error
-        );
-
         mensagem.className = "erro";
-
         mensagem.textContent =
           "Erro ao enviar uma das fotos.";
 
@@ -1582,13 +1401,7 @@ async function criarAnuncio() {
 
       if (salvarFotos.error) {
 
-        console.error(
-          "Erro ao salvar fotos:",
-          salvarFotos.error
-        );
-
         mensagem.className = "erro";
-
         mensagem.textContent =
           "As fotos foram enviadas, mas não foram vinculadas ao anúncio.";
 
@@ -1598,18 +1411,14 @@ async function criarAnuncio() {
       await supabaseClient
         .from("anuncios")
         .update({
-          foto_url:
-            fotosSalvas[0].foto_url,
-
-          foto_principal:
-            fotosSalvas[0].foto_url
+          foto_url: fotosSalvas[0].foto_url,
+          foto_principal: fotosSalvas[0].foto_url
         })
         .eq("id", anuncioId)
         .eq("usuario_id", usuario.id);
     }
 
     mensagem.className = "sucesso";
-
     mensagem.textContent =
       "Anúncio publicado com sucesso!";
 
@@ -1621,13 +1430,9 @@ async function criarAnuncio() {
 
   } catch (erro) {
 
-    console.error(
-      "Erro inesperado:",
-      erro
-    );
+    console.error(erro);
 
     mensagem.className = "erro";
-
     mensagem.textContent =
       "Erro ao publicar anúncio.";
   }
@@ -1652,22 +1457,14 @@ async function listarAnuncios() {
       await supabaseClient
         .from("anuncios")
         .select(
-          "id,usuario_id,nome,idade,cidade,descricao,foto_url,destaque,destaque_ate"
+          "id,usuario_id,nome,idade,cidade,descricao,foto_url,destaque,destaque_ate,created_at"
         )
         .eq("ativo", true)
-        .order("destaque", {
-          ascending: false
-        })
         .order("created_at", {
           ascending: false
         });
 
     if (resultado.error) {
-
-      console.error(
-        "Erro ao buscar anúncios:",
-        resultado.error
-      );
 
       conteudo.innerHTML =
         '<div class="erro">Erro ao carregar anúncios.</div>';
@@ -1677,6 +1474,32 @@ async function listarAnuncios() {
 
     const anuncios =
       resultado.data || [];
+
+    const agora =
+      new Date();
+
+    anuncios.sort(function(a, b) {
+
+      const aAtivo =
+        a.destaque === true &&
+        a.destaque_ate &&
+        new Date(a.destaque_ate) > agora;
+
+      const bAtivo =
+        b.destaque === true &&
+        b.destaque_ate &&
+        new Date(b.destaque_ate) > agora;
+
+      if (aAtivo && !bAtivo) {
+        return -1;
+      }
+
+      if (!aAtivo && bAtivo) {
+        return 1;
+      }
+
+      return 0;
+    });
 
     if (anuncios.length === 0) {
 
@@ -1694,23 +1517,13 @@ async function listarAnuncios() {
     const resultadoFotos =
       await supabaseClient
         .from("anuncio_fotos")
-        .select(
-          "id,anuncio_id,foto_url,ordem"
-        )
-        .in(
-          "anuncio_id",
-          idsAnuncios
-        )
+        .select("id,anuncio_id,foto_url,ordem")
+        .in("anuncio_id", idsAnuncios)
         .order("ordem", {
           ascending: true
         });
 
     if (resultadoFotos.error) {
-
-      console.error(
-        "Erro ao buscar fotos:",
-        resultadoFotos.error
-      );
 
       conteudo.innerHTML =
         '<div class="erro">Erro ao carregar fotos dos anúncios.</div>';
@@ -1736,7 +1549,6 @@ async function listarAnuncios() {
           fotosDoAnuncio.length === 0 &&
           anuncio.foto_url
         ) {
-
           fotosDoAnuncio = [
             {
               foto_url: anuncio.foto_url,
@@ -1750,30 +1562,23 @@ async function listarAnuncios() {
             return foto.foto_url;
           });
 
-        window.galeriasAnuncios[
-          anuncio.id
-        ] = urls;
+        window.galeriasAnuncios[anuncio.id] =
+          urls;
 
-        window.fotosAtuaisAnuncios[
-          anuncio.id
-        ] = 0;
+        window.fotosAtuaisAnuncios[anuncio.id] =
+          0;
 
         const destaqueAtivo =
           anuncio.destaque === true &&
           anuncio.destaque_ate &&
-          new Date(
-            anuncio.destaque_ate
-          ) > new Date();
+          new Date(anuncio.destaque_ate) > new Date();
 
         let galeria = "";
 
         if (urls.length > 0) {
 
           galeria = `
-            <div style="
-              position:relative;
-              margin-bottom:15px;
-            ">
+            <div style="position:relative;margin-bottom:15px;">
 
               <img
                 id="foto-principal-${anuncio.id}"
@@ -1805,16 +1610,12 @@ async function listarAnuncios() {
                         top:190px;
                         width:42px;
                         height:42px;
-                        border:none;
                         border-radius:50%;
                         background:rgba(0,0,0,0.65);
                         color:white;
                         font-size:24px;
-                        cursor:pointer;
                       "
-                    >
-                      ‹
-                    </button>
+                    >‹</button>
 
                     <button
                       type="button"
@@ -1825,16 +1626,12 @@ async function listarAnuncios() {
                         top:190px;
                         width:42px;
                         height:42px;
-                        border:none;
                         border-radius:50%;
                         background:rgba(0,0,0,0.65);
                         color:white;
                         font-size:24px;
-                        cursor:pointer;
                       "
-                    >
-                      ›
-                    </button>
+                    >›</button>
 
                     <div
                       id="contador-fotos-${anuncio.id}"
@@ -1846,26 +1643,15 @@ async function listarAnuncios() {
                     >
                       1 / ${urls.length}
                     </div>
-                  `
-                  : ""
-              }
 
-              ${
-                urls.length > 1
-                  ? `
                     <div style="
                       display:flex;
                       gap:8px;
                       overflow-x:auto;
-                      padding:4px 2px 8px 2px;
+                      padding:4px 2px 8px;
                     ">
-
                       ${
-                        urls.map(function(
-                          url,
-                          indice
-                        ) {
-
+                        urls.map(function(url, indice) {
                           return `
                             <img
                               src="${escapeHtml(url)}"
@@ -1879,13 +1665,10 @@ async function listarAnuncios() {
                                 cursor:pointer;
                               "
                               onclick="selecionarFotoGaleria('${anuncio.id}', ${indice})"
-                              onerror="this.style.display='none'"
                             >
                           `;
-
                         }).join("")
                       }
-
                     </div>
                   `
                   : ""
@@ -1893,7 +1676,6 @@ async function listarAnuncios() {
 
             </div>
           `;
-
         }
 
         return `
@@ -1933,12 +1715,9 @@ async function listarAnuncios() {
                 margin:8px 0;
                 font-size:22px;
               ">
-                ${
-                  destaqueAtivo
-                    ? "⭐ "
-                    : ""
-                }
+                ${destaqueAtivo ? "⭐ " : ""}
                 ${escapeHtml(anuncio.nome)}
+
                 <span style="
                   font-weight:normal;
                   font-size:18px;
@@ -1947,19 +1726,12 @@ async function listarAnuncios() {
                 </span>
               </h3>
 
-              <p style="
-                margin:8px 0;
-                font-size:16px;
-              ">
-                📍
-                <strong>Cidade:</strong>
+              <p>
+                📍 <strong>Cidade:</strong>
                 ${escapeHtml(anuncio.cidade)}
               </p>
 
-              <p style="
-                margin:12px 0 16px 0;
-                line-height:1.5;
-              ">
+              <p style="line-height:1.5;">
                 ${escapeHtml(anuncio.descricao)}
               </p>
 
@@ -2021,10 +1793,7 @@ async function listarAnuncios() {
 
   } catch (erro) {
 
-    console.error(
-      "Erro inesperado:",
-      erro
-    );
+    console.error(erro);
 
     conteudo.innerHTML =
       '<div class="erro">Erro ao carregar anúncios.</div>';
@@ -2032,7 +1801,7 @@ async function listarAnuncios() {
 }
 
 
-/* SOLICITAR DESTAQUE */
+/* ABRIR DESTAQUE */
 
 function abrirDestaque(anuncioId) {
 
@@ -2041,77 +1810,257 @@ function abrirDestaque(anuncioId) {
     return;
   }
 
-  const valor = "9.90";
-
   const confirmar =
     confirm(
       "⭐ Destacar anúncio por 24 horas\n\n" +
       "Valor: R$ 9,90\n\n" +
-      "Deseja continuar?"
+      "Deseja gerar o pagamento Pix?"
     );
 
   if (!confirmar) {
     return;
   }
 
-  criarSolicitacaoDestaque(
-    anuncioId,
-    valor
-  );
+  criarSolicitacaoDestaque(anuncioId);
 }
 
 
-async function criarSolicitacaoDestaque(
-  anuncioId,
-  valor
-) {
+/* CRIAR SOLICITAÇÃO E GERAR PIX */
+
+async function criarSolicitacaoDestaque(anuncioId) {
 
   if (!usuario) {
     mostrar("login");
     return;
   }
 
-  const inicio =
-    new Date();
+  const conteudoPix =
+    document.getElementById("conteudoPix");
 
-  const fim =
-    new Date(
-      inicio.getTime() +
-      24 * 60 * 60 * 1000
-    );
+  mostrar("pagamentoPix");
 
-  const resultado =
-    await supabaseClient
-      .from("anuncio_destaques")
-      .insert({
-        anuncio_id: anuncioId,
-        usuario_id: usuario.id,
-        inicio: inicio.toISOString(),
-        fim: fim.toISOString(),
-        valor: Number(valor),
-        status: "pendente"
-      });
+  conteudoPix.innerHTML =
+    '<div class="sem-mensagem">Criando solicitação de pagamento...</div>';
 
-  if (resultado.error) {
+  try {
+
+    const inicio =
+      new Date();
+
+    const fim =
+      new Date(
+        inicio.getTime() +
+        24 * 60 * 60 * 1000
+      );
+
+    /*
+     * O valor real é definido novamente
+     * no servidor/Edge Function.
+     */
+    const valor = 9.90;
+
+    const resultado =
+      await supabaseClient
+        .from("anuncio_destaques")
+        .insert({
+          anuncio_id: anuncioId,
+          usuario_id: usuario.id,
+          inicio: inicio.toISOString(),
+          fim: fim.toISOString(),
+          valor,
+          status: "pendente"
+        })
+        .select("id")
+        .single();
+
+    if (resultado.error) {
+
+      console.error(
+        "Erro ao criar destaque:",
+        resultado.error
+      );
+
+      conteudoPix.innerHTML =
+        '<div class="erro">Não foi possível criar a solicitação de destaque.</div>';
+
+      return;
+    }
+
+    const destaqueId =
+      resultado.data.id;
+
+    conteudoPix.innerHTML =
+      '<div class="sem-mensagem">Gerando seu Pix...</div>';
+
+    /*
+     * A sessão atual do Supabase é enviada
+     * automaticamente pelo supabase-js.
+     */
+    const pix =
+      await supabaseClient.functions.invoke(
+        "criar-pix-destaque",
+        {
+          body: {
+            anuncioId,
+            destaqueId
+          }
+        }
+      );
+
+    if (pix.error) {
+
+      console.error(
+        "Erro na Edge Function:",
+        pix.error
+      );
+
+      conteudoPix.innerHTML = `
+        <div class="erro">
+          Não foi possível gerar o Pix.
+        </div>
+
+        <p>
+          A solicitação foi criada, mas ocorreu um erro
+          ao gerar o pagamento.
+        </p>
+      `;
+
+      return;
+    }
+
+    const dados =
+      pix.data;
+
+    if (
+      !dados ||
+      !dados.sucesso
+    ) {
+
+      console.error(
+        "Resposta inválida:",
+        dados
+      );
+
+      conteudoPix.innerHTML =
+        '<div class="erro">O pagamento não pôde ser criado.</div>';
+
+      return;
+    }
+
+    let qrCodeHtml = "";
+
+    if (dados.qr_code_base64) {
+
+      qrCodeHtml = `
+        <img
+          class="pix-qr"
+          src="data:image/png;base64,${dados.qr_code_base64}"
+          alt="QR Code Pix"
+        >
+      `;
+    }
+
+    conteudoPix.innerHTML = `
+
+      <div class="pix-box">
+
+        <h3>
+          ⭐ Destaque por 24 horas
+        </h3>
+
+        <div class="valor-pix">
+          R$ 9,90
+        </div>
+
+        <p>
+          Escaneie o QR Code abaixo
+          usando o aplicativo do seu banco.
+        </p>
+
+        ${qrCodeHtml}
+
+        ${
+          dados.qr_code
+            ? `
+              <p>
+                Ou copie o código Pix:
+              </p>
+
+              <textarea
+                id="codigoPix"
+                class="pix-codigo"
+                readonly
+              >${escapeHtml(dados.qr_code)}</textarea>
+
+              <button
+                type="button"
+                class="btn-principal"
+                onclick="copiarCodigoPix()"
+              >
+                📋 Copiar código Pix
+              </button>
+            `
+            : ""
+        }
+
+        <p class="aviso">
+          Depois que o pagamento for confirmado,
+          o destaque será liberado conforme a aprovação
+          do sistema.
+        </p>
+
+        <p>
+          <strong>Status do pagamento:</strong>
+          ${escapeHtml(dados.status || "pending")}
+        </p>
+
+      </div>
+    `;
+
+  } catch (erro) {
 
     console.error(
-      "Erro ao criar solicitação de destaque:",
-      resultado.error
+      "Erro inesperado ao gerar Pix:",
+      erro
     );
 
-    alert(
-      "Não foi possível criar a solicitação de destaque."
-    );
+    conteudoPix.innerHTML =
+      '<div class="erro">Erro inesperado ao gerar o Pix.</div>';
+  }
+}
 
+
+/* COPIAR PIX */
+
+async function copiarCodigoPix() {
+
+  const campo =
+    document.getElementById("codigoPix");
+
+  if (!campo) {
     return;
   }
 
-  alert(
-    "⭐ Solicitação de destaque criada!\n\n" +
-    "Valor: R$ 9,90\n" +
-    "Duração: 24 horas\n\n" +
-    "Status: aguardando pagamento."
-  );
+  try {
+
+    await navigator.clipboard.writeText(
+      campo.value
+    );
+
+    alert(
+      "Código Pix copiado!"
+    );
+
+  } catch (erro) {
+
+    campo.select();
+
+    document.execCommand("copy");
+
+    alert(
+      "Código Pix copiado!"
+    );
+  }
 }
 
 
@@ -2137,7 +2086,6 @@ async function abrirAdmin() {
   ) {
 
     alert("Acesso negado.");
-
     return;
   }
 
@@ -2177,11 +2125,6 @@ async function listarSolicitacoesDestaque() {
       });
 
   if (resultado.error) {
-
-    console.error(
-      "Erro ao carregar solicitações:",
-      resultado.error
-    );
 
     conteudo.innerHTML =
       '<div class="erro">Erro ao carregar solicitações.</div>';
@@ -2266,9 +2209,7 @@ async function listarSolicitacoesDestaque() {
 
 /* APROVAR DESTAQUE */
 
-async function aprovarDestaque(
-  destaqueId
-) {
+async function aprovarDestaque(destaqueId) {
 
   if (!usuario) {
     mostrar("login");
@@ -2325,10 +2266,6 @@ async function aprovarDestaque(
 
   if (destaque.error) {
 
-    console.error(
-      destaque.error
-    );
-
     alert(
       "Erro ao aprovar o destaque."
     );
@@ -2341,8 +2278,7 @@ async function aprovarDestaque(
       .from("anuncios")
       .update({
         destaque: true,
-        destaque_ate:
-          fim.toISOString()
+        destaque_ate: fim.toISOString()
       })
       .eq(
         "id",
@@ -2350,10 +2286,6 @@ async function aprovarDestaque(
       );
 
   if (anuncio.error) {
-
-    console.error(
-      anuncio.error
-    );
 
     alert(
       "O destaque foi aprovado, mas não foi possível ativá-lo no anúncio."
@@ -2363,8 +2295,7 @@ async function aprovarDestaque(
   }
 
   alert(
-    "⭐ Destaque aprovado com sucesso!\n\n" +
-    "O anúncio ficará destacado por 24 horas."
+    "⭐ Destaque aprovado com sucesso!"
   );
 
   listarSolicitacoesDestaque();
@@ -2384,16 +2315,12 @@ function filtrarAnuncios() {
 
   const idadeMin =
     Number(
-      document
-        .getElementById("filtroIdadeMin")
-        .value
+      document.getElementById("filtroIdadeMin").value
     ) || 18;
 
   const idadeMax =
     Number(
-      document
-        .getElementById("filtroIdadeMax")
-        .value
+      document.getElementById("filtroIdadeMax").value
     ) || 999;
 
   const anuncios =
@@ -2403,13 +2330,12 @@ function filtrarAnuncios() {
 
   anuncios.forEach(function(anuncio) {
 
-    const cidadeAnuncio =
-      anuncio.innerText
-        .toLowerCase();
+    const texto =
+      anuncio.innerText.toLowerCase();
 
     const encontrouCidade =
       !cidade ||
-      cidadeAnuncio.includes(cidade);
+      texto.includes(cidade);
 
     const titulo =
       anuncio.querySelector("h3");
@@ -2428,9 +2354,7 @@ function filtrarAnuncios() {
 
         idade =
           Number(
-            partes[
-              partes.length - 1
-            ].trim()
+            partes[partes.length - 1].trim()
           );
       }
     }
@@ -2444,73 +2368,46 @@ function filtrarAnuncios() {
       encontrouIdade
         ? ""
         : "none";
-
   });
 }
 
 
 function limparFiltros() {
 
-  document.getElementById(
-    "filtroCidade"
-  ).value = "";
+  document.getElementById("filtroCidade").value = "";
+  document.getElementById("filtroIdadeMin").value = "";
+  document.getElementById("filtroIdadeMax").value = "";
 
-  document.getElementById(
-    "filtroIdadeMin"
-  ).value = "";
-
-  document.getElementById(
-    "filtroIdadeMax"
-  ).value = "";
-
-  const anuncios =
-    document.querySelectorAll(
-      "#conteudoAnuncios .anuncio"
-    );
-
-  anuncios.forEach(function(anuncio) {
-
-    anuncio.style.display = "";
-
-  });
+  document
+    .querySelectorAll("#conteudoAnuncios .anuncio")
+    .forEach(function(anuncio) {
+      anuncio.style.display = "";
+    });
 }
 
 
 /* GALERIA */
 
-function trocarFotoGaleria(
-  anuncioId,
-  direcao
-) {
+function trocarFotoGaleria(anuncioId, direcao) {
 
   const fotos =
     window.galeriasAnuncios &&
-    window.galeriasAnuncios[
-      anuncioId
-    ];
+    window.galeriasAnuncios[anuncioId];
 
-  if (
-    !fotos ||
-    fotos.length === 0
-  ) {
+  if (!fotos || fotos.length === 0) {
     return;
   }
 
   let indice =
-    window.fotosAtuaisAnuncios[
-      anuncioId
-    ] || 0;
+    window.fotosAtuaisAnuncios[anuncioId] || 0;
 
   indice += direcao;
 
   if (indice < 0) {
-    indice =
-      fotos.length - 1;
+    indice = fotos.length - 1;
   }
 
-  if (
-    indice >= fotos.length
-  ) {
+  if (indice >= fotos.length) {
     indice = 0;
   }
 
@@ -2521,32 +2418,22 @@ function trocarFotoGaleria(
 }
 
 
-function selecionarFotoGaleria(
-  anuncioId,
-  indice
-) {
+function selecionarFotoGaleria(anuncioId, indice) {
 
   const fotos =
     window.galeriasAnuncios &&
-    window.galeriasAnuncios[
-      anuncioId
-    ];
+    window.galeriasAnuncios[anuncioId];
 
-  if (
-    !fotos ||
-    !fotos[indice]
-  ) {
+  if (!fotos || !fotos[indice]) {
     return;
   }
 
-  window.fotosAtuaisAnuncios[
-    anuncioId
-  ] = indice;
+  window.fotosAtuaisAnuncios[anuncioId] =
+    indice;
 
   const imagem =
     document.getElementById(
-      "foto-principal-" +
-      anuncioId
+      "foto-principal-" + anuncioId
     );
 
   if (imagem) {
@@ -2556,18 +2443,13 @@ function selecionarFotoGaleria(
 
     imagem.onclick =
       function() {
-
-        abrirFotoGrande(
-          fotos[indice]
-        );
-
+        abrirFotoGrande(fotos[indice]);
       };
   }
 
   const contador =
     document.getElementById(
-      "contador-fotos-" +
-      anuncioId
+      "contador-fotos-" + anuncioId
     );
 
   if (contador) {
@@ -2597,10 +2479,7 @@ function abrirFotoGrande(url) {
   janela.style.justifyContent = "center";
   janela.style.zIndex = "99999";
   janela.style.padding = "20px";
-  janela.style.boxSizing =
-    "border-box";
-  janela.style.cursor =
-    "pointer";
+  janela.style.cursor = "pointer";
 
   janela.innerHTML = `
     <img
@@ -2619,9 +2498,7 @@ function abrirFotoGrande(url) {
       janela.remove();
     };
 
-  document.body.appendChild(
-    janela
-  );
+  document.body.appendChild(janela);
 }
 
 
@@ -2641,7 +2518,6 @@ async function editarAnuncio(id) {
       "editarAnuncioMensagem"
     );
 
-  mensagem.className = "";
   mensagem.textContent =
     "Carregando anúncio...";
 
@@ -2655,54 +2531,28 @@ async function editarAnuncio(id) {
       .eq("usuario_id", usuario.id)
       .maybeSingle();
 
-  if (error) {
-
-    console.error(
-      "Erro ao carregar anúncio:",
-      error
-    );
+  if (error || !data) {
 
     mensagem.className = "erro";
-
-    mensagem.textContent =
-      "Erro ao carregar anúncio.";
-
-    return;
-  }
-
-  if (!data) {
-
-    mensagem.className = "erro";
-
     mensagem.textContent =
       "Anúncio não encontrado.";
 
     return;
   }
 
-  document.getElementById(
-    "editarNome"
-  ).value =
+  document.getElementById("editarNome").value =
     data.nome || "";
 
-  document.getElementById(
-    "editarIdade"
-  ).value =
+  document.getElementById("editarIdade").value =
     data.idade || "";
 
-  document.getElementById(
-    "editarCidade"
-  ).value =
+  document.getElementById("editarCidade").value =
     data.cidade || "";
 
-  document.getElementById(
-    "editarDescricao"
-  ).value =
+  document.getElementById("editarDescricao").value =
     data.descricao || "";
 
-  document.getElementById(
-    "editarFoto"
-  ).value =
+  document.getElementById("editarFoto").value =
     data.foto_url || "";
 
   mensagem.textContent = "";
@@ -2713,65 +2563,33 @@ async function editarAnuncio(id) {
 
 async function salvarEdicaoAnuncio() {
 
-  if (!usuario) {
-    mostrar("login");
-    return;
-  }
-
-  if (!anuncioEditandoId) {
-
-    alert(
-      "Nenhum anúncio selecionado."
-    );
-
+  if (!usuario || !anuncioEditandoId) {
     return;
   }
 
   const nome =
-    document
-      .getElementById("editarNome")
-      .value
-      .trim();
+    document.getElementById("editarNome").value.trim();
 
   const idade =
-    Number(
-      document
-        .getElementById("editarIdade")
-        .value
-    );
+    Number(document.getElementById("editarIdade").value);
 
   const cidade =
-    document
-      .getElementById("editarCidade")
-      .value
-      .trim();
+    document.getElementById("editarCidade").value.trim();
 
   const descricao =
-    document
-      .getElementById("editarDescricao")
-      .value
-      .trim();
+    document.getElementById("editarDescricao").value.trim();
 
   const foto_url =
-    document
-      .getElementById("editarFoto")
-      .value
-      .trim();
+    document.getElementById("editarFoto").value.trim();
 
   const mensagem =
     document.getElementById(
       "editarAnuncioMensagem"
     );
 
-  if (
-    !nome ||
-    !idade ||
-    !cidade ||
-    !descricao
-  ) {
+  if (!nome || !idade || !cidade || !descricao) {
 
     mensagem.className = "erro";
-
     mensagem.textContent =
       "Preencha nome, idade, cidade e descrição.";
 
@@ -2781,14 +2599,12 @@ async function salvarEdicaoAnuncio() {
   if (idade < 18) {
 
     mensagem.className = "erro";
-
     mensagem.textContent =
       "O anúncio é permitido somente para maiores de 18 anos.";
 
     return;
   }
 
-  mensagem.className = "";
   mensagem.textContent =
     "Salvando alterações...";
 
@@ -2796,53 +2612,26 @@ async function salvarEdicaoAnuncio() {
     await supabaseClient
       .from("anuncios")
       .update({
-        nome: nome,
-        idade: idade,
-        cidade: cidade,
-        descricao: descricao,
-        foto_url:
-          foto_url || null
+        nome,
+        idade,
+        cidade,
+        descricao,
+        foto_url: foto_url || null
       })
-      .eq(
-        "id",
-        anuncioEditandoId
-      )
-      .eq(
-        "usuario_id",
-        usuario.id
-      )
+      .eq("id", anuncioEditandoId)
+      .eq("usuario_id", usuario.id)
       .select();
 
-  if (error) {
-
-    console.error(
-      "Erro ao atualizar anúncio:",
-      error
-    );
+  if (error || !data || data.length === 0) {
 
     mensagem.className = "erro";
-
     mensagem.textContent =
       "Erro ao salvar alterações.";
 
     return;
   }
 
-  if (
-    !data ||
-    data.length === 0
-  ) {
-
-    mensagem.className = "erro";
-
-    mensagem.textContent =
-      "Nenhum anúncio foi atualizado.";
-
-    return;
-  }
-
   mensagem.className = "sucesso";
-
   mensagem.textContent =
     "Anúncio atualizado com sucesso!";
 }
@@ -2852,17 +2641,7 @@ async function salvarEdicaoAnuncio() {
 
 async function excluirMeuAnuncio() {
 
-  if (!usuario) {
-    mostrar("login");
-    return;
-  }
-
-  if (!anuncioEditandoId) {
-
-    alert(
-      "Nenhum anúncio selecionado."
-    );
-
+  if (!usuario || !anuncioEditandoId) {
     return;
   }
 
@@ -2880,7 +2659,6 @@ async function excluirMeuAnuncio() {
       "editarAnuncioMensagem"
     );
 
-  mensagem.className = "";
   mensagem.textContent =
     "Excluindo anúncio...";
 
@@ -2890,24 +2668,12 @@ async function excluirMeuAnuncio() {
       .update({
         ativo: false
       })
-      .eq(
-        "id",
-        anuncioEditandoId
-      )
-      .eq(
-        "usuario_id",
-        usuario.id
-      );
+      .eq("id", anuncioEditandoId)
+      .eq("usuario_id", usuario.id);
 
   if (error) {
 
-    console.error(
-      "Erro ao excluir anúncio:",
-      error
-    );
-
     mensagem.className = "erro";
-
     mensagem.textContent =
       "Erro ao excluir anúncio.";
 
@@ -2915,109 +2681,72 @@ async function excluirMeuAnuncio() {
   }
 
   mensagem.className = "sucesso";
-
   mensagem.textContent =
     "Anúncio excluído com sucesso!";
 
   anuncioEditandoId = null;
 
   setTimeout(function() {
-
     mostrar("painel");
-
   }, 1200);
 }
 
 
-/* FAVORITAR */
+/* FAVORITOS */
 
-async function favoritarAnuncio(
-  anuncioId
-) {
+async function favoritarAnuncio(anuncioId) {
 
   if (!usuario) {
-
     mostrar("login");
+    return;
+  }
+
+  const existente =
+    await supabaseClient
+      .from("favoritos")
+      .select("id")
+      .eq("usuario_id", usuario.id)
+      .eq("anuncio_id", anuncioId)
+      .maybeSingle();
+
+  if (existente.error) {
+
+    alert(
+      "Erro ao verificar favorito."
+    );
 
     return;
   }
 
-  try {
-
-    const existente =
-      await supabaseClient
-        .from("favoritos")
-        .select("id")
-        .eq(
-          "usuario_id",
-          usuario.id
-        )
-        .eq(
-          "anuncio_id",
-          anuncioId
-        )
-        .maybeSingle();
-
-    if (existente.error) {
-
-      console.error(
-        "Erro ao verificar favorito:",
-        existente.error
-      );
-
-      alert(
-        "Erro ao verificar favorito."
-      );
-
-      return;
-    }
-
-    if (existente.data) {
-
-      alert(
-        "Esse anúncio já está nos seus favoritos."
-      );
-
-      return;
-    }
-
-    const resultado =
-      await supabaseClient
-        .from("favoritos")
-        .insert({
-          usuario_id: usuario.id,
-          anuncio_id: anuncioId
-        });
-
-    if (resultado.error) {
-
-      console.error(
-        "Erro ao favoritar:",
-        resultado.error
-      );
-
-      alert(
-        resultado.error.message
-      );
-
-      return;
-    }
+  if (existente.data) {
 
     alert(
-      "Anúncio adicionado aos favoritos!"
+      "Esse anúncio já está nos seus favoritos."
     );
 
-  } catch (erro) {
-
-    console.error(
-      "Erro inesperado:",
-      erro
-    );
-
-    alert(
-      "Não foi possível favoritar o anúncio."
-    );
+    return;
   }
+
+  const resultado =
+    await supabaseClient
+      .from("favoritos")
+      .insert({
+        usuario_id: usuario.id,
+        anuncio_id: anuncioId
+      });
+
+  if (resultado.error) {
+
+    alert(
+      resultado.error.message
+    );
+
+    return;
+  }
+
+  alert(
+    "Anúncio adicionado aos favoritos!"
+  );
 }
 
 
@@ -3036,145 +2765,116 @@ async function listarFavoritos() {
     '<div class="sem-mensagem">Carregando favoritos...</div>';
 
   if (!usuario) {
-
     mostrar("login");
+    return;
+  }
+
+  const resultado =
+    await supabaseClient
+      .from("favoritos")
+      .select(`
+        id,
+        anuncio_id,
+        anuncios (
+          id,
+          usuario_id,
+          nome,
+          idade,
+          cidade,
+          descricao,
+          foto_url
+        )
+      `)
+      .eq("usuario_id", usuario.id)
+      .order("id", {
+        ascending: false
+      });
+
+  if (resultado.error) {
+
+    conteudo.innerHTML =
+      '<div class="erro">Erro ao carregar favoritos.</div>';
 
     return;
   }
 
-  try {
+  const favoritos =
+    resultado.data || [];
 
-    const resultado =
-      await supabaseClient
-        .from("favoritos")
-        .select(`
-          id,
-          anuncio_id,
-          anuncios (
-            id,
-            usuario_id,
-            nome,
-            idade,
-            cidade,
-            descricao,
-            foto_url
-          )
-        `)
-        .eq(
-          "usuario_id",
-          usuario.id
-        )
-        .order("id", {
-          ascending: false
-        });
-
-    if (resultado.error) {
-
-      console.error(
-        "Erro ao buscar favoritos:",
-        resultado.error
-      );
-
-      conteudo.innerHTML =
-        '<div class="erro">Erro ao carregar favoritos.</div>';
-
-      return;
-    }
-
-    const favoritos =
-      resultado.data || [];
-
-    if (favoritos.length === 0) {
-
-      conteudo.innerHTML =
-        '<div class="sem-mensagem">Você ainda não possui favoritos.</div>';
-
-      return;
-    }
+  if (favoritos.length === 0) {
 
     conteudo.innerHTML =
-      favoritos.map(function(item) {
+      '<div class="sem-mensagem">Você ainda não possui favoritos.</div>';
 
-        const anuncio =
-          item.anuncios;
-
-        if (!anuncio) {
-          return "";
-        }
-
-        const foto =
-          anuncio.foto_url
-            ? `
-              <img
-                src="${escapeHtml(anuncio.foto_url)}"
-                alt="Foto"
-                onerror="this.style.display='none'"
-              >
-            `
-            : "";
-
-        return `
-          <div class="anuncio">
-
-            ${foto}
-
-            <h3>
-              ${escapeHtml(anuncio.nome)}
-              - ${escapeHtml(anuncio.idade)}
-            </h3>
-
-            <p>
-              <strong>Cidade:</strong>
-              ${escapeHtml(anuncio.cidade)}
-            </p>
-
-            <p>
-              ${escapeHtml(anuncio.descricao)}
-            </p>
-
-            ${
-              anuncio.usuario_id !== usuario.id
-                ? `
-                  <button
-                    type="button"
-                    class="btn-principal"
-                    onclick="abrirConversa('${anuncio.usuario_id}', '${escapeHtml(anuncio.nome).replace(/'/g, "\\'")}')"
-                  >
-                    💬 Enviar mensagem
-                  </button>
-                `
-                : ""
-            }
-
-          </div>
-        `;
-
-      }).join("");
-
-  } catch (erro) {
-
-    console.error(
-      "Erro inesperado:",
-      erro
-    );
-
-    conteudo.innerHTML =
-      '<div class="erro">Erro ao carregar favoritos.</div>';
+    return;
   }
+
+  conteudo.innerHTML =
+    favoritos.map(function(item) {
+
+      const anuncio =
+        item.anuncios;
+
+      if (!anuncio) {
+        return "";
+      }
+
+      const foto =
+        anuncio.foto_url
+          ? `
+            <img
+              src="${escapeHtml(anuncio.foto_url)}"
+              alt="Foto"
+            >
+          `
+          : "";
+
+      return `
+        <div class="anuncio">
+
+          ${foto}
+
+          <h3>
+            ${escapeHtml(anuncio.nome)}
+            - ${escapeHtml(anuncio.idade)}
+          </h3>
+
+          <p>
+            <strong>Cidade:</strong>
+            ${escapeHtml(anuncio.cidade)}
+          </p>
+
+          <p>
+            ${escapeHtml(anuncio.descricao)}
+          </p>
+
+          ${
+            anuncio.usuario_id !== usuario.id
+              ? `
+                <button
+                  type="button"
+                  class="btn-principal"
+                  onclick="abrirConversa('${anuncio.usuario_id}', '${escapeHtml(anuncio.nome).replace(/'/g, "\\'")}')"
+                >
+                  💬 Enviar mensagem
+                </button>
+              `
+              : ""
+          }
+
+        </div>
+      `;
+
+    }).join("");
 }
 
 
-/* ABRIR CONVERSA */
+/* CONVERSA */
 
-async function abrirConversa(
-  id,
-  nome
-) {
+async function abrirConversa(id, nome) {
 
   if (!usuario) {
-
     mostrar("login");
-
     return;
   }
 
@@ -3188,23 +2888,13 @@ async function abrirConversa(
   }
 
   conversaUsuarioId = id;
-
   conversaUsuarioNome =
     nome || "Usuário";
 
-  document.getElementById(
-    "tituloChat"
-  ).textContent =
-    "Conversa com " +
-    conversaUsuarioNome;
+  document.getElementById("tituloChat").textContent =
+    "Conversa com " + conversaUsuarioNome;
 
-  document.getElementById(
-    "novaMensagem"
-  ).value = "";
-
-  document.getElementById(
-    "chatMensagem"
-  ).textContent = "";
+  document.getElementById("novaMensagem").value = "";
 
   mostrar("chatTela");
 
@@ -3214,14 +2904,9 @@ async function abrirConversa(
 }
 
 
-/* CARREGAR CHAT */
-
 async function carregarChat() {
 
-  if (
-    !usuario ||
-    !conversaUsuarioId
-  ) {
+  if (!usuario || !conversaUsuarioId) {
     return;
   }
 
@@ -3229,124 +2914,91 @@ async function carregarChat() {
 }
 
 
-/* BUSCAR MENSAGENS */
-
 async function buscarMensagensChat() {
 
-  if (
-    !usuario ||
-    !conversaUsuarioId
-  ) {
+  if (!usuario || !conversaUsuarioId) {
     return;
   }
 
   const conteudo =
-    document.getElementById(
-      "conteudoChat"
-    );
+    document.getElementById("conteudoChat");
 
-  try {
+  const resultado =
+    await supabaseClient
+      .from("mensagens")
+      .select(
+        "id,remetente_id,destinatario_id,mensagem,lida,created_at"
+      )
+      .or(
+        "and(remetente_id.eq." +
+        usuario.id +
+        ",destinatario_id.eq." +
+        conversaUsuarioId +
+        ")," +
+        "and(remetente_id.eq." +
+        conversaUsuarioId +
+        ",destinatario_id.eq." +
+        usuario.id +
+        ")"
+      )
+      .order("created_at", {
+        ascending: true
+      });
 
-    const resultado =
-      await supabaseClient
-        .from("mensagens")
-        .select(
-          "id,remetente_id,destinatario_id,mensagem,lida,created_at"
-        )
-        .or(
-          "and(remetente_id.eq." +
-          usuario.id +
-          ",destinatario_id.eq." +
-          conversaUsuarioId +
-          ")," +
-          "and(remetente_id.eq." +
-          conversaUsuarioId +
-          ",destinatario_id.eq." +
-          usuario.id +
-          ")"
-        )
-        .order("created_at", {
-          ascending: true
-        });
-
-    if (resultado.error) {
-
-      console.error(
-        "Erro ao carregar mensagens:",
-        resultado.error
-      );
-
-      conteudo.innerHTML =
-        '<div class="erro">Erro ao carregar mensagens.</div>';
-
-      return;
-    }
-
-    const mensagens =
-      resultado.data || [];
-
-    if (mensagens.length === 0) {
-
-      conteudo.innerHTML =
-        '<div class="sem-mensagem">Nenhuma mensagem ainda. Comece a conversa!</div>';
-
-      return;
-    }
+  if (resultado.error) {
 
     conteudo.innerHTML =
-      mensagens.map(function(msg) {
+      '<div class="erro">Erro ao carregar mensagens.</div>';
 
-        const enviada =
-          msg.remetente_id ===
-          usuario.id;
-
-        const classe =
-          enviada
-            ? "balao balao-enviado"
-            : "balao balao-recebido";
-
-        let dataFormatada = "";
-
-        if (msg.created_at) {
-
-          dataFormatada =
-            new Date(
-              msg.created_at
-            ).toLocaleString(
-              "pt-BR"
-            );
-        }
-
-        return `
-          <div class="${classe}">
-
-            <div>
-              ${escapeHtml(msg.mensagem)}
-            </div>
-
-            <span class="data-msg">
-              ${escapeHtml(dataFormatada)}
-            </span>
-
-          </div>
-        `;
-
-      }).join("");
-
-    conteudo.scrollTop =
-      conteudo.scrollHeight;
-
-  } catch (erro) {
-
-    console.error(
-      "Erro inesperado no chat:",
-      erro
-    );
+    return;
   }
+
+  const mensagens =
+    resultado.data || [];
+
+  if (mensagens.length === 0) {
+
+    conteudo.innerHTML =
+      '<div class="sem-mensagem">Nenhuma mensagem ainda. Comece a conversa!</div>';
+
+    return;
+  }
+
+  conteudo.innerHTML =
+    mensagens.map(function(msg) {
+
+      const enviada =
+        msg.remetente_id === usuario.id;
+
+      const classe =
+        enviada
+          ? "balao balao-enviado"
+          : "balao balao-recebido";
+
+      const dataFormatada =
+        msg.created_at
+          ? new Date(msg.created_at)
+              .toLocaleString("pt-BR")
+          : "";
+
+      return `
+        <div class="${classe}">
+          <div>
+            ${escapeHtml(msg.mensagem)}
+          </div>
+
+          <span class="data-msg">
+            ${escapeHtml(dataFormatada)}
+          </span>
+        </div>
+      `;
+
+    }).join("");
+
+  conteudo.scrollTop =
+    conteudo.scrollHeight;
 }
 
-
-/* ATUALIZAÇÃO DO CHAT */
 
 function iniciarAtualizacaoChat() {
 
@@ -3364,9 +3016,7 @@ function pararAtualizacaoChat() {
 
   if (intervaloChat) {
 
-    clearInterval(
-      intervaloChat
-    );
+    clearInterval(intervaloChat);
 
     intervaloChat = null;
   }
@@ -3377,28 +3027,15 @@ function pararAtualizacaoChat() {
 
 async function enviarMensagemChat() {
 
-  if (
-    !usuario ||
-    !conversaUsuarioId
-  ) {
+  if (!usuario || !conversaUsuarioId) {
     return;
   }
 
   const campo =
-    document.getElementById(
-      "novaMensagem"
-    );
+    document.getElementById("novaMensagem");
 
   const texto =
     campo.value.trim();
-
-  const mensagem =
-    document.getElementById(
-      "chatMensagem"
-    );
-
-  mensagem.className = "";
-  mensagem.textContent = "";
 
   if (!texto) {
     return;
@@ -3411,64 +3048,37 @@ async function enviarMensagemChat() {
 
   botao.disabled = true;
 
-  try {
+  const resultado =
+    await supabaseClient
+      .from("mensagens")
+      .insert({
+        remetente_id: usuario.id,
+        destinatario_id: conversaUsuarioId,
+        mensagem: texto,
+        lida: false
+      });
 
-    const resultado =
-      await supabaseClient
-        .from("mensagens")
-        .insert({
-          remetente_id:
-            usuario.id,
+  if (resultado.error) {
 
-          destinatario_id:
-            conversaUsuarioId,
-
-          mensagem:
-            texto,
-
-          lida:
-            false
-        });
-
-    if (resultado.error) {
-
-      console.error(
-        "Erro ao enviar mensagem:",
-        resultado.error
-      );
-
-      mensagem.className = "erro";
-
-      mensagem.textContent =
-        resultado.error.message;
-
-      return;
-    }
-
-    campo.value = "";
-
-    await buscarMensagensChat();
-
-  } catch (erro) {
-
-    console.error(
-      "Erro inesperado:",
-      erro
-    );
-
-    mensagem.className = "erro";
-
-    mensagem.textContent =
-      "Não foi possível enviar a mensagem.";
-
-  } finally {
+    document.getElementById(
+      "chatMensagem"
+    ).textContent =
+      resultado.error.message;
 
     botao.disabled = false;
+
+    return;
   }
+
+  campo.value = "";
+
+  await buscarMensagensChat();
+
+  botao.disabled = false;
 }
 
 
-/* LISTAR CONVERSAS */
+/* CONVERSAS */
 
 async function listarConversas() {
 
@@ -3483,216 +3093,137 @@ async function listarConversas() {
     '<div class="sem-mensagem">Carregando conversas...</div>';
 
   if (!usuario) {
-
     mostrar("login");
+    return;
+  }
+
+  const resultado =
+    await supabaseClient
+      .from("mensagens")
+      .select(
+        "id,remetente_id,destinatario_id,mensagem,created_at"
+      )
+      .or(
+        "remetente_id.eq." +
+        usuario.id +
+        ",destinatario_id.eq." +
+        usuario.id
+      )
+      .order("created_at", {
+        ascending: false
+      });
+
+  if (resultado.error) {
+
+    conteudo.innerHTML =
+      '<div class="erro">Erro ao carregar conversas.</div>';
 
     return;
   }
 
-  try {
+  const mensagens =
+    resultado.data || [];
 
-    const resultado =
-      await supabaseClient
-        .from("mensagens")
-        .select(
-          "id,remetente_id,destinatario_id,mensagem,created_at"
-        )
-        .or(
-          "remetente_id.eq." +
-          usuario.id +
-          ",destinatario_id.eq." +
-          usuario.id
-        )
-        .order("created_at", {
-          ascending: false
-        });
+  if (mensagens.length === 0) {
 
-    if (resultado.error) {
+    conteudo.innerHTML =
+      '<div class="sem-mensagem">Você ainda não possui conversas.</div>';
 
-      console.error(
-        "Erro ao buscar conversas:",
-        resultado.error
-      );
+    return;
+  }
 
-      conteudo.innerHTML =
-        '<div class="erro">Erro ao carregar conversas.</div>';
+  const conversas = [];
+  const idsAdicionados = new Set();
 
-      return;
-    }
+  for (const msg of mensagens) {
 
-    const mensagens =
-      resultado.data || [];
-
-    if (mensagens.length === 0) {
-
-      conteudo.innerHTML =
-        '<div class="sem-mensagem">Você ainda não possui conversas.</div>';
-
-      return;
-    }
-
-    const conversas = [];
-
-    const idsAdicionados =
-      new Set();
-
-    for (
-      let i = 0;
-      i < mensagens.length;
-      i++
-    ) {
-
-      const msg =
-        mensagens[i];
-
-      const outroId =
-        msg.remetente_id ===
-        usuario.id
-          ? msg.destinatario_id
-          : msg.remetente_id;
-
-      if (
-        outroId &&
-        !idsAdicionados.has(
-          outroId
-        )
-      ) {
-
-        idsAdicionados.add(
-          outroId
-        );
-
-        conversas.push({
-          usuarioId:
-            outroId,
-
-          ultimaMensagem:
-            msg.mensagem,
-
-          data:
-            msg.created_at
-        });
-      }
-    }
+    const outroId =
+      msg.remetente_id === usuario.id
+        ? msg.destinatario_id
+        : msg.remetente_id;
 
     if (
-      conversas.length === 0
+      outroId &&
+      !idsAdicionados.has(outroId)
     ) {
 
-      conteudo.innerHTML =
-        '<div class="sem-mensagem">Você ainda não possui conversas.</div>';
+      idsAdicionados.add(outroId);
 
-      return;
+      conversas.push({
+        usuarioId: outroId,
+        ultimaMensagem: msg.mensagem,
+        data: msg.created_at
+      });
     }
-
-    const ids =
-      conversas.map(
-        function(conversa) {
-          return conversa.usuarioId;
-        }
-      );
-
-    const perfis =
-      await supabaseClient
-        .from("profiles")
-        .select("id,nome")
-        .in("id", ids);
-
-    if (perfis.error) {
-
-      console.error(
-        "Erro ao buscar perfis:",
-        perfis.error
-      );
-    }
-
-    const mapaNomes = {};
-
-    (perfis.data || [])
-      .forEach(
-        function(perfil) {
-
-          mapaNomes[
-            perfil.id
-          ] =
-            perfil.nome ||
-            "Usuário";
-
-        }
-      );
-
-    conteudo.innerHTML =
-      conversas.map(
-        function(conversa) {
-
-          const nome =
-            mapaNomes[
-              conversa.usuarioId
-            ] ||
-            "Usuário";
-
-          let dataFormatada = "";
-
-          if (conversa.data) {
-
-            dataFormatada =
-              new Date(
-                conversa.data
-              ).toLocaleString(
-                "pt-BR"
-              );
-          }
-
-          return `
-            <div class="conversa">
-
-              <h3>
-                ${escapeHtml(nome)}
-              </h3>
-
-              <p>
-                ${escapeHtml(conversa.ultimaMensagem)}
-              </p>
-
-              <span class="pequeno">
-                ${escapeHtml(dataFormatada)}
-              </span>
-
-              <br>
-
-              <button
-                type="button"
-                class="btn-principal"
-                onclick="abrirConversa('${conversa.usuarioId}', '${escapeHtml(nome).replace(/'/g, "\\'")}')"
-              >
-                Abrir conversa
-              </button>
-
-            </div>
-          `;
-
-        }
-      ).join("");
-
-  } catch (erro) {
-
-    console.error(
-      "Erro inesperado:",
-      erro
-    );
-
-    conteudo.innerHTML =
-      '<div class="erro">Erro ao carregar conversas.</div>';
   }
+
+  const ids =
+    conversas.map(function(item) {
+      return item.usuarioId;
+    });
+
+  const perfis =
+    await supabaseClient
+      .from("profiles")
+      .select("id,nome")
+      .in("id", ids);
+
+  const mapaNomes = {};
+
+  (perfis.data || []).forEach(function(perfil) {
+    mapaNomes[perfil.id] =
+      perfil.nome || "Usuário";
+  });
+
+  conteudo.innerHTML =
+    conversas.map(function(conversa) {
+
+      const nome =
+        mapaNomes[conversa.usuarioId] ||
+        "Usuário";
+
+      const data =
+        conversa.data
+          ? new Date(conversa.data)
+              .toLocaleString("pt-BR")
+          : "";
+
+      return `
+        <div class="conversa">
+
+          <h3>
+            ${escapeHtml(nome)}
+          </h3>
+
+          <p>
+            ${escapeHtml(conversa.ultimaMensagem)}
+          </p>
+
+          <span class="pequeno">
+            ${escapeHtml(data)}
+          </span>
+
+          <br>
+
+          <button
+            type="button"
+            class="btn-principal"
+            onclick="abrirConversa('${conversa.usuarioId}', '${escapeHtml(nome).replace(/'/g, "\\'")}')"
+          >
+            Abrir conversa
+          </button>
+
+        </div>
+      `;
+
+    }).join("");
 }
 
 
 /* ENTER NO CHAT */
 
 document
-  .getElementById(
-    "novaMensagem"
-  )
+  .getElementById("novaMensagem")
   .addEventListener(
     "keydown",
     function(event) {
@@ -3706,7 +3237,6 @@ document
 
         enviarMensagemChat();
       }
-
     }
   );
 
@@ -3714,19 +3244,9 @@ document
 /* AUTENTICAÇÃO */
 
 supabaseClient.auth.onAuthStateChange(
-  function(
-    event,
-    session
-  ) {
+  function(event, session) {
 
-    console.log(
-      "Evento de autenticação:",
-      event
-    );
-
-    if (
-      event === "SIGNED_IN"
-    ) {
+    if (event === "SIGNED_IN") {
 
       usuario =
         session
@@ -3734,21 +3254,15 @@ supabaseClient.auth.onAuthStateChange(
           : null;
 
       if (usuario) {
-
         carregarPainel();
       }
     }
 
-    if (
-      event === "SIGNED_OUT"
-    ) {
+    if (event === "SIGNED_OUT") {
 
       usuario = null;
-
       conversaUsuarioId = null;
-
       conversaUsuarioNome = "";
-
       anuncioEditandoId = null;
 
       pararAtualizacaoChat();
@@ -3767,9 +3281,7 @@ async function verificarSessao() {
   try {
 
     const resultado =
-      await supabaseClient
-        .auth
-        .getSession();
+      await supabaseClient.auth.getSession();
 
     const session =
       resultado.data.session;
@@ -3790,10 +3302,7 @@ async function verificarSessao() {
 
   } catch (erro) {
 
-    console.error(
-      "Erro ao verificar sessão:",
-      erro
-    );
+    console.error(erro);
 
     mostrar("inicio");
   }
