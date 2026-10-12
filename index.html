@@ -3,6 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="icon" type="image/png" sizes="192x192" href="./icone-192.png">
+  <meta name="theme-color" content="#6a1b9a">
 
   <meta name="google-site-verification" content="JOzLeRo8eYhM7uj6cCF8CbSF2yva249Jh1PO3dRX8MI" />
   <title>Encontro VIP</title>
@@ -3487,6 +3490,17 @@ async function verificarSessao() {
 
 verificarSessao();
 
+</script>
+
+
+<script>
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("./sw.js")
+      .then(() => console.log("Encontro VIP: aplicativo preparado"))
+      .catch((erro) => console.error("Falha ao preparar aplicativo:", erro));
+  });
+}
 </script>
 
 </body>
