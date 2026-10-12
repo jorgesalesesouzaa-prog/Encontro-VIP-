@@ -618,6 +618,17 @@
         placeholder="URL da foto"
       >
 
+      <label for="editarFotosArquivos">
+        Adicionar fotos (máximo de 5 no total)
+      </label>
+      <input
+        id="editarFotosArquivos"
+        type="file"
+        accept="image/jpeg,image/png,image/webp"
+        multiple
+      >
+      <div id="editarFotosAtuais"></div>
+
       <button
         type="button"
         class="btn-principal"
@@ -1822,20 +1833,55 @@ function abrirDestaque(anuncioId) {
   }
 
   criarSolicitacaoDestaque(anuncioId);
-}
 
-
-/* CRIAR SOLICITAÇÃO E GERAR PIX */
-
-async function criarSolicitacaoDestaque(anuncioId) {
-
+function abrirDestaque(anuncioId) {
   if (!usuario) {
     mostrar("login");
     return;
   }
 
-  const conteudoPix =
-    document.getElementById("conteudoPix");
+  const escolha = prompt(
+    "⭐ ESCOLHA SEU PLANO DE DESTAQUE\n\n" +
+    "1 - Básico: 24 horas - R$ 9,90\n" +
+    "2 - Plus: 7 dias - R$ 29,90\n" +
+    "3 - Premium: 30 dias - R$ 79,90\n\n" +
+    "Digite 1, 2 ou 3:"
+  );
+
+  const planos = {
+    "1": { plano: "basico", nome: "Básico", dias: 1, valor: 9.90 },
+    "2": { plano: "plus", nome: "Plus", dias: 7, valor: 29.90 },
+    "3": { plano: "premium", nome: "Premium", dias: 30, valor: 79.90 }
+  };
+
+  const selecionado = planos[escolha];
+
+  if (!selecionado) {
+    alert("Plano não selecionado. Nenhuma cobrança foi criada.");
+    return;
+  }
+
+  const confirmar = confirm(
+    "⭐ Plano " + selecionado.nome + "\n\n" +
+    "Duração: " + selecionado.dias + " dia(s)\n" +
+    "Valor: R$ " + selecionado.valor.toFixed(2).replace(".", ",") +
+    "\n\nDeseja continuar para o pagamento Pix?"
+  );
+
+  if (!confirmar) return;
+
+  criarSolicitacaoDestaque(anuncioId, selecionado);
+}}
+
+
+/* CRIAR SOLICITAÇÃO E GERAR PIX */
+
+async function criarSolicitacaoDestaque(anuncioId, selecionado) {
+
+  if (!usuario) {
+    mostrar("login");
+    return;
+  }
 
   mostrar("pagamentoPix");
 
@@ -1847,17 +1893,12 @@ async function criarSolicitacaoDestaque(anuncioId) {
     const inicio =
       new Date();
 
-    const fim =
-      new Date(
-        inicio.getTime() +
-        24 * 60 * 60 * 1000
-      );
+    const fim = new Date(
+  inicio.getTime() +
+  selecionado.dias * 24 * 60 * 60 * 1000
+);
 
-    /*
-     * O valor real é definido novamente
-     * no servidor/Edge Function.
-     */
-    const valor = "1.00";
+const valor = selecionado.valor;
 
     const resultado =
       await supabaseClient
@@ -1868,6 +1909,7 @@ async function criarSolicitacaoDestaque(anuncioId) {
           inicio: inicio.toISOString(),
           fim: fim.toISOString(),
           valor,
+          plano: selecionado.plano,
           status: "pendente"
         })
         .select("id")
@@ -2210,97 +2252,11 @@ async function listarSolicitacoesDestaque() {
 /* APROVAR DESTAQUE */
 
 async function aprovarDestaque(destaqueId) {
-
-  if (!usuario) {
-    mostrar("login");
-    return;
-  }
-
-  const confirmar =
-    confirm(
-      "Deseja aprovar este destaque?\n\n" +
-      "O anúncio ficará destacado por 24 horas."
-    );
-
-  if (!confirmar) {
-    return;
-  }
-
-  const busca =
-    await supabaseClient
-      .from("anuncio_destaques")
-      .select("anuncio_id")
-      .eq("id", destaqueId)
-      .single();
-
-  if (
-    busca.error ||
-    !busca.data
-  ) {
-
-    alert(
-      "Não foi possível encontrar o anúncio."
-    );
-
-    return;
-  }
-
-  const inicio =
-    new Date();
-
-  const fim =
-    new Date(
-      inicio.getTime() +
-      24 * 60 * 60 * 1000
-    );
-
-  const destaque =
-    await supabaseClient
-      .from("anuncio_destaques")
-      .update({
-        status: "aprovado",
-        inicio: inicio.toISOString(),
-        fim: fim.toISOString()
-      })
-      .eq("id", destaqueId);
-
-  if (destaque.error) {
-
-    alert(
-      "Erro ao aprovar o destaque."
-    );
-
-    return;
-  }
-
-  const anuncio =
-    await supabaseClient
-      .from("anuncios")
-      .update({
-        destaque: true,
-        destaque_ate: fim.toISOString()
-      })
-      .eq(
-        "id",
-        busca.data.anuncio_id
-      );
-
-  if (anuncio.error) {
-
-    alert(
-      "O destaque foi aprovado, mas não foi possível ativá-lo no anúncio."
-    );
-
-    return;
-  }
-
   alert(
-    "⭐ Destaque aprovado com sucesso!"
+    "A aprovação manual de destaques está temporariamente desativada. " +
+    "A liberação será feita após a confirmação segura do pagamento."
   );
-
-  listarSolicitacoesDestaque();
 }
-
 
 /* FILTROS */
 
@@ -2555,87 +2511,304 @@ async function editarAnuncio(id) {
   document.getElementById("editarFoto").value =
     data.foto_url || "";
 
+  const areaFotos =
+    document.getElementById("editarFotosAtuais");
+
+  areaFotos.textContent = "Carregando fotos...";
+
+  const resultadoFotos =
+    await supabaseClient
+      .from("anuncio_fotos")
+      .select("id,anuncio_id,usuario_id,foto_url,ordem")
+      .eq("anuncio_id", id)
+      .eq("usuario_id", usuario.id)
+      .order("ordem", { ascending: true });
+
+  if (resultadoFotos.error) {
+    areaFotos.textContent =
+      "Não foi possível carregar as fotos.";
+  } else {
+    window.fotosEdicaoAtuais =
+      resultadoFotos.data || [];
+
+    if (window.fotosEdicaoAtuais.length === 0) {
+      areaFotos.textContent = "Nenhuma foto adicional cadastrada.";
+    } else {
+      areaFotos.innerHTML =
+        window.fotosEdicaoAtuais.map(function(foto) {
+          return `
+            <div style="display:inline-block;margin:8px;text-align:center">
+              <img
+                src="${escapeHtml(foto.foto_url)}"
+                alt="Foto do anúncio"
+                style="width:110px;height:110px;object-fit:cover;border-radius:8px"
+              >
+              <button
+                type="button"
+                class="btn-perigo"
+                onclick="removerFotoEdicao('${foto.id}')"
+              >Remover</button>
+            </div>
+          `;
+        }).join("");
+    }
+  }
+
   mensagem.textContent = "";
 
   mostrar("editarAnuncio");
 }
 
 
-async function salvarEdicaoAnuncio() {
+async function removerFotoEdicao(fotoId) {
+  if (!usuario || !anuncioEditandoId) return;
 
-  if (!usuario || !anuncioEditandoId) {
+  const confirmar = confirm("Deseja remover esta foto do anúncio?");
+  if (!confirmar) return;
+
+  const mensagem = document.getElementById("editarAnuncioMensagem");
+  mensagem.className = "";
+  mensagem.textContent = "Removendo foto...";
+
+  const busca = await supabaseClient
+    .from("anuncio_fotos")
+    .select("id,anuncio_id,usuario_id,foto_url")
+    .eq("id", fotoId)
+    .eq("anuncio_id", anuncioEditandoId)
+    .eq("usuario_id", usuario.id)
+    .maybeSingle();
+
+  if (busca.error || !busca.data) {
+    mensagem.className = "erro";
+    mensagem.textContent = "Não foi possível encontrar essa foto.";
     return;
   }
 
-  const nome =
-    document.getElementById("editarNome").value.trim();
+  const foto = busca.data;
 
-  const idade =
-    Number(document.getElementById("editarIdade").value);
+  const exclusao = await supabaseClient
+    .from("anuncio_fotos")
+    .delete()
+    .eq("id", fotoId)
+    .eq("anuncio_id", anuncioEditandoId)
+    .eq("usuario_id", usuario.id);
 
-  const cidade =
-    document.getElementById("editarCidade").value.trim();
+  if (exclusao.error) {
+    mensagem.className = "erro";
+    mensagem.textContent = "Não foi possível remover a foto.";
+    return;
+  }
 
-  const descricao =
-    document.getElementById("editarDescricao").value.trim();
+  const restantes = await supabaseClient
+    .from("anuncio_fotos")
+    .select("id,foto_url,ordem")
+    .eq("anuncio_id", anuncioEditandoId)
+    .eq("usuario_id", usuario.id)
+    .order("ordem", { ascending: true });
 
-  const foto_url =
-    document.getElementById("editarFoto").value.trim();
+  if (restantes.error) {
+    mensagem.className = "erro";
+    mensagem.textContent = "Foto removida da galeria, mas não foi possível atualizar a lista.";
+    return;
+  }
 
-  const mensagem =
-    document.getElementById(
-      "editarAnuncioMensagem"
-    );
+  const principal = restantes.data.length
+    ? restantes.data[0].foto_url
+    : null;
+
+  const atualizacao = await supabaseClient
+    .from("anuncios")
+    .update({
+      foto_url: principal,
+      foto_principal: principal
+    })
+    .eq("id", anuncioEditandoId)
+    .eq("usuario_id", usuario.id);
+
+  if (atualizacao.error) {
+    mensagem.className = "erro";
+    mensagem.textContent = "A foto saiu da galeria, mas não foi possível atualizar a foto principal.";
+    return;
+  }
+
+  /* Tenta remover também o arquivo do armazenamento, se a URL pertencer ao bucket esperado. */
+  try {
+    const prefixo = "/storage/v1/object/public/fotos-anuncios/";
+    const posicao = foto.foto_url.indexOf(prefixo);
+
+    if (posicao !== -1) {
+      const caminho = decodeURIComponent(
+        foto.foto_url.substring(posicao + prefixo.length)
+      );
+
+      if (caminho && !caminho.includes("..")) {
+        await supabaseClient.storage
+          .from("fotos-anuncios")
+          .remove([caminho]);
+      }
+    }
+  } catch (erro) {
+    console.warn("A foto foi removida da galeria; a limpeza do arquivo falhou.", erro);
+  }
+
+  window.fotosEdicaoAtuais = restantes.data;
+  await editarAnuncio(anuncioEditandoId);
+
+  mensagem.className = "sucesso";
+  mensagem.textContent = "Foto removida com sucesso.";
+}
+
+
+async function salvarEdicaoAnuncio() {
+  if (!usuario || !anuncioEditandoId) return;
+
+  const nome = document.getElementById("editarNome").value.trim();
+  const idade = Number(document.getElementById("editarIdade").value);
+  const cidade = document.getElementById("editarCidade").value.trim();
+  const descricao = document.getElementById("editarDescricao").value.trim();
+  const foto_url = document.getElementById("editarFoto").value.trim();
+  const seletor = document.getElementById("editarFotosArquivos");
+  const arquivos = Array.from(seletor.files || []);
+  const mensagem = document.getElementById("editarAnuncioMensagem");
 
   if (!nome || !idade || !cidade || !descricao) {
-
     mensagem.className = "erro";
-    mensagem.textContent =
-      "Preencha nome, idade, cidade e descrição.";
-
+    mensagem.textContent = "Preencha nome, idade, cidade e descrição.";
     return;
   }
 
   if (idade < 18) {
-
     mensagem.className = "erro";
-    mensagem.textContent =
-      "O anúncio é permitido somente para maiores de 18 anos.";
-
+    mensagem.textContent = "O anúncio é permitido somente para maiores de 18 anos.";
     return;
   }
 
-  mensagem.textContent =
-    "Salvando alterações...";
+  for (const arquivo of arquivos) {
+    if (!["image/jpeg", "image/png", "image/webp"].includes(arquivo.type)) {
+      mensagem.className = "erro";
+      mensagem.textContent = "Use apenas fotos JPG, PNG ou WEBP.";
+      return;
+    }
+    if (arquivo.size > 10 * 1024 * 1024) {
+      mensagem.className = "erro";
+      mensagem.textContent = "Cada foto deve ter no máximo 10 MB.";
+      return;
+    }
+  }
 
-  const { data, error } =
-    await supabaseClient
-      .from("anuncios")
-      .update({
-        nome,
-        idade,
-        cidade,
-        descricao,
-        foto_url: foto_url || null
-      })
-      .eq("id", anuncioEditandoId)
-      .eq("usuario_id", usuario.id)
-      .select();
+  mensagem.textContent = "Verificando fotos...";
 
-  if (error || !data || data.length === 0) {
+  const consulta = await supabaseClient
+    .from("anuncio_fotos")
+    .select("id,foto_url,ordem")
+    .eq("anuncio_id", anuncioEditandoId)
+    .eq("usuario_id", usuario.id)
+    .order("ordem", { ascending: true });
 
+  if (consulta.error) {
     mensagem.className = "erro";
-    mensagem.textContent =
-      "Erro ao salvar alterações.";
-
+    mensagem.textContent = "Não foi possível verificar as fotos atuais.";
     return;
   }
 
+  const fotosAtuais = consulta.data || [];
+  if (fotosAtuais.length + arquivos.length > 5) {
+    mensagem.className = "erro";
+    mensagem.textContent =
+      "Você já tem " + fotosAtuais.length +
+      " foto(s). Pode adicionar no máximo " +
+      Math.max(0, 5 - fotosAtuais.length) + " nova(s).";
+    return;
+  }
+
+  mensagem.textContent = "Salvando alterações...";
+
+  const atualizacao = await supabaseClient
+    .from("anuncios")
+    .update({
+      nome,
+      idade,
+      cidade,
+      descricao,
+      foto_url: foto_url || (fotosAtuais[0] && fotosAtuais[0].foto_url) || null,
+      foto_principal: foto_url || (fotosAtuais[0] && fotosAtuais[0].foto_url) || null
+    })
+    .eq("id", anuncioEditandoId)
+    .eq("usuario_id", usuario.id)
+    .select("id");
+
+  if (atualizacao.error || !atualizacao.data || !atualizacao.data.length) {
+    mensagem.className = "erro";
+    mensagem.textContent = "Erro ao salvar alterações do anúncio.";
+    return;
+  }
+
+  const novasFotos = [];
+
+  for (let i = 0; i < arquivos.length; i++) {
+    const arquivo = arquivos[i];
+    const extensao = arquivo.name.split(".").pop().toLowerCase();
+    const caminho = usuario.id + "/" + anuncioEditandoId + "/" +
+      crypto.randomUUID() + "." + extensao;
+
+    mensagem.textContent =
+      "Enviando foto " + (i + 1) + " de " + arquivos.length + "...";
+
+    const upload = await supabaseClient.storage
+      .from("fotos-anuncios")
+      .upload(caminho, arquivo);
+
+    if (upload.error) {
+      mensagem.className = "erro";
+      mensagem.textContent = "Os dados foram salvos, mas uma foto não foi enviada.";
+      return;
+    }
+
+    const url = supabaseClient.storage
+      .from("fotos-anuncios")
+      .getPublicUrl(caminho).data.publicUrl;
+
+    novasFotos.push({
+      anuncio_id: anuncioEditandoId,
+      usuario_id: usuario.id,
+      foto_url: url,
+      ordem: fotosAtuais.length + i
+    });
+  }
+
+  if (novasFotos.length) {
+    const inserir = await supabaseClient
+      .from("anuncio_fotos")
+      .insert(novasFotos);
+
+    if (inserir.error) {
+      mensagem.className = "erro";
+      mensagem.textContent =
+        "As fotos foram enviadas, mas não foi possível vinculá-las ao anúncio.";
+      return;
+    }
+
+    if (!foto_url && fotosAtuais.length === 0) {
+      const principal = novasFotos[0].foto_url;
+      const atualizarPrincipal = await supabaseClient
+        .from("anuncios")
+        .update({ foto_url: principal, foto_principal: principal })
+        .eq("id", anuncioEditandoId)
+        .eq("usuario_id", usuario.id);
+
+      if (atualizarPrincipal.error) {
+        mensagem.className = "erro";
+        mensagem.textContent = "Fotos adicionadas, mas a foto principal não foi atualizada.";
+        return;
+      }
+    }
+  }
+
+  seletor.value = "";
+  await editarAnuncio(anuncioEditandoId);
   mensagem.className = "sucesso";
-  mensagem.textContent =
-    "Anúncio atualizado com sucesso!";
+  mensagem.textContent = "Anúncio atualizado com sucesso!";
 }
-
 
 /* EXCLUIR ANÚNCIO */
 
