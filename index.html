@@ -284,6 +284,17 @@
       >
         Entrar
       </button>
+
+      <button
+        type="button"
+        class="btn-secundario"
+        id="botao-instalar-app"
+        onclick="instalarEncontroVIP()"
+      >
+        📲 Instalar Encontro VIP
+      </button>
+
+      <p id="ajuda-instalacao" class="hidden" role="status" aria-live="polite"></p>
     </div>
   </div>
 
@@ -3500,6 +3511,56 @@ if ("serviceWorker" in navigator) {
       .then(() => console.log("Encontro VIP: aplicativo preparado"))
       .catch((erro) => console.error("Falha ao preparar aplicativo:", erro));
   });
+}
+</script>
+
+
+<script>
+let promptInstalacaoEncontroVIP = null;
+
+window.addEventListener("beforeinstallprompt", (evento) => {
+  evento.preventDefault();
+  promptInstalacaoEncontroVIP = evento;
+});
+
+window.addEventListener("appinstalled", () => {
+  promptInstalacaoEncontroVIP = null;
+  const ajuda = document.getElementById("ajuda-instalacao");
+  if (ajuda) {
+    ajuda.classList.remove("hidden");
+    ajuda.textContent = "Encontro VIP foi instalado com sucesso!";
+  }
+});
+
+async function instalarEncontroVIP() {
+  const ajuda = document.getElementById("ajuda-instalacao");
+  if (!ajuda) return;
+
+  ajuda.classList.remove("hidden");
+
+  if (window.matchMedia("(display-mode: standalone)").matches) {
+    ajuda.textContent = "O Encontro VIP já está aberto como aplicativo.";
+    return;
+  }
+
+  if (promptInstalacaoEncontroVIP) {
+    promptInstalacaoEncontroVIP.prompt();
+    await promptInstalacaoEncontroVIP.userChoice;
+    promptInstalacaoEncontroVIP = null;
+    return;
+  }
+
+  const navegador = navigator.userAgent;
+  const iphoneOuIpad = /iPhone|iPad|iPod/i.test(navegador);
+  const android = /Android/i.test(navegador);
+
+  if (iphoneOuIpad) {
+    ajuda.textContent = "No iPhone ou iPad: abra este site no Safari, toque em Compartilhar e escolha 'Adicionar à Tela de Início'.";
+  } else if (android) {
+    ajuda.textContent = "No Android: abra o menu ⋮ do navegador e procure 'Instalar aplicativo' ou 'Adicionar à tela inicial'. Se não aparecer, tente abrir o site no Chrome.";
+  } else {
+    ajuda.textContent = "Para instalar no computador, procure 'Instalar aplicativo' no menu do navegador. No Firefox, essa opção pode não estar disponível.";
+  }
 }
 </script>
 
